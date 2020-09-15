@@ -1,0 +1,36 @@
+---
+title: "geomultistar: Geographical Queries on Multidimensional Data"
+author: "Jose Samos (jsamos@ugr.es)"
+date: "2020-09-15"
+output: rmarkdown::html_vignette
+bibliography: bibliography.bib
+vignette: >
+  %\VignetteIndexEntry{geomultistar: Geographical Queries on Multidimensional Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo = FALSE}
+# library(geomultistar)
+```
+
+# Introduction
+
+The *multidimensional data model* was defined in the 1990s with the aim of supporting data analysis. Data in multidimensional systems is obtained from operational systems and is transformed to adapt it to the new structure.
+
+
+
+# Dimensional modelling and star schemas
+
+The content of this section is a summary based mainly on @adamson2010star and @kimball2013data. It is intended to present the fundamental concepts of the area that are relevant to understand the functionality, naming and use of the `starschemar` package.
+
+
+
+# References

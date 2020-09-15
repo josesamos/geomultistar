@@ -8,7 +8,7 @@
 <!-- badges: end -->
 
 The goal of `geomultistar` is to build geographical queries on data in
-`multistar` format, obtained from the `starschemar` package.
+`multistar` format, obtained using the `starschemar` package.
 
 ## Installation
 
