@@ -21,7 +21,10 @@ Imports:
     readr,
     tibble,
     tidyr,
-    tidyselect
+    tidyselect,
+    starschemar,
+    generics,
+    purrr
 Suggests: 
     testthat,
     knitr,
