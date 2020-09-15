@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.com/josesamos/geomultistar.svg?branch=master)](https://travis-ci.com/josesamos/geomultistar)
 <!-- badges: end -->
 
 The goal of `geomultistar` is to build geographical queries on data in
