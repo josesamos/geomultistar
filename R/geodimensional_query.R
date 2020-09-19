@@ -18,18 +18,12 @@ new_geodimensional_query <- function(ms = NULL, geodimension = NULL) {
     )
 
   stopifnot(geodimension %in% names(ms$dimension))
-  for (name in geodimension) {
-    if (is.null(schema$geodimension)) {
-      schema$geodimension <- list(name = NULL)
-      names(schema$geodimension) <- name
-    } else {
-      dim_names <- names(schema$geodimension)
-      schema$geodimension <- c(schema$geodimension, list(name = NULL))
-      names(schema$geodimension) <- c(dim_names, name)
-    }
-  }
+  stopifnot(length(geodimension) == 1)
+  schema$geodimension <- list(geodimension = NULL)
+  names(schema$geodimension) <- geodimension
+
   for (dimension in names(schema$geodimension)) {
-    for (name in names(ms$dimension[[dimension]])[-1]) {
+    for (name in c(sprintf("all_%s", dimension), names(ms$dimension[[dimension]])[-1])) {
       if (is.null(schema$geodimension[[dimension]])) {
         schema$geodimension[[dimension]] <- list(name = NULL)
         names(schema$geodimension[[dimension]]) <- name

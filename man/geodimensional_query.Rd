@@ -4,7 +4,7 @@
 \alias{geodimensional_query}
 \title{\code{geodimensional_query} S3 class}
 \usage{
-geodimensional_query(ms = NULL)
+geodimensional_query(ms = NULL, geodimension = NULL)
 }
 \arguments{
 \item{ms}{A \code{multistar} object.}

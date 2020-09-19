@@ -81,15 +81,15 @@
 #'   "West"
 #' )
 #'
-#' region <- c(1,
-#'             1,
-#'             2,
-#'             2,
-#'             3,
-#'             3,
-#'             3,
-#'             4,
-#'             4)
+#' region <- c('1',
+#'             '1',
+#'             '2',
+#'             '2',
+#'             '3',
+#'             '3',
+#'             '3',
+#'             '4',
+#'             '4')
 #'
 #' tb <-
 #'   tibble::add_column(tb,
@@ -570,6 +570,11 @@
 #' USA Counties, 2018
 #'
 #' From the original dataset, some fields have been selected and renamed.
+#'
+#' Some counties appear with the same repeated name within the same state, they
+#' are the following: Baltimore, MD; Fairfax, VA; Franklin, VA; Richmond, VA;
+#' Roanoke, VA; St. Louis, MO. Since they are accessed by name (county and
+#' state), those of the same name within the state have been grouped together.
 #'
 #' @format A `sf`.
 #' @source

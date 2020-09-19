@@ -4,7 +4,7 @@
 \alias{new_geodimensional_query}
 \title{geodimensional_query S3 class}
 \usage{
-new_geodimensional_query(ms = NULL)
+new_geodimensional_query(ms = NULL, geodimension = NULL)
 }
 \value{
 A \code{geodimensional_query} object.
