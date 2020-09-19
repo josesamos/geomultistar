@@ -14,6 +14,30 @@ A \code{sf}.
 usa_counties
 }
 \description{
-From the original dataset, some fields have been selected and renamed.
+From the original dataset, some fields have been selected and renamed, and
+only includes the Mortality Reporting System counties.
+}
+\details{
+Some counties appear with the same repeated name within the same state, they
+are the following: Baltimore, MD; Richmond, VA; St. Louis, MO. Since they are
+accessed by name (county and state), those of the same name within the state
+have been grouped together.
+}
+\examples{
+
+# Read by:
+#
+# filepath <- "data/cb_2018_us_county_20m/cb_2018_us_county_20m.shp"
+# usa_counties <- st_read(filepath)  \%>\%
+#   dplyr::select(
+#     geo_id = GEOID,
+#     state_fp = STATEFP,
+#     county_fp = COUNTYFP,
+#     county = NAME
+#   )
+# states <- sf::st_drop_geometry(usa_states[, c("geo_id", "state")])
+# usa_counties <- usa_counties \%>\%
+#  dplyr::left_join(states, by = c("state_fp" = "geo_id"))
+
 }
 \keyword{datasets}

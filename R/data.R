@@ -559,7 +559,31 @@
 
 #' USA Cities, 2014
 #'
-#' From the original dataset, some fields have been selected and renamed.
+#' From the original dataset, some fields have been selected and renamed, and
+#' only includes the Mortality Reporting System cities.
+#'
+#' @examples
+#'
+#' # Read by:
+#' #
+#' # filepath <- "data/citiesx010g/citiesx010g.shp"
+#' # usa_cities <- st_read(filepath)  %>%
+#' #   dplyr::select(
+#' #     gnis_id = GNIS_ID,
+#' #     ansi_code = ANSICODE,
+#' #     city = NAME,
+#' #     state = STATE,
+#' #     state_fp = STATE_FIPS,
+#' #     county_fp = COUNTYFIPS,
+#' #     county = COUNTY,
+#' #     latitude = LATITUDE,
+#' #     longitude = LONGITUDE,
+#' #     elev_m = ELEV_IN_M
+#' #   )  %>%
+#' #   dplyr::mutate(
+#' #     county_geo_id = paste(state_fp, county_fp, sep = "", collapse = NULL),
+#' #     .after = county_fp
+#' #   )
 #'
 #' @format A `sf`.
 #' @source
@@ -569,12 +593,29 @@
 
 #' USA Counties, 2018
 #'
-#' From the original dataset, some fields have been selected and renamed.
+#' From the original dataset, some fields have been selected and renamed, and
+#' only includes the Mortality Reporting System counties.
 #'
 #' Some counties appear with the same repeated name within the same state, they
-#' are the following: Baltimore, MD; Fairfax, VA; Franklin, VA; Richmond, VA;
-#' Roanoke, VA; St. Louis, MO. Since they are accessed by name (county and
-#' state), those of the same name within the state have been grouped together.
+#' are the following: Baltimore, MD; Richmond, VA; St. Louis, MO. Since they are
+#' accessed by name (county and state), those of the same name within the state
+#' have been grouped together.
+#'
+#' @examples
+#'
+#' # Read by:
+#' #
+#' # filepath <- "data/cb_2018_us_county_20m/cb_2018_us_county_20m.shp"
+#' # usa_counties <- st_read(filepath)  %>%
+#' #   dplyr::select(
+#' #     geo_id = GEOID,
+#' #     state_fp = STATEFP,
+#' #     county_fp = COUNTYFP,
+#' #     county = NAME
+#' #   )
+#' # states <- sf::st_drop_geometry(usa_states[, c("geo_id", "state")])
+#' # usa_counties <- usa_counties %>%
+#' #  dplyr::left_join(states, by = c("state_fp" = "geo_id"))
 #'
 #' @format A `sf`.
 #' @source
@@ -584,7 +625,18 @@
 
 #' USA States, 2018
 #'
-#' From the original dataset, some fields have been selected and renamed.
+#' From the original dataset, some fields have been selected and renamed, and
+#' only includes the Mortality Reporting System states.
+#'
+#' @examples
+#'
+#' # Read by:
+#' #
+#' # filepath <- "data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp"
+#' # usa_states <- st_read(filepath)  %>%
+#' #   dplyr::select(geo_id = GEOID,
+#' #                 state = STUSPS,
+#' #                 state_name = NAME)
 #'
 #' @format A `sf`.
 #' @source
@@ -595,6 +647,15 @@
 #'
 #' From the original dataset, some fields have been selected and renamed.
 #'
+#' @examples
+#'
+#' # Read by:
+#' #
+#' # filepath <- "data/cb_2018_us_division_20m/cb_2018_us_division_20m.shp"
+#' # usa_divisions <- st_read(filepath)  %>%
+#' #   dplyr::select(geo_id = GEOID,
+#' #                 division = NAME)
+#'
 #' @format A `sf`.
 #' @source
 #'   \url{https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_20m.zip}
@@ -604,6 +665,15 @@
 #'
 #' From the original dataset, some fields have been selected and renamed.
 #'
+#' @examples
+#'
+#' # Read by:
+#' #
+#' # filepath <- "data/cb_2018_us_region_20m/cb_2018_us_region_20m.shp"
+#' # usa_regions <- st_read(filepath)  %>%
+#' #   dplyr::select(geo_id = GEOID,
+#' #                 region = NAME)
+#'
 #' @format A `sf`.
 #' @source
 #'   \url{https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_20m.zip}
@@ -612,6 +682,15 @@
 #' USA Nation, 2018
 #'
 #' From the original dataset, some fields have been selected and renamed.
+#'
+#' @examples
+#'
+#' # Read by:
+#' #
+#' # filepath <- "data/cb_2018_us_nation_20m/cb_2018_us_nation_20m.shp"
+#' # usa_nation <- st_read(filepath)  %>%
+#' #   dplyr::select(geo_id = GEOID,
+#' #                 name = NAME)
 #'
 #' @format A `sf`.
 #' @source

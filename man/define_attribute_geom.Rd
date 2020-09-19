@@ -7,32 +7,31 @@
 \usage{
 define_attribute_geom(
   gdq,
-  dimension = NULL,
   attribute = NULL,
-  sf = NULL,
-  by = NULL
+  layer = NULL,
+  by = NULL,
+  from_attribute = NULL
 )
 
 \method{define_attribute_geom}{geodimensional_query}(
   gdq,
-  dimension = NULL,
   attribute = NULL,
-  sf = NULL,
-  by = NULL
+  layer = NULL,
+  by = NULL,
+  from_attribute = NULL
 )
 }
 \arguments{
 \item{gdq}{A \code{geodimensional_query} object.}
 
-\item{dimension}{A string, dimension name. By default it considers the first
-geographic dimension.}
-
 \item{attribute}{A string, attribute name.}
 
-\item{sf}{A \code{sf} object}
+\item{layer}{A \code{sf} object}
 
 \item{by}{a vector of correspondence of attributes of the dimension with the
 \code{sf} structure.}
+
+\item{from_attribute}{A string, attribute name.}
 }
 \value{
 A \code{geodimensional_query} object.

@@ -16,4 +16,14 @@ usa_regions
 \description{
 From the original dataset, some fields have been selected and renamed.
 }
+\examples{
+
+# Read by:
+#
+# filepath <- "data/cb_2018_us_region_20m/cb_2018_us_region_20m.shp"
+# usa_regions <- st_read(filepath)  \%>\%
+#   dplyr::select(geo_id = GEOID,
+#                 region = NAME)
+
+}
 \keyword{datasets}

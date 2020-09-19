@@ -14,6 +14,31 @@ A \code{sf}.
 usa_cities
 }
 \description{
-From the original dataset, some fields have been selected and renamed.
+From the original dataset, some fields have been selected and renamed, and
+only includes the Mortality Reporting System cities.
+}
+\examples{
+
+# Read by:
+#
+# filepath <- "data/citiesx010g/citiesx010g.shp"
+# usa_cities <- st_read(filepath)  \%>\%
+#   dplyr::select(
+#     gnis_id = GNIS_ID,
+#     ansi_code = ANSICODE,
+#     city = NAME,
+#     state = STATE,
+#     state_fp = STATE_FIPS,
+#     county_fp = COUNTYFIPS,
+#     county = COUNTY,
+#     latitude = LATITUDE,
+#     longitude = LONGITUDE,
+#     elev_m = ELEV_IN_M
+#   )  \%>\%
+#   dplyr::mutate(
+#     county_geo_id = paste(state_fp, county_fp, sep = "", collapse = NULL),
+#     .after = county_fp
+#   )
+
 }
 \keyword{datasets}
