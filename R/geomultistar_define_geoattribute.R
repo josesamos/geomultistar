@@ -29,7 +29,7 @@
 #' library(tidyr)
 #' library(sf) # It has to be included even if it is not used directly.
 #'
-#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
@@ -94,6 +94,7 @@ define_geoattribute.geomultistar <-
 #'
 #' @importFrom magrittr %>%
 #' @name %>%
+#' @importFrom rlang :=
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
 #' @param attribute A string, attribute name.
@@ -148,6 +149,7 @@ define_geoattribute_from_attribute <- function(gms,
 #'
 #' @importFrom magrittr %>%
 #' @name %>%
+#' @importFrom rlang :=
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
 #' @param attribute A string, attribute name.

@@ -26,9 +26,10 @@
 #'
 #' @examples
 #' library(tidyr)
+#' library(starschemar)
 #' library(sf) # It has to be included even if it is not used directly.
 #'
-#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
@@ -81,10 +82,10 @@ run_geoquery.dimensional_query <-
            attribute = NULL) {
 
     # run_query
-    dq <- define_selected_facts(dq)
-    dq <- define_selected_dimensions(dq)
-    dq <- filter_selected_instances(dq)
-    dq <- delete_unused_foreign_keys(dq)
+    dq <- starschemar:::define_selected_facts(dq)
+    dq <- starschemar:::define_selected_dimensions(dq)
+    dq <- starschemar:::filter_selected_instances(dq)
+    dq <- starschemar:::delete_unused_foreign_keys(dq)
     ###########
 
     dq <- filter_geodimension(dq)
@@ -122,15 +123,15 @@ run_geoquery.dimensional_query <-
     dq$output$geodimension <- NULL
 
     # run_query
-    dq <- remove_duplicate_dimension_rows(dq)
-    dq <- group_facts(dq)
+    dq <- starschemar:::remove_duplicate_dimension_rows(dq)
+    dq <- starschemar:::group_facts(dq)
     if (unify_by_grain) {
-      dq <- unify_facts_by_grain (dq)
+      dq <- starschemar:::unify_facts_by_grain (dq)
     }
     class(dq$output) <- class(dq$input)
     ###########
 
-    ft <- multistar_as_flat_table(dq$output, fact)
+    ft <- starschemar::multistar_as_flat_table(dq$output, fact)
     columns <- names(ft)
 
     if (length(names(geodim)) == 2) {

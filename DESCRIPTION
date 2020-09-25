@@ -25,7 +25,9 @@ Imports:
     starschemar,
     generics,
     purrr,
-    sf
+    sf,
+    magrittr,
+    rlang
 Suggests: 
     testthat,
     knitr,

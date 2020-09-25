@@ -17,7 +17,7 @@
 #' library(tidyr)
 #' library(sf) # It has to be included even if it is not used directly.
 #'
-#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
