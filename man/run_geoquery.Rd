@@ -94,6 +94,7 @@ sf <- gdq \%>\%
 Other geo functions: 
 \code{\link{define_geoattribute}()},
 \code{\link{geomultistar}()},
-\code{\link{get_empty_geoinstances}()}
+\code{\link{get_empty_geoinstances}()},
+\code{\link{multistar}()}
 }
 \concept{geo functions}

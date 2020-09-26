@@ -46,7 +46,7 @@ new_geomultistar <-
 
 #' `geomultistar` S3 class
 #'
-#' An `geomultistar` object is created. Dimensions that contain geographic
+#' A `geomultistar` object is created. Dimensions that contain geographic
 #' information are indicated.
 #'
 #' @inheritParams new_geomultistar

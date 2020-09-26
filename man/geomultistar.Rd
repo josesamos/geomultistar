@@ -15,7 +15,7 @@ geomultistar(ms = NULL, geodimension = NULL)
 A \code{geomultistar} object.
 }
 \description{
-An \code{geomultistar} object is created. Dimensions that contain geographic
+A \code{geomultistar} object is created. Dimensions that contain geographic
 information are indicated.
 }
 \examples{
@@ -34,6 +34,7 @@ gms <- geomultistar(ms = ms_mrs, geodimension = "where")
 Other geo functions: 
 \code{\link{define_geoattribute}()},
 \code{\link{get_empty_geoinstances}()},
+\code{\link{multistar}()},
 \code{\link{run_geoquery}()}
 }
 \concept{geo functions}

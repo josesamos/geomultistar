@@ -4,7 +4,8 @@ context("test define_geoattribute")
 library(sf) # It has to be included even if it is not used directly.
 
 test_that("define_geoattribute works", {
-  gms <- geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
+  gms <-
+    geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
   gms <-
     define_geoattribute(
       gms,
@@ -25,18 +26,21 @@ test_that("define_geoattribute works", {
             structure(c(NA_real_, NA_real_), class = c("XY", "POINT", "sfg")),
             structure(c(-73.2048348,
                         41.1670412), class = c("XY", "POINT", "sfg")),
-            structure(c(NA_real_,
-                        NA_real_), class = c("XY", "POINT", "sfg"))
+            structure(
+              c(-122.4442906,
+                47.2528769000001),
+              class = c("XY", "POINT", "sfg")
+            )
           ),
           class = c("sfc_POINT",
                     "sfc"),
           precision = 0,
           bbox = structure(
             c(
-              xmin = -73.2048348,
+              xmin = -122.4442906,
               ymin = 41.1670412,
               xmax = -73.2048348,
-              ymax = 41.1670412
+              ymax = 47.2528769000001
             ),
             class = "bbox"
           ),
@@ -44,10 +48,10 @@ test_that("define_geoattribute works", {
             list(input = "NAD83", wkt = "GEOGCRS[\"NAD83\",\n    DATUM[\"North American Datum 1983\",\n        ELLIPSOID[\"GRS 1980\",6378137,298.257222101,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"latitude\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"longitude\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    ID[\"EPSG\",4269]]"),
             class = "crs"
           ),
-          n_empty = 2L
+          n_empty = 1L
         )
       ),
-      row.names = c(NA,-3L),
+      row.names = c(NA, -3L),
       name = "where",
       type = "conformed",
       class = c("sf", "tbl_df",
@@ -64,11 +68,9 @@ test_that("define_geoattribute works", {
   )
 
   gms <-
-    define_geoattribute(
-      gms,
-      attribute = "region",
-      from_attribute = "city",
-    )
+    define_geoattribute(gms,
+                        attribute = "region",
+                        from_attribute = "city",)
 
   expect_equal(
     gms$geodimension$where$region,
@@ -82,17 +84,20 @@ test_that("define_geoattribute works", {
                                                             "sfg")),
             structure(c(-73.2048348, 41.1670412), class = c("XY",
                                                             "POINT", "sfg")),
-            structure(c(NA_real_, NA_real_), class = c("XY",
-                                                       "POINT", "sfg"))
+            structure(
+              c(-122.4442906, 47.2528769000001),
+              class = c("XY", "POINT", "sfg")
+            )
           ),
-          class = c("sfc_POINT", "sfc"),
+          class = c("sfc_POINT",
+                    "sfc"),
           precision = 0,
           bbox = structure(
             c(
-              xmin = -73.2048348,
+              xmin = -122.4442906,
               ymin = 41.1670412,
               xmax = -73.2048348,
-              ymax = 41.1670412
+              ymax = 47.2528769000001
             ),
             class = "bbox"
           ),
@@ -100,10 +105,10 @@ test_that("define_geoattribute works", {
             list(input = "NAD83", wkt = "GEOGCRS[\"NAD83\",\n    DATUM[\"North American Datum 1983\",\n        ELLIPSOID[\"GRS 1980\",6378137,298.257222101,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"latitude\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"longitude\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    ID[\"EPSG\",4269]]"),
             class = "crs"
           ),
-          n_empty = 1L
+          n_empty = 0L
         )
       ),
-      row.names = c(NA,-3L),
+      row.names = c(NA, -3L),
       name = "where",
       type = "conformed",
       class = c("sf", "tbl_df",
@@ -118,21 +123,17 @@ test_that("define_geoattribute works", {
       )
     )
   )
+  gms <-
+    define_geoattribute(gms,
+                        attribute = "all_where",
+                        from_layer = usa_nation,)
+  expect_equal(class(gms$geodimension$where$all_where$geometry),
+               c("sfc_MULTIPOLYGON", "sfc"))
 
   gms <-
-    define_geoattribute(
-      gms,
-      attribute = "all_where",
-      from_layer = usa_nation,
-    )
-  expect_equal(class(gms$geodimension$where$all_where$geometry), c("sfc_MULTIPOLYGON", "sfc"))
-
-  gms <-
-    define_geoattribute(
-      gms,
-      attribute = "all_where",
-      from_attribute = "region",
-    )
+    define_geoattribute(gms,
+                        attribute = "all_where",
+                        from_attribute = "region",)
   expect_equal(
     gms$geodimension$where$all_where,
     structure(
@@ -140,18 +141,19 @@ test_that("define_geoattribute works", {
         all_where = 0,
         geometry = structure(
           list(structure(
-            c(-73.2048348,
-              41.1670412), class = c("XY", "POINT", "sfg")
+            c(-122.4442906,-73.2048348, 47.2528769000001, 41.1670412),
+            .Dim = c(2L, 2L),
+            class = c("XY",
+                      "MULTIPOINT", "sfg")
           )),
-          class = c("sfc_POINT",
-                    "sfc"),
+          class = c("sfc_MULTIPOINT", "sfc"),
           precision = 0,
           bbox = structure(
             c(
-              xmin = -73.2048348,
+              xmin = -122.4442906,
               ymin = 41.1670412,
               xmax = -73.2048348,
-              ymax = 41.1670412
+              ymax = 47.2528769000001
             ),
             class = "bbox"
           ),

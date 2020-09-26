@@ -87,6 +87,7 @@ gms <- gms \%>\%
 Other geo functions: 
 \code{\link{geomultistar}()},
 \code{\link{get_empty_geoinstances}()},
+\code{\link{multistar}()},
 \code{\link{run_geoquery}()}
 }
 \concept{geo functions}

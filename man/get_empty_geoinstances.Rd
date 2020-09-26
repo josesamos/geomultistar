@@ -44,6 +44,7 @@ gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
 Other geo functions: 
 \code{\link{define_geoattribute}()},
 \code{\link{geomultistar}()},
+\code{\link{multistar}()},
 \code{\link{run_geoquery}()}
 }
 \concept{geo functions}
