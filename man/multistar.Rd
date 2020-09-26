@@ -4,12 +4,7 @@
 \alias{multistar}
 \title{\code{multistar} S3 class}
 \usage{
-multistar(fact_name = NULL, fact_table = NULL)
-}
-\arguments{
-\item{fact_name}{A string, name of fact table.}
-
-\item{fact_table}{A \code{tibble}, fact table.}
+multistar()
 }
 \value{
 A \code{multistar} object.

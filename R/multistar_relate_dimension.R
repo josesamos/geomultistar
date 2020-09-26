@@ -48,5 +48,8 @@ relate_dimension.multistar <- function(ms,
   attr_names[which(attr_names == fact_key)] <- key
   names(ms$fact[[fact_name]]) <- attr_names
 
+  attr(ms$fact[[fact_name]], "foreign_keys") <-
+    c(attr(ms$fact[[fact_name]], "foreign_keys"), key)
+
   ms
 }

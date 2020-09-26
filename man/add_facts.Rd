@@ -5,9 +5,23 @@
 \alias{add_facts.multistar}
 \title{Add a fact table to a \code{multistar}}
 \usage{
-add_facts(ms, fact_name = NULL, fact_table = NULL)
+add_facts(
+  ms,
+  fact_name = NULL,
+  fact_table = NULL,
+  measures = NULL,
+  agg_functions = NULL,
+  nrow_agg = "nrow_agg"
+)
 
-\method{add_facts}{multistar}(ms, fact_name = NULL, fact_table = NULL)
+\method{add_facts}{multistar}(
+  ms,
+  fact_name = NULL,
+  fact_table = NULL,
+  measures = NULL,
+  agg_functions = NULL,
+  nrow_agg = "nrow_agg"
+)
 }
 \arguments{
 \item{ms}{A \code{multistar} object.}
@@ -15,6 +29,14 @@ add_facts(ms, fact_name = NULL, fact_table = NULL)
 \item{fact_name}{A string, name of fact table.}
 
 \item{fact_table}{A \code{tibble}, fact table.}
+
+\item{measures}{A vector of measure names.}
+
+\item{agg_functions}{A vector of aggregation function names. If none is
+indicated, the default is SUM. Additionally they can be MAX or MIN.}
+
+\item{nrow_agg}{A string, measurement name for the number of rows aggregated.
+If it does not exist, it is added.}
 }
 \value{
 A \code{tibble}.
