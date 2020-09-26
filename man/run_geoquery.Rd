@@ -74,14 +74,14 @@ gdq <- dimensional_query(gms) \%>\%
   select_dimension(name = "where",
                    attributes = c("state", "city")) \%>\%
   select_dimension(name = "when",
-                   attributes = c("year", "week")) \%>\%
+                   attributes = c("when_happened_year", "when_happened_week")) \%>\%
   select_fact(
     name = "mrs_age",
-    measures = c("deaths")
+    measures = c("n_deaths")
   ) \%>\%
   select_fact(name = "mrs_cause",
               measures = c("pneumonia_and_influenza_deaths", "other_deaths")) \%>\%
-  filter_dimension(name = "when", week <= "03") \%>\%
+  filter_dimension(name = "when", when_happened_week <= "03") \%>\%
   filter_dimension(name = "where", state == "MA")
 
 sf <- gdq \%>\%
