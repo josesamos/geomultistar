@@ -27,10 +27,9 @@ library(starschemar)
 \seealso{
 
 
-Other geo functions: 
-\code{\link{define_geoattribute}()},
-\code{\link{geomultistar}()},
-\code{\link{get_empty_geoinstances}()},
-\code{\link{run_geoquery}()}
+Other multistar functions: 
+\code{\link{add_dimension}()},
+\code{\link{add_facts}()},
+\code{\link{relate_dimension}()}
 }
-\concept{geo functions}
+\concept{multistar functions}

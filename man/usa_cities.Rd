@@ -28,16 +28,10 @@ only includes the Mortality Reporting System cities.
 #     ansi_code = ANSICODE,
 #     city = NAME,
 #     state = STATE,
-#     state_fp = STATE_FIPS,
-#     county_fp = COUNTYFIPS,
 #     county = COUNTY,
 #     latitude = LATITUDE,
 #     longitude = LONGITUDE,
 #     elev_m = ELEV_IN_M
-#   )  \%>\%
-#   dplyr::mutate(
-#     county_geo_id = paste(state_fp, county_fp, sep = "", collapse = NULL),
-#     .after = county_fp
 #   )
 
 }

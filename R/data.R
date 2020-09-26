@@ -15,16 +15,10 @@
 #' #     ansi_code = ANSICODE,
 #' #     city = NAME,
 #' #     state = STATE,
-#' #     state_fp = STATE_FIPS,
-#' #     county_fp = COUNTYFIPS,
 #' #     county = COUNTY,
 #' #     latitude = LATITUDE,
 #' #     longitude = LONGITUDE,
 #' #     elev_m = ELEV_IN_M
-#' #   )  %>%
-#' #   dplyr::mutate(
-#' #     county_geo_id = paste(state_fp, county_fp, sep = "", collapse = NULL),
-#' #     .after = county_fp
 #' #   )
 #'
 #' @format A `sf`.
@@ -162,4 +156,57 @@
 #' @source
 #'   \url{https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london}
 "uk_london_boroughs"
+
+#' Dimension *when*
+#'
+#' *When* dimension table of the Mortality Reporting System. Defined from
+#' `ms_mrs`. The primary key has been renamed and its type has been changed. The
+#' other attributes have also been renamed.
+#'
+#' @format A `tibble`.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"mrs_when"
+
+#' Dimension *where*
+#'
+#' *Where* dimension table of the Mortality Reporting System. Defined from
+#' `ms_mrs`. The primary key has been renamed.
+#'
+#' @format A `tibble`.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"mrs_where"
+
+#' Dimension *who*
+#'
+#' *Who* dimension table of the Mortality Reporting System. Defined from
+#' `ms_mrs`. The primary key has been renamed.
+#'
+#' @format A `tibble`.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"mrs_who"
+
+#' Fact *age*
+#'
+#' Fact *age* table of the Mortality Reporting System. Defined from `ms_mrs`.
+#' Foreign keys have been renamed, only a *when* dimension has been considered,
+#' the type for the *when* dimension has been changed.
+#'
+#' @format A `tibble`.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"mrs_fact_age"
+
+#' Fact *cause*
+#'
+#' Fact *cause* table of the Mortality Reporting System. Defined from `ms_mrs`.
+#' Foreign keys have been renamed, only a *when* dimension has been considered,
+#' the type for the *when* dimension has been changed.
+#'
+#' @format A `tibble`.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"mrs_fact_cause"
 

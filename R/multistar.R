@@ -11,7 +11,22 @@
 new_multistar <-
   function(fact_name = NULL,
            fact_table = NULL) {
-    star$fact[[fact_name]] <- fact_table
+    star <-
+      list(
+        fact = vector("list", length = 0),
+        dimension =  vector("list", length = 0)
+      )
+    stopifnot(!is.null(fact_name))
+    star$fact[[fact_name]] <-
+      structure(
+        fact_table,
+        class = unique(append(class(fact_table), "fact_table")),
+        name = fact_name,
+        foreign_keys = NULL,
+        measures = NULL,
+        agg_functions = NULL,
+        nrow_agg = NULL
+      )
 
     structure(star,
               class = "multistar")
@@ -26,7 +41,7 @@ new_multistar <-
 #'
 #' @return A `multistar` object.
 #'
-#' @family geo functions
+#' @family multistar functions
 #' @seealso
 #'
 #' @examples
