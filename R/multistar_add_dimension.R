@@ -44,6 +44,7 @@ add_dimension.multistar <- function(ms,
                                     key_as_data = FALSE) {
   stopifnot(!is.null(dimension_name))
   stopifnot(!(dimension_name %in% names(ms$dimension)))
+  stopifnot(tibble::is_tibble(dimension_table))
   stopifnot(!is.null(dimension_key))
   stopifnot(dimension_key %in% names(dimension_table))
   stopifnot(length(dimension_table[[dimension_key]]) == length(unique(dimension_table[[dimension_key]])))

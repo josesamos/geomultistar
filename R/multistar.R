@@ -19,8 +19,7 @@ new_multistar <-
 
 #' `multistar` S3 class
 #'
-#' Given a name for the facts and the fact table, a `multistar` object is
-#' created.
+#' Creates an empty `multistar` object.
 #'
 #' @return A `multistar` object.
 #'
@@ -28,9 +27,8 @@ new_multistar <-
 #' @seealso
 #'
 #' @examples
-#' library(tidyr)
-#' library(starschemar)
 #'
+#' ms <- multistar()
 #'
 #' @export
 multistar <- function() {

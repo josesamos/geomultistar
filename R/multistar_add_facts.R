@@ -42,7 +42,7 @@ add_facts.multistar <- function(ms,
                                 nrow_agg = "nrow_agg") {
   stopifnot(!is.null(fact_name))
   stopifnot(!(fact_name %in% names(ms$fact)))
-
+  stopifnot(tibble::is_tibble(fact_table))
   if (is.null(agg_functions)) {
     agg_functions <-  rep("SUM", length(measures))
   }
@@ -57,6 +57,13 @@ add_facts.multistar <- function(ms,
   }
   if (!(nrow_agg %in% attributes_defined)) {
     fact_table <- dplyr::mutate(fact_table, !!nrow_agg := as.integer(1))
+  }
+
+  measures_type <-
+    dplyr::summarise_all(fact_table[, c(measures, nrow_agg)], class)
+  for (n in seq_along(measures_type)) {
+    type <- measures_type[[n]][1]
+    stopifnot(type %in% c("integer", "double", "integer64", "numeric"))
   }
 
   ms$fact[[fact_name]] <-

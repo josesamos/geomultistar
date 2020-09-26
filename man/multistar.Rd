@@ -10,13 +10,11 @@ multistar()
 A \code{multistar} object.
 }
 \description{
-Given a name for the facts and the fact table, a \code{multistar} object is
-created.
+Creates an empty \code{multistar} object.
 }
 \examples{
-library(tidyr)
-library(starschemar)
 
+ms <- multistar()
 
 }
 \seealso{
