@@ -16,8 +16,8 @@ Description: Multidimensional systems allow complex queries to be
     dimensions, so that the results of multidimensional queries 
     can be obtained directly as vector layers. The multidimensional 
     structures on which we can define the queries can be created 
-    from a flat table with the starschemar package or imported 
-    directly using functions from this package.
+    from a flat table with starschemar package or imported directly 
+    using functions from this package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-GB
