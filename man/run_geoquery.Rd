@@ -41,20 +41,22 @@ the geographic data associated with it to get a geographic data layer as the
 result.
 }
 \details{
-As an option, we can indicate if we do not want to unify the facts in the
-case of having the same grain.
+In the case of having several fact tables, as an option, we can indicate if
+we do not want to unify the facts in the case of having the same grain.
 
 If the result only has one fact table, it is not necessary to provide its
 name. Nor is it necessary to indicate the name of the geographic dimension if
-there is only one available. If no attribute is specified, the one
-corresponding to the \emph{all} level is considered.
+there is only one available.
+
+If no attribute is specified, the geographic attribute of the result with
+finer granularity is selected.
 }
 \examples{
 library(tidyr)
 library(starschemar)
-library(sf) # It has to be included even if it is not used directly.
+library(sf)
 
-gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
+gms <- geomultistar(ms = ms_mrs, geodimension = "where") \%>\%
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,
@@ -85,7 +87,7 @@ gdq <- dimensional_query(gms) \%>\%
   filter_dimension(name = "where", state == "MA")
 
 sf <- gdq \%>\%
-  run_geoquery(attribute = "city")
+  run_geoquery()
 
 }
 \seealso{

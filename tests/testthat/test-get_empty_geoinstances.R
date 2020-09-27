@@ -55,8 +55,9 @@ test_that("get_empty_geoinstances works", {
         .Label = c("constant", "aggregate", "identity"),
         class = "factor"
       ),
-      class = c("sf", "tbl_df", "tbl", "data.frame",
-                "dimension_table")
+      n_instances = 3L,
+      class = c("sf", "tbl_df",
+                "tbl", "data.frame", "dimension_table")
     )
   )
 

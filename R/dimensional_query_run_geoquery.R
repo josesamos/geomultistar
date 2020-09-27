@@ -5,13 +5,15 @@
 #' the geographic data associated with it to get a geographic data layer as the
 #' result.
 #'
-#' As an option, we can indicate if we do not want to unify the facts in the
-#' case of having the same grain.
+#' In the case of having several fact tables, as an option, we can indicate if
+#' we do not want to unify the facts in the case of having the same grain.
 #'
 #' If the result only has one fact table, it is not necessary to provide its
 #' name. Nor is it necessary to indicate the name of the geographic dimension if
-#' there is only one available. If no attribute is specified, the one
-#' corresponding to the *all* level is considered.
+#' there is only one available.
+#'
+#' If no attribute is specified, the geographic attribute of the result with
+#' finer granularity is selected.
 #'
 #' @param dq A `dimensional_query` object.
 #' @param unify_by_grain A boolean, unify facts with the same grain.
@@ -27,9 +29,9 @@
 #' @examples
 #' library(tidyr)
 #' library(starschemar)
-#' library(sf) # It has to be included even if it is not used directly.
+#' library(sf)
 #'
-#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
@@ -60,7 +62,7 @@
 #'   filter_dimension(name = "where", state == "MA")
 #'
 #' sf <- gdq %>%
-#'   run_geoquery(attribute = "city")
+#'   run_geoquery()
 #'
 #' @export
 run_geoquery <-
@@ -93,33 +95,14 @@ run_geoquery.dimensional_query <-
     if (is.null(dimension)) {
       dimension <- names(dq$output$geodimension)[1]
     }
-    all <- sprintf("all_%s", dimension)
     if (is.null(attribute)) {
-      attribute <- all
+      attribute <- default_attribute(dq, dimension)
     }
-    stopifnot(attribute %in% names(dq$output$geodimension[[dimension]]))
+    is_geographic_attribute <- attribute %in% names(dq$output$geodimension[[dimension]])
+    stopifnot(is_geographic_attribute)
 
-    if (is.null(dq$output$dimension[[dimension]])) {
-      # all, geographic dimension not selected in query
-      stopifnot(attribute == all)
-      geodim <- dq$output$geodimension[[dimension]][[attribute]]
-    }
-    else {
-      columns <- names(dq$output$dimension[[dimension]])
-      if (attribute == all) {
-        dq$output$dimension[[dimension]][[attribute]] <- 0
-      }
-      key <-
-        names(dq$output$geodimension[[dimension]][[attribute]])[1]
-      geodim <-
-        dplyr::left_join(dq$output$dimension[[dimension]], dq$output$geodimension[[dimension]][[attribute]][, key], by = key) %>%
-        sf::st_as_sf() %>%
-        dplyr::select(tidyselect::all_of(columns))
-      if (attribute == all) {
-        dq$output$dimension[[dimension]] <-
-          dq$output$dimension[[dimension]][, 1:(length(names(dq$output$dimension[[dimension]])) - 1)]
-      }
-    }
+    dq <- specify_geodimension(dq, dimension, attribute)
+    geodim <- dq$output$geodimension
     dq$output$geodimension <- NULL
 
     # run_query
@@ -136,7 +119,7 @@ run_geoquery.dimensional_query <-
 
     if (length(names(geodim)) == 2) {
       # all, geographic dimension not selected in query
-      ft[[attribute]] <- 0
+      ft[[attribute]] <- 0 # fk to join to the layer
       ft <- dplyr::left_join(ft, geodim, by = attribute)
     } else {
       ft <-
@@ -151,7 +134,81 @@ run_geoquery.dimensional_query <-
     ft
   }
 
+#' Default attribute
+#'
+#' Get the attribute with the most instances, if there is more than one.
+#'
+#' @param dq A `dimensional_query` object.
+#' @param dimension A string, name of the geographic dimension.
+#'
+#' @return A string, name of the attribute.
+#'
+#' @keywords internal
+default_attribute <- function(dq, dimension) {
+  attribute  <- sprintf("all_%s", dimension)
+  if (!is.null(dq$output$dimension[[dimension]])) {
+    candidates <- names(dq$output$dimension[[dimension]])[-1]
+    attribute <- candidates[1]
+    geographic_attribute_with_layer <-
+      !is.null(dq$output$geodimension[[dimension]][[attribute]])
+    stopifnot(geographic_attribute_with_layer)
+    n_instances <-
+      attr(dq$output$geodimension[[dimension]][[attribute]], "n_instances")
+    if (length(candidates) > 1) {
+      for (candidate in candidates) {
+        geographic_attribute_with_layer <-
+          !is.null(dq$output$geodimension[[dimension]][[candidate]])
+        stopifnot(geographic_attribute_with_layer)
+        ni <-
+          attr(dq$output$geodimension[[dimension]][[candidate]], "n_instances")
+        if (ni > n_instances) {
+          attribute <- candidate
+          n_instances <- ni
+        }
+      }
+    }
+  }
+  attribute
+}
 
+
+#' Default attribute
+#'
+#' Get the attribute with the most instances, if there is more than one.
+#'
+#' @param dq A `dimensional_query` object.
+#' @param dimension A string, name of the geographic dimension.
+#' @param attribute A string, name of the selected geographic attribute.
+#'
+#' @return A string, name of the attribute.
+#'
+#' @keywords internal
+specify_geodimension <- function(dq, dimension, attribute) {
+  all <- sprintf("all_%s", dimension)
+  if (is.null(dq$output$dimension[[dimension]])) {
+    # all, geographic dimension not selected in query
+    stopifnot(attribute == all)
+    geodim <- dq$output$geodimension[[dimension]][[all]]
+  }
+  else {
+    columns <- names(dq$output$dimension[[dimension]])
+    if (attribute == all) {
+      dq$output$dimension[[dimension]][[all]] <- 0 # fk to join to the layer
+    }
+    key <-
+      names(dq$output$geodimension[[dimension]][[attribute]])[1]
+    geodim <-
+      dplyr::left_join(dq$output$dimension[[dimension]], dq$output$geodimension[[dimension]][[attribute]][, key], by = key) %>%
+      sf::st_as_sf() %>%
+      dplyr::select(tidyselect::all_of(columns))
+    if (attribute == all) { # drop column all used to join
+      dq$output$dimension[[dimension]] <-
+        dq$output$dimension[[dimension]][, 1:(length(names(dq$output$dimension[[dimension]])) - 1)]
+    }
+  }
+  dq$output$geodimension <- geodim
+  dq
+}
 
 #' Filter geodimension
 #'

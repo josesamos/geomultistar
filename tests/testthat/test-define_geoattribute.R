@@ -51,7 +51,7 @@ test_that("define_geoattribute works", {
           n_empty = 1L
         )
       ),
-      row.names = c(NA, -3L),
+      row.names = c(NA,-3L),
       name = "where",
       type = "conformed",
       class = c("sf", "tbl_df",
@@ -63,7 +63,8 @@ test_that("define_geoattribute works", {
         class = "factor",
         .Label = c("constant",
                    "aggregate", "identity")
-      )
+      ),
+      n_instances = 3L
     )
   )
 
@@ -108,7 +109,7 @@ test_that("define_geoattribute works", {
           n_empty = 0L
         )
       ),
-      row.names = c(NA, -3L),
+      row.names = c(NA,-3L),
       name = "where",
       type = "conformed",
       class = c("sf", "tbl_df",
@@ -120,15 +121,19 @@ test_that("define_geoattribute works", {
         class = "factor",
         .Label = c("constant",
                    "aggregate", "identity")
-      )
+      ),
+      n_instances = 2L
     )
   )
+
   gms <-
     define_geoattribute(gms,
                         attribute = "all_where",
                         from_layer = usa_nation,)
   expect_equal(class(gms$geodimension$where$all_where$geometry),
                c("sfc_MULTIPOLYGON", "sfc"))
+  expect_equal(attr(gms$geodimension$where$all_where, "n_instances"),
+               1)
 
   gms <-
     define_geoattribute(gms,
@@ -172,7 +177,8 @@ test_that("define_geoattribute works", {
         class = "factor",
         .Label = c("constant",
                    "aggregate", "identity")
-      )
+      ),
+      n_instances = 1
     )
   )
 })

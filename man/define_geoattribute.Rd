@@ -28,7 +28,7 @@ define_geoattribute(
 
 \item{dimension}{A string, dimension name.}
 
-\item{attribute}{A string, attribute name.}
+\item{attribute}{A vector, attribute names.}
 
 \item{from_layer}{A \code{sf} object.}
 
@@ -63,8 +63,16 @@ gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
     from_layer = usa_cities,
     by = c("city" = "city", "state" = "state")
   ) \%>\%
-  define_geoattribute(attribute = "region",
+  define_geoattribute(attribute = c("region", "all_where"),
                       from_attribute = "city")
+
+gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
+  define_geoattribute(
+    attribute = "city",
+    from_layer = usa_cities,
+    by = c("city" = "city", "state" = "state")
+  ) \%>\%
+  define_geoattribute(from_attribute = "city")
 
 # 1
 gms <- gms \%>\%
