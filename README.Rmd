@@ -35,6 +35,21 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("josesamos/geomultistar")
 ```
+
+Multidimensional Queries Enriched with Geographic Data
+
+Multidimensional systems allow complex queries to be 
+    carried out in an easy way. The geographical dimension, 
+    together with the temporal dimension, plays a fundamental 
+    role in multidimensional systems. Through this package, vector 
+    layers can be associated to the attributes of geographic 
+    dimensions, so that the results of multidimensional queries 
+    can be obtained directly as vector layers. The multidimensional 
+    structures on which we can define the queries can be created 
+    from a flat table with the starschemar package or imported 
+    directly using functions from this package.
+
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
