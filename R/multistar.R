@@ -19,7 +19,8 @@ new_multistar <-
 
 #' `multistar` S3 class
 #'
-#' Creates an empty `multistar` object.
+#' Creates an empty `multistar` object that allows you to import fact and
+#' dimension tables.
 #'
 #' @return A `multistar` object.
 #'

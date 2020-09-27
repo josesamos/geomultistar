@@ -42,14 +42,62 @@ add_dimension(
 dimension accessible in queries?}
 }
 \value{
-A \code{tibble}.
+A \code{multistar}.
 }
 \description{
-Add a dimension table to a \code{multistar}
+To add a dimension table to a \code{multistar} object, we must indicate the name
+that we give to the dimension, the \code{tibble} that contains the data and the
+name of the attribute corresponding to the table primary key.
+}
+\details{
+We cannot add a dimension without defining a correspondence with one of the
+\code{multistar}'s fact tables. We have to define the name of the fact table and
+the name of its foreign key. The referential integrity of the instances of
+the facts is checked.
+
+The attribute that is used as the primary key will no longer be accessible
+for queries (its function is considered to be exclusively related to facts).
+If you want to use it for queries, it must be explicitly indicated by the
+boolean parameter \code{key_as_data}.
 }
 \examples{
 library(tidyr)
 
+ms <- multistar() \%>\%
+  add_facts(
+    fact_name = "mrs_age",
+    fact_table = mrs_fact_age,
+    measures = "n_deaths",
+    nrow_agg = "count"
+  ) \%>\%
+  add_facts(
+    fact_name = "mrs_cause",
+    fact_table = mrs_fact_cause,
+    measures = c("pneumonia_and_influenza_deaths", "other_deaths"),
+    nrow_agg = "nrow_agg"
+  ) \%>\%
+  add_dimension(
+    dimension_name = "where",
+    dimension_table = mrs_where,
+    dimension_key = "where_pk",
+    fact_name = "mrs_age",
+    fact_key = "where_fk"
+  ) \%>\%
+  add_dimension(
+    dimension_name = "when",
+    dimension_table = mrs_when,
+    dimension_key = "when_pk",
+    fact_name = "mrs_age",
+    fact_key = "when_fk",
+    key_as_data = TRUE
+  ) \%>\%
+  add_dimension(
+    dimension_name = "who",
+    dimension_table = mrs_who,
+    dimension_key = "who_pk",
+    fact_name = "mrs_age",
+    fact_key = "who_fk"
+  )
 
 }
 \seealso{

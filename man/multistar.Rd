@@ -10,7 +10,8 @@ multistar()
 A \code{multistar} object.
 }
 \description{
-Creates an empty \code{multistar} object.
+Creates an empty \code{multistar} object that allows you to import fact and
+dimension tables.
 }
 \examples{
 

@@ -1,16 +1,23 @@
 
-#' Define geographic attribute
+#' Define geographic attributes
 #'
-#' Defines a geographic attribute in two possible ways: Associates the instances
-#' of an attribute of the geographic dimension with the instances of a
+#' Defines a geographic attributes in two possible ways: Associates the
+#' instances of attributes of the geographic dimension with the instances of a
 #' geographic layer or defines it from the geometry of another previously
-#' defined geographic attribute.
+#' defined geographic attribute. Multiple attributes can be specified in the
+#' `attribute` parameter.
 #'
-#' If defined from a layer, additionally the attributes used for the join
-#' between the tables must be indicated.
+#' If defined from a layer (`from_layer` parameter), additionally the attributes
+#' used for the join between the tables (dimension and layer tables) must be
+#' indicated (`by` parameter).
 #'
 #' If defined from another attribute, it should have a finer granularity, to
 #' obtain the result by grouping its instances.
+#'
+#' If no value is indicated in the `attribute` parameter, it is defined for all
+#' those attributes of the dimension that do not have any previous definition,
+#' they are obtained from the attribute indicated in the `from_attribute`
+#' parameter.
 #'
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
@@ -27,38 +34,26 @@
 #'
 #' @examples
 #' library(tidyr)
-#' library(sf) # It has to be included even if it is not used directly.
+#' library(starschemar)
+#' library(sf)
 #'
-#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
 #'     by = c("city" = "city", "state" = "state")
-#'   ) %>%
+#'   )
+#'
+#' gms <- gms %>%
 #'   define_geoattribute(attribute = c("region", "all_where"),
 #'                       from_attribute = "city")
 #'
-#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
-#'   define_geoattribute(
-#'     attribute = "city",
-#'     from_layer = usa_cities,
-#'     by = c("city" = "city", "state" = "state")
-#'   ) %>%
+#' gms <- gms %>%
 #'   define_geoattribute(from_attribute = "city")
 #'
-#' # 1
-#' gms <- gms %>%
-#'   define_geoattribute(attribute = "all_where",
-#'                       from_attribute = "region")
-#' # 2
-#' gms <- gms %>%
-#'   define_geoattribute(attribute = "all_where",
-#'                       from_attribute = "city")
-#' # 3
 #' gms <- gms %>%
 #'   define_geoattribute(attribute = "all_where",
 #'                       from_layer = usa_nation)
-#'
 #'
 #' @export
 define_geoattribute <- function(gms,
@@ -83,8 +78,14 @@ define_geoattribute.geomultistar <-
     if (is.null(dimension)) {
       dimension <- names(gms$geodimension)[1]
     }
-    stopifnot(attribute %in% names(gms$geodimension[[dimension]]))
-    if (is.null(attribute)) { # default
+    is_geographic_dimension <-
+      dimension %in% names(gms$geodimension)
+    stopifnot(is_geographic_dimension)
+    is_geographic_attribute <-
+      attribute %in% names(gms$geodimension[[dimension]])
+    stopifnot(is_geographic_attribute)
+    if (is.null(attribute)) {
+      # default
       stopifnot(!is.null(from_attribute))
       for (attribute in names(gms$geodimension[[dimension]])) {
         if (is.null(gms$geodimension[[dimension]][[attribute]])) {
@@ -128,7 +129,8 @@ define_geoattribute_from_attribute <- function(gms,
                                                attribute = NULL,
                                                from_attribute = NULL) {
   stopifnot(!is.null(from_attribute))
-  stopifnot(from_attribute %in% names(gms$geodimension[[dimension]]))
+  is_geographic_from_attribute <- from_attribute %in% names(gms$geodimension[[dimension]])
+  stopifnot(is_geographic_from_attribute)
   geom <- gms$geodimension[[dimension]][[from_attribute]]
   from_attribute_geom_is_defined <- !is.null(geom)
   stopifnot(from_attribute_geom_is_defined)

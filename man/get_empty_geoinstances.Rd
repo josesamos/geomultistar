@@ -20,14 +20,15 @@ get_empty_geoinstances(gms, dimension = NULL, attribute = NULL)
 A \code{sf} object.
 }
 \description{
-Gets the instances of the geographic attribute that do not have a geometry
-associated with them.
+Gets the instances of the given geographic attribute that do not have a
+geometry associated with them.
 }
 \examples{
 library(tidyr)
-library(sf) # It has to be included even if it is not used directly.
+library(starschemar)
+library(sf)
 
-gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
+gms <- geomultistar(ms = ms_mrs, geodimension = "where") \%>\%
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,

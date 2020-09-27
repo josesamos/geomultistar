@@ -3,7 +3,7 @@
 \name{define_geoattribute}
 \alias{define_geoattribute}
 \alias{define_geoattribute.geomultistar}
-\title{Define geographic attribute}
+\title{Define geographic attributes}
 \usage{
 define_geoattribute(
   gms,
@@ -41,52 +41,47 @@ define_geoattribute(
 A \code{geomultistar} object.
 }
 \description{
-Defines a geographic attribute in two possible ways: Associates the instances
-of an attribute of the geographic dimension with the instances of a
+Defines a geographic attributes in two possible ways: Associates the
+instances of attributes of the geographic dimension with the instances of a
 geographic layer or defines it from the geometry of another previously
-defined geographic attribute.
+defined geographic attribute. Multiple attributes can be specified in the
+\code{attribute} parameter.
 }
 \details{
-If defined from a layer, additionally the attributes used for the join
-between the tables must be indicated.
+If defined from a layer (\code{from_layer} parameter), additionally the attributes
+used for the join between the tables (dimension and layer tables) must be
+indicated (\code{by} parameter).
 
 If defined from another attribute, it should have a finer granularity, to
 obtain the result by grouping its instances.
+
+If no value is indicated in the \code{attribute} parameter, it is defined for all
+those attributes of the dimension that do not have any previous definition,
+they are obtained from the attribute indicated in the \code{from_attribute}
+parameter.
 }
 \examples{
 library(tidyr)
-library(sf) # It has to be included even if it is not used directly.
+library(starschemar)
+library(sf)
 
-gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
+gms <- geomultistar(ms = ms_mrs, geodimension = "where") \%>\%
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,
     by = c("city" = "city", "state" = "state")
-  ) \%>\%
+  )
+
+gms <- gms \%>\%
   define_geoattribute(attribute = c("region", "all_where"),
                       from_attribute = "city")
 
-gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") \%>\%
-  define_geoattribute(
-    attribute = "city",
-    from_layer = usa_cities,
-    by = c("city" = "city", "state" = "state")
-  ) \%>\%
+gms <- gms \%>\%
   define_geoattribute(from_attribute = "city")
 
-# 1
-gms <- gms \%>\%
-  define_geoattribute(attribute = "all_where",
-                      from_attribute = "region")
-# 2
-gms <- gms \%>\%
-  define_geoattribute(attribute = "all_where",
-                      from_attribute = "city")
-# 3
 gms <- gms \%>\%
   define_geoattribute(attribute = "all_where",
                       from_layer = usa_nation)
-
 
 }
 \seealso{

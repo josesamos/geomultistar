@@ -1,7 +1,21 @@
 
 #' Add a fact table to a `multistar`
 #'
+#' To add a fact table to a `multistar` object, we must indicate the name that
+#' we give to the facts, the `tibble` that contains the data and a vector of
+#' attribute names corresponding to the measures.
 #'
+#' Associated with each measurement, an aggregation function is required, which
+#' by default is SUM. It that can be SUM, MAX or MIN. Mean is not considered
+#' among the possible aggregation functions: The reason is that calculating the
+#' mean by considering subsets of data does not necessarily yield the mean of
+#' the total data.
+#'
+#' An additional measurement, `nrow_agg`, corresponding to the number of
+#' aggregated rows is always added which, together with SUM, allows us to obtain
+#' the mean if needed. As the value of this parameter, you can specify an
+#' attribute of the table or the name that you want to assign to it (if it does
+#' not exist, it is added to the table).
 #'
 #' @param ms A `multistar` object.
 #' @param fact_name A string, name of fact table.
@@ -10,9 +24,9 @@
 #' @param agg_functions A vector of aggregation function names. If none is
 #'   indicated, the default is SUM. Additionally they can be MAX or MIN.
 #' @param nrow_agg A string, measurement name for the number of rows aggregated.
-#'   If it does not exist, it is added.
+#'   If it does not exist, it is added to the table.
 #'
-#' @return A `tibble`.
+#' @return A `multistar`.
 #'
 #' @family multistar functions
 #' @seealso
@@ -20,6 +34,19 @@
 #' @examples
 #' library(tidyr)
 #'
+#' ms <- multistar() %>%
+#'   add_facts(
+#'     fact_name = "mrs_age",
+#'     fact_table = mrs_fact_age,
+#'     measures = "n_deaths",
+#'     nrow_agg = "count"
+#'   ) %>%
+#'   add_facts(
+#'     fact_name = "mrs_cause",
+#'     fact_table = mrs_fact_cause,
+#'     measures = c("pneumonia_and_influenza_deaths", "other_deaths"),
+#'     nrow_agg = "nrow_agg"
+#'   )
 #'
 #' @export
 add_facts <- function(ms,

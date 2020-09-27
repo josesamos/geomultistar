@@ -1,8 +1,8 @@
 
 #' Get empty instances of a geographic attribute
 #'
-#' Gets the instances of the geographic attribute that do not have a geometry
-#' associated with them.
+#' Gets the instances of the given geographic attribute that do not have a
+#' geometry associated with them.
 #'
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
@@ -15,9 +15,10 @@
 #'
 #' @examples
 #' library(tidyr)
-#' library(sf) # It has to be included even if it is not used directly.
+#' library(starschemar)
+#' library(sf)
 #'
-#' gms <- geomultistar(ms = starschemar::ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
@@ -44,8 +45,14 @@ get_empty_geoinstances.geomultistar <-
     if (is.null(dimension)) {
       dimension <- names(gms$geodimension)[1]
     }
-    stopifnot(attribute %in% names(gms$geodimension[[dimension]]))
-    stopifnot(!is.null(gms$geodimension[[dimension]][[attribute]]))
+    is_geographic_dimension <-
+      dimension %in% names(gms$geodimension)
+    stopifnot(is_geographic_dimension)
+    is_geographic_attribute <-
+      attribute %in% names(gms$geodimension[[dimension]])
+    stopifnot(is_geographic_attribute)
+    the_attribute_is_defined <- !is.null(gms$geodimension[[dimension]][[attribute]])
+    stopifnot(the_attribute_is_defined)
 
     gms$geodimension[[dimension]][[attribute]][is.na(sf::st_dimension(gms$geodimension[[dimension]][[attribute]])), ]
   }
