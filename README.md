@@ -45,7 +45,7 @@ If we start from a flat table, we can generate a star schema using the
 [`starschemar`](https://CRAN.R-project.org/package=starschemar) package,
 as described in its examples.
 
-If we have a star schema in another tool, we import the fact and
+If we have a star schema in another tool, we need to import the fact and
 dimension tables into R in the form of tables implemented by `tibble`
 (`mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who`
 in the example). Once we have them in this format, we have to build a

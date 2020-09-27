@@ -18,19 +18,307 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo = FALSE}
-# library(geomultistar)
+library(geomultistar)
 ```
 
 # Introduction
 
-The *multidimensional data model* was defined in the 1990s with the aim of supporting data analysis. Data in multidimensional systems is obtained from operational systems and is transformed to adapt it to the new structure.
+The *multidimensional data model* was defined with the aim of supporting data analysis. In multidimensional systems, data is structured in facts and dimensions[^1]. 
+
+[^1]: Basic concepts of dimensional modelling and star schemas are presented in [`starschemar`](https://CRAN.R-project.org/package=starschemar) vignettes.
+
+The star model is widely accepted, it is recommended for use in widely distributed end-user tools. In it we have a table for  facts and a table for each dimension. Dimensions provide factual views for easy querying.
+
+The *geographical dimension* plays a fundamental role in multidimensional systems. In a multidimensional schema, there can be more than one geographic dimension.
+
+These dimensions allow us to associate places of different levels of detail with the factual data. For example, we can record data at the city level but later we may be interested in studying them grouped at the zone or nation level.
+
+It is very interesting to have the possibility of representing the reports obtained from multidimensional systems, using their geographic dimensions, on a map, or performing spatial analysis on them. Thus, the goal of this package is **to enrich multidimensional queries with geographic data**. In other words, it is not a question of making spatial queries but of generating a spatial layer with the result of the multidimensional queries and that this generation is done automatically, once the configuration of the geographical dimensions has been made.
+
+The rest of this document is structured as follows: An illustrative example of how the package works is presented. Then, the document ends with conclusions.
+
+# An illustrative example
+
+To perform multidimensional queries, the `multistar` class was defined in the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package. A `multistar` implements the star schemas: it has a table for each dimension and a table for the facts; however, it can contain multiple fact tables with some dimensions in common.
+
+Using the functions defined in `starschemar` package, starting from a flat table implemented by means of a `tibble`, we can generate a `multistar` object.
+
+If we already have a star schema, `geomultistar` package offers functions to generate a `multistar` object from the fact and dimension tables in `tibble` format.
+
+## Generate a `multistar` object
+
+In this case, we are going to suppose that we have tables of facts and dimensions in `tibble` format, which we have imported into R. In particular, we have the tables `mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who`, obtained from the example presented in package `starschemar`: Two fact tables that share two of the three dimensions.
+
+### Add fact tables
+
+We create an empty object, to which we will add elements. First we have to add a fact table, later we will add dimension tables or other fact tables.
+
+```{r}
+library(tidyr)
+library(geomultistar)
+
+ms <- multistar() %>%
+  add_facts(
+    fact_name = "mrs_age",
+    fact_table = mrs_fact_age,
+    measures = "n_deaths",
+    nrow_agg = "count"
+  ) 
+```
+
+For the facts we indicate a name, the table that contains its data and the names of the columns that contain the measures.
+
+You can indicate an aggregation function associated with each measure. This parameter should be defined only if some measure is not additive. In this case it is not necessary.
+
+Finally, you can indicate the name of a field that represents the number of rows grouped in each query: You can indicate the name of an existing column in the table for that purpose, or the name that you want to give to the column to be added if none exists. In this case, the name of a column in the table is assigned.
+
+Next we add another table of facts with characteristics similar to the previous one. 
+
+```{r}
+ms <- ms %>%
+  add_facts(
+    fact_name = "mrs_cause",
+    fact_table = mrs_fact_cause,
+    measures = c("pneumonia_and_influenza_deaths", "other_deaths"),
+    nrow_agg = "nrow_agg"
+  )
+```
+
+In this case, the column that contains the number of grouped rows precisely has the name that is assigned by default.
+
+### Add dimension tables
+
+Once we have at least one fact table, we can add dimension tables.
+
+```{r}
+ms <- ms %>%
+  add_dimension(
+    dimension_name = "where",
+    dimension_table = mrs_where,
+    dimension_key = "where_pk",
+    fact_name = "mrs_age",
+    fact_key = "where_fk"
+  )
+```
+
+For each dimension we define its name, the table that contains the data, the name of the primary key and, for the table of facts with which we are going to relate it, its name and the name of the corresponding foreign key.
+
+To establish the relationship successfully, it is verified that there is referential integrity between the tables using the indicated columns. The columns corresponding to the primary and foreign keys are renamed and are no longer available for queries. If you want to keep the field in the dimension, it can be indicated by a parameter, as is shown below by parameter `key_as_data`.
+
+```{r}
+ms <- ms %>%
+  add_dimension(
+    dimension_name = "when",
+    dimension_table = mrs_when,
+    dimension_key = "when_pk",
+    fact_name = "mrs_age",
+    fact_key = "when_fk",
+    key_as_data = TRUE
+  ) %>%
+  add_dimension(
+    dimension_name = "who",
+    dimension_table = mrs_who,
+    dimension_key = "who_pk",
+    fact_name = "mrs_age",
+    fact_key = "who_fk"
+  )
+```
 
 
+If a dimension is related to more than one fact table, when it is added, its relationship to only one can be defined. Later, additional relationships can be defined, as we will see next.
 
-# Dimensional modelling and star schemas
+### Relate dimensions
 
-The content of this section is a summary based mainly on @adamson2010star and @kimball2013data. It is intended to present the fundamental concepts of the area that are relevant to understand the functionality, naming and use of the `starschemar` package.
+Once a dimension is included in the `multistar`, we can relate it to other fact tables.
+
+```{r}
+ms <- ms %>%
+  relate_dimension(dimension_name = "where",
+                   fact_name = "mrs_cause",
+                   fact_key = "where_fk") %>%
+  relate_dimension(dimension_name = "when",
+                   fact_name = "mrs_cause",
+                   fact_key = "when_fk")
+```
+
+In this case, to specify the dimension we only have to indicate its name.
+
+### Additional operations on the `multistar` object
+
+Through the previous operations, we generate a `multistar` object to which we can apply the operations defined in the `starschemar` package for this class. At this moment we can export it as a flat table, using `multistar_as_flat_table`, or define multidimensional queries, as we will later use `dimensional_query`.
 
 
+## Define geographic dimensions and attributes
 
-# References
+To define the dimensions and geographic attributes of a `multistar` object, we must define a `geomultistar` specialization from it, which allows to store this information.
+
+We create a `geomultistar` object from a `multistar` one defining the names of the dimensions that contain geographic information. In the example only one dimension.
+
+```{r}
+library(sf)
+
+gms <-
+  geomultistar(ms, geodimension = "where")
+```
+
+For each attribute of a geographic dimension that we want to use in queries, we can define a vector layer with which a relationship can be established using one or more attributes of the dimension.
+
+```{r}
+gms <- gms %>%
+  define_geoattribute(
+    attribute = "city",
+    from_layer = usa_cities,
+    by = c("city" = "city", "state" = "state")
+  ) 
+```
+
+For the `city` attribute, a relationship is defined with a vector layer in `sf` format (`usa_cities`), using the `city` and `state` attributes[^2] that have the same name in the layer. 
+
+[^2]: It is appropriate to use `city` and `state` to establish the relationship because the granularity of the data is `city` and there can be repeated city names in different states.
+
+Sometimes there may be problems establishing the correspondence between the geographic attributes and the vector layer: Instances may remain unrelated. To detect these situations, we can query the rows that do not have associated geometry using the following function.
+
+```{r}
+empty_city <- gms %>%
+  get_empty_geoinstances(attribute = "city")
+```
+
+The result obtained is shown below.
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(empty_city, split.table = Inf)
+```
+
+In this case, for the unknown cities, their location has not been determined. There may be several because other geographic data of less granularity may be known.
+
+In the same way, the relationship for `county` with the corresponding layer (`usa_counties`) is defined.
+
+```{r}
+gms <- gms %>%
+  define_geoattribute(
+    attribute = "county",
+    from_layer = usa_counties,
+    by = c("county" = "county", "state" = "state")
+  )  
+```
+
+We check if they have all been related.
+
+```{r}
+empty_county <- gms %>%
+  get_empty_geoinstances(attribute = "county")
+```
+
+And the result obtained is shown below.
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(empty_county, split.table = Inf)
+```
+
+It also happens for the same instances. In this case we can see that the associated geometry is of a different type.
+
+In the case of `state` and `state_name`, as they both have the same level of detail, they can be defined together from the same layer (`usa_states`).
+
+```{r}
+gms <- gms %>%
+  define_geoattribute(
+    attribute = c("state", "state_name"),
+    from_layer = usa_states,
+    by = c("state" = "state")
+  ) 
+```
+
+Additionally, for an attribute we can generate its layer from the one associated with another related attribute of the dimension. This is what has been done below for `division`.
+
+```{r}
+gms <- gms %>%
+  define_geoattribute(
+    attribute = "division",
+    from_attribute = "state"
+  ) 
+```
+
+In this case, the vector layer is generated from the data available in the layer under consideration. Sometimes this is precisely what is desired. If not, look for a vector layer at that level of detail.
+
+If no attribute name is indicated, this operation is applied to the rest of the attributes of the dimension that do not have an associated vector layer by any of the methods presented, as shown below.
+
+```{r}
+gms <- gms %>%
+  define_geoattribute(from_attribute = "state")
+```
+
+With this we have all the attributes of the dimension with an associated layer, defined at its level of granularity[^3].  On the other hand, we can change the layer of any attribute at any time, independently of the rest.
+
+[^3]: If we are not going to use them in queries it is not necessary that they have the associated layer.
+
+## Define multidimensional queries
+
+Multidimensional queries are defined from a `multistar` object in the `starschemar` package. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
+
+```{r}
+library(starschemar)
+
+gdqr <- dimensional_query(gms) %>%
+  select_dimension(name = "where",
+                   attributes = c("division_name", "region_name")) %>%
+  select_dimension(name = "when",
+                   attributes = c("year", "week")) %>%
+  select_fact(name = "mrs_age",
+              measures = c("n_deaths")) %>%
+  select_fact(
+    name = "mrs_cause",
+    measures = c("pneumonia_and_influenza_deaths", "other_deaths")
+  ) %>%
+  filter_dimension(name = "when", week <= "03")
+```
+
+The definition functions of this type of queries are quite intuitive, they are explained in the vignette of package [`starschemar`](https://CRAN.R-project.org/package=starschemar).
+
+If we use the function `run_query` of the mentioned package, a normal multidimensional query is executed, as shown below.
+
+```{r}
+ft <- gdqr %>%
+  run_query() %>%
+  multistar_as_flat_table()
+```
+
+The result of this type of query is a `multistar` object, which we can transform into a flat table to display it more easily, as we do below for the first rows..
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(head(ft, 12), split.table = Inf)
+```
+
+## Run queries adding geographic information
+
+If instead of executing the standard query, we execute `run_geoquery` function, from this package, we automatically obtain a vector layer at the finest possible level of detail, depending on the definition of the query.
+
+```{r}
+vl_sf <- gdqr %>%
+  run_geoquery()
+```
+
+The first rows of the result can be seen below in table form.
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(head(vl_sf, 12), split.table = Inf)
+```
+
+The result is a vector layer that we can save, perform spatial analysis or queries on it, or we can see it as a map, using the functions associated with the `sf` class.
+
+```{r}
+class(vl_sf)
+
+plot(vl_sf[,"n_deaths"])
+```
+
+Although we have indicated in the query the attributes `division_name` and `region_name`, as can be seen in the figure, the result obtained is at the finest granularity level, in this case at the `division_name` level.
+
+Only the parts of the divisions made up of states where there is recorded data are shown. If we wanted to show the full extent of each division, we should have explicitly associated a layer at that level.
+
+# Conclusions
+
+To generate the multidimensional structure on which to define queries, we can use the functions of the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package or, if we already have the multidimensional design implemented, the import functions included in this package.
+
+`geomultistar` package allows generating vector layers in `sf` format as a result of multidimensional queries. To do this, all we need is to associate vector layers with some of the attributes of the geographic dimensions, so that the layers associated with the rest of the attributes can be obtained automatically. Queries do not present any additional difficulties due to the fact of returning geographic data.
+
+The data obtained can be processed with the `sf` package to define spatial queries or analysis, be presented in maps or saved as a file to be used by a GIS (*Geographical Information System*).
