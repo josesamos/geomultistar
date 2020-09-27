@@ -35,7 +35,8 @@ Imports:
     purrr,
     sf,
     magrittr,
-    rlang
+    rlang,
+    pander
 Suggests: 
     testthat,
     knitr,
