@@ -1,3 +1,5 @@
+# geomultistar 1.0.0.9000
+
 # geomultistar 1.0.0
 * Initial functionality.
 * Functions to define geographic dimensions: [geomultistar()], [define_geoattribute()] and [get_empty_geoinstances()].
