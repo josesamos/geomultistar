@@ -24,14 +24,22 @@ geolevel(
 
 \item{geometry}{A string, type of geometry of the layer.}
 
-\item{top_level}{A boolean, is the level Top of a dimension.}
+\item{top_level}{A boolean, is the level \emph{Top} of a dimension.}
 }
 \value{
 A \code{geolevel} object.
 }
 \description{
-A \code{geolevel} object is created. Dimensions that contain geographic
-information are indicated.
+A \code{geolevel} object is created from a given geographic layer. The attributes
+of the layer to be included in the level are indicated, and the subset of
+these that make up the natural key.
+}
+\details{
+A level can have several associated geometries (point, polygon or line), the
+geometry of the layer is indicated.
+
+The \emph{Top} level of any dimension is a special case since it has only one
+object. This situation is indicated by a boolean parameter.
 }
 \examples{
 
@@ -40,8 +48,9 @@ information are indicated.
 \seealso{
 
 
-Other geolevel functions: 
+Other geodimension functions: 
 \code{\link{add_geometry}()},
+\code{\link{add_level}()},
 \code{\link{geodimension}()}
 }
-\concept{geolevel functions}
+\concept{geodimension functions}

@@ -3,7 +3,7 @@
 \name{add_level}
 \alias{add_level}
 \alias{add_level.geodimension}
-\title{Relate a dimension table to a fact table in a \code{geodimension}}
+\title{Add a level to a dimension}
 \usage{
 add_level(gd, level = NULL, lower_level_name = NULL, upper_level_name = NULL)
 
@@ -22,15 +22,23 @@ add_level(gd, level = NULL, lower_level_name = NULL, upper_level_name = NULL)
 A \code{geodimension}.
 }
 \description{
-Adding a dimension to a \code{geodimension} can only relate to a fact table. You can
-then relate to other fact tables in the \code{geodimension} using this function. The
-name of the fact table and its foreign key must be indicated. The referential
-integrity of the instances of the facts is checked.
+A new level must always lie between two levels of the dimension. Given the
+level and the names of the two levels between which it is inserted, it adds
+it to the dimension.
+}
+\details{
+If any of them is not indicated, by default it is considered the lowest level
+and the highest level of the dimension.
 }
 \examples{
 
 }
 \seealso{
 
+
+Other geodimension functions: 
+\code{\link{add_geometry}()},
+\code{\link{geodimension}()},
+\code{\link{geolevel}()}
 }
 \concept{geodimension functions}

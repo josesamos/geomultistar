@@ -15,13 +15,9 @@ new_geodimension <-
            botton_level = NULL,
            top_level = NULL) {
 
-    stopifnot(attr(top_level, "n_instances") == 1)
+    stopifnot(is_top_level(top_level))
 
-    botton_level$data[[attr(top_level, "surrogate_key")]] <-
-      top_level$data[[attr(top_level, "surrogate_key")]]
-    attr(botton_level, "parent_level") <- attr(top_level, "name")
-    attr(botton_level, "parent_key") <-
-      attr(top_level, "surrogate_key")
+    botton_level <- relate_to_top_level(botton_level, top_level)
 
     geodimension <- list()
     geodimension[[attr(botton_level, "name")]] <- botton_level
@@ -38,14 +34,14 @@ new_geodimension <-
 
 #' `geodimension` S3 class
 #'
-#' A `geodimension` object is created. Dimensions that contain geographic
-#' information are indicated.
+#' A `geodimension` object is created. In addition to the name of the dimension,
+#' the lowest and highest level of the dimension are indicated.
 #'
 #' @inheritParams new_geodimension
 #'
 #' @return A `geodimension` object.
 #'
-#' @family geolevel functions
+#' @family geodimension functions
 #' @seealso
 #'
 #' @examples
@@ -57,3 +53,5 @@ geodimension <- function(name = NULL,
                          top_level = NULL) {
   new_geodimension(name, botton_level, top_level)
 }
+
+

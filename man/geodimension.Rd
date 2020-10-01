@@ -17,8 +17,8 @@ geodimension(name = NULL, botton_level = NULL, top_level = NULL)
 A \code{geodimension} object.
 }
 \description{
-A \code{geodimension} object is created. Dimensions that contain geographic
-information are indicated.
+A \code{geodimension} object is created. In addition to the name of the dimension,
+the lowest and highest level of the dimension are indicated.
 }
 \examples{
 
@@ -27,8 +27,9 @@ information are indicated.
 \seealso{
 
 
-Other geolevel functions: 
+Other geodimension functions: 
 \code{\link{add_geometry}()},
+\code{\link{add_level}()},
 \code{\link{geolevel}()}
 }
-\concept{geolevel functions}
+\concept{geodimension functions}

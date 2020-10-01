@@ -1,10 +1,8 @@
 
-#' Relate a dimension table to a fact table in a `geolevel`
+#' Add geometry to a level
 #'
-#' Adding a dimension to a `geolevel` can only relate to a fact table. You can
-#' then relate to other fact tables in the `geolevel` using this function. The
-#' name of the fact table and its foreign key must be indicated. The referential
-#' integrity of the instances of the facts is checked.
+#' A level can have several associated geometries (point, polygon or line). Add
+#' the geometry of the layer or replace an existing one of the indicated type.
 #'
 #' @param gl A `geolevel` object.
 #' @param layer A `sf` object.
@@ -12,7 +10,7 @@
 #'
 #' @return A `geolevel`.
 #'
-#' @family geolevel functions
+#' @family geodimension functions
 #' @seealso
 #'
 #' @examples
@@ -31,7 +29,7 @@ add_geometry.geolevel <- function(gl,
                                   layer = NULL,
                                   geometry = NULL) {
   key <- attr(gl, "key")
-  if (attr(gl, "name") == "all" & attr(gl, "n_instances_layer") == 1) {
+  if (is_top_level(gl)) {
     layer <- layer %>%
       tibble::add_column(all_name = "All", .before = 1)
   }
@@ -56,9 +54,9 @@ add_geometry.geolevel <- function(gl,
   layer <- layer[!is.na(sf::st_dimension(layer)), ]
 
   if (geometry %in% names(gl)) {
-    attr(gl, "n_instances") <- nrow(layer)
+    attr(gl, "n_instances_layer") <- nrow(layer)
   } else {
-    attr(gl, "n_instances") <- c(nrow(layer), attr(gl, "n_instances"))
+    attr(gl, "n_instances_layer") <- c(nrow(layer), attr(gl, "n_instances_layer"))
   }
   gl[[geometry]] <- layer
 

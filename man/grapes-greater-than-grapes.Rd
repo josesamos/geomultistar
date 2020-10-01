@@ -43,7 +43,7 @@ define_geoattribute_from_layer(
 
 \item{geometry}{A string, type of geometry of the layer.}
 
-\item{top_level}{A boolean, is the level Top of a dimension.}
+\item{top_level}{A boolean, is the level \emph{Top} of a dimension.}
 
 \item{gms}{A \code{geomultistar} object.}
 

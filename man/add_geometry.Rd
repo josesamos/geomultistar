@@ -3,7 +3,7 @@
 \name{add_geometry}
 \alias{add_geometry}
 \alias{add_geometry.geolevel}
-\title{Relate a dimension table to a fact table in a \code{geolevel}}
+\title{Add geometry to a level}
 \usage{
 add_geometry(gl, layer = NULL, geometry = NULL)
 
@@ -20,10 +20,8 @@ add_geometry(gl, layer = NULL, geometry = NULL)
 A \code{geolevel}.
 }
 \description{
-Adding a dimension to a \code{geolevel} can only relate to a fact table. You can
-then relate to other fact tables in the \code{geolevel} using this function. The
-name of the fact table and its foreign key must be indicated. The referential
-integrity of the instances of the facts is checked.
+A level can have several associated geometries (point, polygon or line). Add
+the geometry of the layer or replace an existing one of the indicated type.
 }
 \examples{
 
@@ -31,8 +29,9 @@ integrity of the instances of the facts is checked.
 \seealso{
 
 
-Other geolevel functions: 
+Other geodimension functions: 
+\code{\link{add_level}()},
 \code{\link{geodimension}()},
 \code{\link{geolevel}()}
 }
-\concept{geolevel functions}
+\concept{geodimension functions}
