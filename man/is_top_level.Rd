@@ -2,9 +2,12 @@
 % Please edit documentation in R/geolevel.R
 \name{is_top_level}
 \alias{is_top_level}
+\alias{is_top_level.geolevel}
 \title{Is it \emph{Top} level of dimension?}
 \usage{
 is_top_level(level)
+
+\method{is_top_level}{geolevel}(level)
 }
 \arguments{
 \item{level}{A \code{geolevel}.}

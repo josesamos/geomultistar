@@ -102,7 +102,8 @@ new_geolevel <-
 #'
 #' A `geolevel` object is created from a given geographic layer. The attributes
 #' of the layer to be included in the level are indicated, and the subset of
-#' these that make up the natural key.
+#' these that make up the natural key. If no attribute is indicated, all are
+#' considered.
 #'
 #' A level can have several associated geometries (point, polygon or line), the
 #' geometry of the layer is indicated.
@@ -124,6 +125,20 @@ new_geolevel <-
 #'
 #' @examples
 #'
+#' city <-
+#'   geolevel(
+#'     name = "city",
+#'     layer = usa_cities,
+#'     key = c("city", "state"),
+#'     geometry = "point"
+#'   )
+#'
+#' all <-
+#'   geolevel(
+#'     layer = usa_nation,
+#'     geometry = "polygon",
+#'     top_level = TRUE
+#'   )
 #'
 #' @export
 geolevel <-
@@ -137,6 +152,8 @@ geolevel <-
   }
 
 
+# is_top_level ------------------------------------------------------
+
 #' Is it *Top* level of dimension?
 #'
 #' @param level A `geolevel`.
@@ -145,9 +162,19 @@ geolevel <-
 #'
 #' @keywords internal
 is_top_level <- function(level) {
+  UseMethod("is_top_level")
+}
+
+
+#' @rdname is_top_level
+#' @export
+#' @keywords internal
+is_top_level.geolevel <- function(level) {
   (attr(level, "name") == "all" & attr(level, "n_instances_layer") == 1)
 }
 
+
+# are_levels_related ------------------------------------------------------
 
 #' Are levels related?
 #'
@@ -163,6 +190,14 @@ is_top_level <- function(level) {
 #'
 #' @keywords internal
 are_levels_related <- function(level, upper_level) {
+  UseMethod("are_levels_related")
+}
+
+
+#' @rdname are_levels_related
+#' @export
+#' @keywords internal
+are_levels_related.geolevel <- function(level, upper_level) {
   if (is_top_level(upper_level)) {
     res <- TRUE
   } else {
@@ -171,6 +206,7 @@ are_levels_related <- function(level, upper_level) {
   res
 }
 
+# relate_to_top_level ------------------------------------------------------
 
 #' Relate level to *Top* level
 #'
@@ -181,6 +217,14 @@ are_levels_related <- function(level, upper_level) {
 #'
 #' @keywords internal
 relate_to_top_level <- function(level, top_level) {
+  UseMethod("relate_to_top_level")
+}
+
+
+#' @rdname relate_to_top_level
+#' @export
+#' @keywords internal
+relate_to_top_level.geolevel <- function(level, top_level) {
   tl_surrogate_key <- attr(top_level, "surrogate_key")
   level$data[[tl_surrogate_key]] <-
     top_level$data[[tl_surrogate_key]]
@@ -189,6 +233,8 @@ relate_to_top_level <- function(level, top_level) {
   level
 }
 
+
+# derelate_to_upper_level ------------------------------------------------------
 
 #' De-relate level to upper level.
 #'
@@ -199,16 +245,26 @@ relate_to_top_level <- function(level, top_level) {
 #'
 #' @keywords internal
 derelate_to_upper_level <- function(level, upper_level_name) {
-    i <- which(attr(level, "parent_level") == upper_level_name)
-    if (length(i) > 0) {
-      level$data <- level$data %>%
-        dplyr::select(-(!!(attr(level, "parent_key")[i])))
-      attr(level, "parent_key") <- attr(level, "parent_key")[-i]
-      attr(level, "parent_level") <- attr(level, "parent_level")[-i]
-    }
-    level
-  }
+  UseMethod("derelate_to_upper_level")
+}
 
+
+#' @rdname derelate_to_upper_level
+#' @export
+#' @keywords internal
+derelate_to_upper_level.geolevel <- function(level, upper_level_name) {
+  i <- which(attr(level, "parent_level") == upper_level_name)
+  if (length(i) > 0) {
+    level$data <- level$data %>%
+      dplyr::select(-(!!(attr(level, "parent_key")[i])))
+    attr(level, "parent_key") <- attr(level, "parent_key")[-i]
+    attr(level, "parent_level") <- attr(level, "parent_level")[-i]
+  }
+  level
+}
+
+
+# relate_to_upper_level ------------------------------------------------------
 
 #' Relate level to upper level.
 #'
@@ -219,6 +275,14 @@ derelate_to_upper_level <- function(level, upper_level_name) {
 #'
 #' @keywords internal
 relate_to_upper_level <- function(level, upper_level) {
+  UseMethod("relate_to_upper_level")
+}
+
+
+#' @rdname relate_to_upper_level
+#' @export
+#' @keywords internal
+relate_to_upper_level.geolevel <- function(level, upper_level) {
   if (is_top_level(upper_level)) {
     level <- relate_to_top_level(level, upper_level)
   } else {

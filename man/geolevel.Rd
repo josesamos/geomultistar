@@ -32,7 +32,8 @@ A \code{geolevel} object.
 \description{
 A \code{geolevel} object is created from a given geographic layer. The attributes
 of the layer to be included in the level are indicated, and the subset of
-these that make up the natural key.
+these that make up the natural key. If no attribute is indicated, all are
+considered.
 }
 \details{
 A level can have several associated geometries (point, polygon or line), the
@@ -43,6 +44,20 @@ object. This situation is indicated by a boolean parameter.
 }
 \examples{
 
+city <-
+  geolevel(
+    name = "city",
+    layer = usa_cities,
+    key = c("city", "state"),
+    geometry = "point"
+  )
+
+all <-
+  geolevel(
+    layer = usa_nation,
+    geometry = "polygon",
+    top_level = TRUE
+  )
 
 }
 \seealso{

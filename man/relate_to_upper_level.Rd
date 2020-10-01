@@ -2,9 +2,12 @@
 % Please edit documentation in R/geolevel.R
 \name{relate_to_upper_level}
 \alias{relate_to_upper_level}
+\alias{relate_to_upper_level.geolevel}
 \title{Relate level to upper level.}
 \usage{
 relate_to_upper_level(level, upper_level)
+
+\method{relate_to_upper_level}{geolevel}(level, upper_level)
 }
 \arguments{
 \item{level}{A \code{geolevel}.}

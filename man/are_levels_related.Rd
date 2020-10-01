@@ -2,9 +2,12 @@
 % Please edit documentation in R/geolevel.R
 \name{are_levels_related}
 \alias{are_levels_related}
+\alias{are_levels_related.geolevel}
 \title{Are levels related?}
 \usage{
 are_levels_related(level, upper_level)
+
+\method{are_levels_related}{geolevel}(level, upper_level)
 }
 \arguments{
 \item{level}{A \code{geolevel}.}

@@ -2,9 +2,12 @@
 % Please edit documentation in R/geolevel.R
 \name{derelate_to_upper_level}
 \alias{derelate_to_upper_level}
+\alias{derelate_to_upper_level.geolevel}
 \title{De-relate level to upper level.}
 \usage{
 derelate_to_upper_level(level, upper_level_name)
+
+\method{derelate_to_upper_level}{geolevel}(level, upper_level_name)
 }
 \arguments{
 \item{level}{A \code{geolevel}.}

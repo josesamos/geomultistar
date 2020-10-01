@@ -2,9 +2,12 @@
 % Please edit documentation in R/geolevel.R
 \name{relate_to_top_level}
 \alias{relate_to_top_level}
+\alias{relate_to_top_level.geolevel}
 \title{Relate level to \emph{Top} level}
 \usage{
 relate_to_top_level(level, top_level)
+
+\method{relate_to_top_level}{geolevel}(level, top_level)
 }
 \arguments{
 \item{level}{A \code{geolevel}.}

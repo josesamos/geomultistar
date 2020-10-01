@@ -19,6 +19,38 @@
 #' @seealso
 #'
 #' @examples
+#' library(tidyr)
+#'
+#' city <-
+#'   geolevel(
+#'     name = "city",
+#'     layer = usa_cities,
+#'     key = c("city", "state"),
+#'     geometry = "point"
+#'   )
+#'
+#' all <-
+#'   geolevel(
+#'     layer = usa_nation,
+#'     geometry = "polygon",
+#'     top_level = TRUE
+#'   )
+#'
+#' usa_city <-
+#'   geodimension(name = "usa_city",
+#'                botton_level = city,
+#'                top_level = all)
+#'
+#' state <-
+#'   geolevel(
+#'     name = "state",
+#'     layer = usa_states,
+#'     key = c("state"),
+#'     geometry = "polygon"
+#'   )
+#'
+#' usa_city <- usa_city %>%
+#'   add_level(level = state)
 #'
 #' @export
 add_level <- function(gd,

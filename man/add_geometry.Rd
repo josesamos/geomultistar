@@ -24,6 +24,21 @@ A level can have several associated geometries (point, polygon or line). Add
 the geometry of the layer or replace an existing one of the indicated type.
 }
 \examples{
+library(tidyr)
+
+city <-
+  geolevel(
+    name = "city",
+    layer = usa_cities,
+    attributes = NULL,
+    key = c("city", "state"),
+    geometry = "point"
+  )
+
+# geometry is no checked
+city <- city \%>\%
+  add_geometry(layer = usa_cities,
+               geometry = "polygon")
 
 }
 \seealso{

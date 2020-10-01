@@ -14,6 +14,21 @@
 #' @seealso
 #'
 #' @examples
+#' library(tidyr)
+#'
+#' city <-
+#'   geolevel(
+#'     name = "city",
+#'     layer = usa_cities,
+#'     attributes = NULL,
+#'     key = c("city", "state"),
+#'     geometry = "point"
+#'   )
+#'
+#' # geometry is no checked
+#' city <- city %>%
+#'   add_geometry(layer = usa_cities,
+#'                geometry = "polygon")
 #'
 #' @export
 add_geometry <- function(gl,

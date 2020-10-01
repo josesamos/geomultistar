@@ -22,6 +22,25 @@ the lowest and highest level of the dimension are indicated.
 }
 \examples{
 
+city <-
+  geolevel(
+    name = "city",
+    layer = usa_cities,
+    key = c("city", "state"),
+    geometry = "point"
+  )
+
+all <-
+  geolevel(
+    layer = usa_nation,
+    geometry = "polygon",
+    top_level = TRUE
+  )
+
+usa_city <-
+  geodimension(name = "usa_city",
+               botton_level = city,
+               top_level = all)
 
 }
 \seealso{
