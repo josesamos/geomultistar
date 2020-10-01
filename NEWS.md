@@ -1,4 +1,5 @@
 # geomultistar 1.0.0.9000
+* Functions for defining dimensions and levels from geographic data layers: [geodimension()], [add_level()], [geolevel()], [add_geometry()], and [check_referential_integrity()].
 
 # geomultistar 1.0.0
 * Initial functionality.
