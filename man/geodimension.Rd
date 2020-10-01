@@ -49,6 +49,7 @@ usa_city <-
 Other geodimension functions: 
 \code{\link{add_geometry}()},
 \code{\link{add_level}()},
+\code{\link{check_referential_integrity}()},
 \code{\link{geolevel}()}
 }
 \concept{geodimension functions}

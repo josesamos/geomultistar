@@ -303,3 +303,37 @@ relate_to_upper_level.geolevel <- function(level, upper_level) {
   }
   level
 }
+
+
+# normalize_level ------------------------------------------------------
+
+#' Relate level to upper level.
+#'
+#' @param level A `geolevel`.
+#' @param upper_level A `geolevel`.
+#'
+#' @return level A `geolevel`.
+#'
+#' @keywords internal
+normalize_level <- function(level, upper_level) {
+  UseMethod("normalize_level")
+}
+
+
+#' @rdname normalize_level
+#' @export
+#' @keywords internal
+normalize_level.geolevel <- function(level, upper_level) {
+  if (!is_top_level(upper_level)) {
+    attributes_upper <- attr(upper_level, "attributes")
+    attributes_level <- attr(level, "attributes")
+    attributes <- attributes_level[!(attributes_level %in% attr(level, "key"))]
+    attributes <- attributes[(attributes %in% attributes_upper)]
+    if (length(attributes) > 0) {
+      attr(level, "attributes") <- attributes_level[!(attributes_level %in% attributes)]
+      level$data <- level$data %>%
+        dplyr::select(-tidyselect::all_of(attributes))
+    }
+  }
+  level
+}

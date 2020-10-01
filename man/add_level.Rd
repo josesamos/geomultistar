@@ -5,9 +5,23 @@
 \alias{add_level.geodimension}
 \title{Add a level to a dimension}
 \usage{
-add_level(gd, level = NULL, lower_level_name = NULL, upper_level_name = NULL)
+add_level(
+  gd,
+  level = NULL,
+  lower_level_name = NULL,
+  upper_level_name = NULL,
+  normalize_levels = TRUE,
+  check_referential_integrity = TRUE
+)
 
-\method{add_level}{geodimension}(gd, level = NULL, lower_level_name = NULL, upper_level_name = NULL)
+\method{add_level}{geodimension}(
+  gd,
+  level = NULL,
+  lower_level_name = NULL,
+  upper_level_name = NULL,
+  normalize_levels = TRUE,
+  check_referential_integrity = TRUE
+)
 }
 \arguments{
 \item{gd}{A \code{geodimension} object.}
@@ -17,6 +31,11 @@ add_level(gd, level = NULL, lower_level_name = NULL, upper_level_name = NULL)
 \item{lower_level_name}{A string, name of the lower level.}
 
 \item{upper_level_name}{A string, name of the upper lever.}
+
+\item{normalize_levels}{A boolean, remove the attributes included in a level
+from its lower level.}
+
+\item{check_referential_integrity}{A boolean, check for unrelated instances.}
 }
 \value{
 A \code{geodimension}.
@@ -29,6 +48,13 @@ it to the dimension.
 \details{
 If any of them is not indicated, by default it is considered the lowest level
 and the highest level of the dimension.
+
+It offers the possibility of automatically removing the attributes included
+in a level from its lower level. Different attributes must have different
+names in the dimension levels.
+
+We can define that the level is only included if there is referential
+integrity between the instances of the levels to be related.
 }
 \examples{
 library(tidyr)
@@ -70,6 +96,7 @@ usa_city <- usa_city \%>\%
 
 Other geodimension functions: 
 \code{\link{add_geometry}()},
+\code{\link{check_referential_integrity}()},
 \code{\link{geodimension}()},
 \code{\link{geolevel}()}
 }

@@ -66,6 +66,7 @@ all <-
 Other geodimension functions: 
 \code{\link{add_geometry}()},
 \code{\link{add_level}()},
+\code{\link{check_referential_integrity}()},
 \code{\link{geodimension}()}
 }
 \concept{geodimension functions}
