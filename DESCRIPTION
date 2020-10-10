@@ -36,7 +36,9 @@ Imports:
     sf,
     magrittr,
     rlang,
-    pander
+    pander,
+    stringr,
+    snakecase
 Suggests: 
     testthat,
     knitr,
