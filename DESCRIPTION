@@ -38,7 +38,9 @@ Imports:
     rlang,
     pander,
     stringr,
-    snakecase
+    snakecase,
+    RSQLite,
+    rgdal
 Suggests: 
     testthat,
     knitr,

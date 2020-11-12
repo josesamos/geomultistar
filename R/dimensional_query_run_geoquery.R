@@ -20,6 +20,7 @@
 #' @param fact A string, name of the fact.
 #' @param dimension A string, name of the geographic dimension.
 #' @param attribute A string, name of the geographic attribute to consider.
+#' @param wider A boolean, avoid repeating geographic data.
 #'
 #' @return A `sf` object.
 #'
@@ -70,7 +71,8 @@ run_geoquery <-
            unify_by_grain = TRUE,
            fact = NULL,
            dimension = NULL,
-           attribute = NULL) {
+           attribute = NULL,
+           wider = FALSE) {
     UseMethod("run_geoquery")
   }
 
@@ -81,7 +83,8 @@ run_geoquery.dimensional_query <-
            unify_by_grain = TRUE,
            fact = NULL,
            dimension = NULL,
-           attribute = NULL) {
+           attribute = NULL,
+           wider = FALSE) {
 
     # run_query
     dq <- starschemar:::define_selected_facts(dq)
@@ -117,21 +120,32 @@ run_geoquery.dimensional_query <-
     ft <- starschemar::multistar_as_flat_table(dq$output, fact)
     columns <- names(ft)
 
-    if (length(names(geodim)) == 2) {
+    names_geodim <- names(geodim)
+    if (length(names_geodim) == 2) {
       # all, geographic dimension not selected in query
       ft[[attribute]] <- 0 # fk to join to the layer
-      ft <- dplyr::left_join(ft, geodim, by = attribute)
+      pk <- attribute
     } else {
-      ft <-
-        dplyr::left_join(ft, geodim, by = names(geodim)[2:(length(names(geodim)) - 1)])
+      pk <- names_geodim[2:(length(names_geodim) - 1)]
     }
 
-    ft <- ft %>%
-      sf::st_as_sf() %>%
-      dplyr::select(tidyselect::all_of(columns)) %>%
-      dplyr::group_by_at(columns) %>%
-      dplyr::summarize(.groups = "drop")
-    ft
+    if (wider) {
+      measures <- get_selected_measure_names(dq, ft)
+      l <- widen_flat_table(ft, pk, measures)
+      ft <- l$sf
+    }
+    ft <- dplyr::left_join(ft, geodim, by = pk) %>%
+      sf::st_as_sf()
+
+    if (wider) {
+      l$sf <- ft
+      l
+    } else {
+      ft <- ft %>%
+        dplyr::select(tidyselect::all_of(columns)) %>%
+        dplyr::group_by_at(columns) %>%
+        dplyr::summarize(.groups = "drop")
+    }
   }
 
 #' Default attribute
@@ -243,4 +257,90 @@ filter_geodimension <- function(dq) {
   }
   dq
 }
+
+
+
+#' widen_flat_table
+#'
+#' Makes the pk fields the primary key of the table. The rest of the fields that
+#' prevent them from being so, are extracted to another table. The original
+#' table is widened by combining the extracted fields with the measures.
+#'
+#' @param ft A `tibble` object.
+#' @param pk A vector of names.
+#' @param measures A vector of names.
+#'
+#' @return A list of `tibble` objects.
+#' @keywords internal
+widen_flat_table <- function(ft, pk, measures) {
+  names_ft <- names(ft)
+  stopifnot(pk %in% names_ft)
+  stopifnot(measures %in% names_ft)
+  pk <- unique(pk)
+  measures <- unique(measures)
+  rest <- names_ft[!(names_ft %in% c(pk, measures))]
+
+  ft_pk <- unique(ft[, pk])
+  rest_out <- NULL
+  rest_in <- NULL
+  for (at in rest) {
+    ft_pk_at <- unique(ft[, c(pk, at)])
+    if (nrow(ft_pk) < nrow(ft_pk_at)) {
+      rest_out <- c(rest_out, at)
+    } else {
+      rest_in <- c(rest_in, at)
+    }
+  }
+  pk <- c(pk, rest_in)
+
+  length_rest_out <- length(rest_out)
+  if (length_rest_out > 0) {
+    ft_out <- unique(ft[, rest_out])
+    if (length_rest_out > 1) {
+      n_row <- nrow(ft_out)
+      format <- sprintf("V%%0%dd", max(nchar(sprintf("%s", n_row))))
+      id <- sprintf(format, 1:n_row)
+      ft_out <- tibble::add_column(ft_out, id_variable = id, .before = 1)
+    } else if (length_rest_out == 1) {
+      ft_out <- tibble::add_column(ft_out, id_variable = as.character(ft_out[, rest_out][[1]]), .before = 1)
+    }
+
+    ft <- dplyr::left_join(ft, ft_out, by = rest_out)
+    ft <- dplyr::select(ft,!rest_out)
+    names_ft <- names(ft)
+    ft <- tidyr::pivot_wider(ft, names_from = names_ft[length(names_ft)], values_from = measures)
+    ft <- tibble::add_column(ft, fid = 1:nrow(ft), .before = 1)
+
+    out <- tibble::add_column(ft_out, measure = measures[1], .after = 1)
+    for (m in measures[-1]) {
+      out <- tibble::add_row(out, tibble::add_column(ft_out, measure = m, .after = 1))
+    }
+    names_out <- names(out)
+    measure <- names_out[length(names_out)]
+    out$id_variable <- paste(out[, measure][[1]], out$id_variable, sep = "_")
+
+    list(sf = ft, variables = out)
+  } else {
+    list(sf = ft)
+  }
+}
+
+#' get_selected_measure_names
+#'
+#' Get the names of the measures selected in the query.
+#'
+#' @param dq A `dimensional_query` object.
+#' @param ft A `tibble` object.
+#'
+#' @return A vector of names.
+#' @keywords internal
+get_selected_measure_names <- function(dq, ft) {
+  num_measures <- 0
+  for (name in names(dq$fact)) {
+    num_measures <- num_measures + length(names(dq$fact[[name]]))
+  }
+  names_ft <- names(ft)
+  names_ft[(length(names_ft) - num_measures + 1):length(names_ft)]
+}
+
 

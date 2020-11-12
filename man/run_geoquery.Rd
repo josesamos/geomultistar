@@ -10,7 +10,8 @@ run_geoquery(
   unify_by_grain = TRUE,
   fact = NULL,
   dimension = NULL,
-  attribute = NULL
+  attribute = NULL,
+  wider = FALSE
 )
 
 \method{run_geoquery}{dimensional_query}(
@@ -18,7 +19,8 @@ run_geoquery(
   unify_by_grain = TRUE,
   fact = NULL,
   dimension = NULL,
-  attribute = NULL
+  attribute = NULL,
+  wider = FALSE
 )
 }
 \arguments{
@@ -31,6 +33,8 @@ run_geoquery(
 \item{dimension}{A string, name of the geographic dimension.}
 
 \item{attribute}{A string, name of the geographic attribute to consider.}
+
+\item{wider}{A boolean, avoid repeating geographic data.}
 }
 \value{
 A \code{sf} object.
