@@ -110,7 +110,7 @@ gms <-
     by = c("county" = "county", "state" = "state")
   )  %>%
   define_geoattribute(
-    attribute = c("state", "state_name"),
+    attribute = c("state"),
     from_layer = usa_states,
     by = c("state" = "state")
   ) %>%
