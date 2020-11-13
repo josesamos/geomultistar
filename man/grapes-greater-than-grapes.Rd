@@ -21,7 +21,8 @@ define_geoattribute_from_attribute(
   gms,
   dimension = NULL,
   attribute = NULL,
-  from_attribute = NULL
+  from_attribute = NULL,
+  additional_attributes = NULL
 )
 
 define_geoattribute_from_layer(
@@ -52,6 +53,8 @@ define_geoattribute_from_layer(
 \item{attribute}{A string, attribute name.}
 
 \item{from_attribute}{A string, attribute name.}
+
+\item{additional_attributes}{A vector, attribute names.}
 
 \item{by}{a vector of correspondence of attributes of the dimension with the
 \code{sf} structure.}

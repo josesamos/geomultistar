@@ -9,6 +9,7 @@ define_geoattribute(
   gms,
   dimension = NULL,
   attribute = NULL,
+  additional_attributes = NULL,
   from_layer = NULL,
   by = NULL,
   from_attribute = NULL
@@ -18,6 +19,7 @@ define_geoattribute(
   gms,
   dimension = NULL,
   attribute = NULL,
+  additional_attributes = NULL,
   from_layer = NULL,
   by = NULL,
   from_attribute = NULL
@@ -29,6 +31,8 @@ define_geoattribute(
 \item{dimension}{A string, dimension name.}
 
 \item{attribute}{A vector, attribute names.}
+
+\item{additional_attributes}{A vector, attribute names.}
 
 \item{from_layer}{A \code{sf} object.}
 

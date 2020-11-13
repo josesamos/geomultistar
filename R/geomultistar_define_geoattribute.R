@@ -22,6 +22,7 @@
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
 #' @param attribute A vector, attribute names.
+#' @param additional_attributes A vector, attribute names.
 #' @param from_layer A `sf` object.
 #' @param by a vector of correspondence of attributes of the dimension with the
 #'   `sf` layer structure.
@@ -59,6 +60,7 @@
 define_geoattribute <- function(gms,
                                 dimension = NULL,
                                 attribute = NULL,
+                                additional_attributes = NULL,
                                 from_layer = NULL,
                                 by = NULL,
                                 from_attribute = NULL) {
@@ -72,6 +74,7 @@ define_geoattribute.geomultistar <-
   function(gms,
            dimension = NULL,
            attribute = NULL,
+           additional_attributes = NULL,
            from_layer = NULL,
            by = NULL,
            from_attribute = NULL) {
@@ -84,6 +87,12 @@ define_geoattribute.geomultistar <-
     is_geographic_attribute <-
       attribute %in% names(gms$geodimension[[dimension]])
     stopifnot(is_geographic_attribute)
+    is_geographic_additional_attributes <-
+      additional_attributes %in% names(gms$geodimension[[dimension]])
+    stopifnot(is_geographic_additional_attributes)
+    is_geographic_names_by <-
+      names(by) %in% names(gms$geodimension[[dimension]])
+    stopifnot(is_geographic_names_by)
     if (is.null(attribute)) {
       # default
       stopifnot(!is.null(from_attribute))
@@ -97,7 +106,7 @@ define_geoattribute.geomultistar <-
       for (att in attribute) {
         if (!is.null(from_attribute)) {
           gms <-
-            define_geoattribute_from_attribute(gms, dimension, att, from_attribute)
+            define_geoattribute_from_attribute(gms, dimension, att, from_attribute, additional_attributes)
         } else {
           gms <-
             define_geoattribute_from_layer(gms, dimension, att, from_layer, by)
@@ -120,6 +129,7 @@ define_geoattribute.geomultistar <-
 #' @param dimension A string, dimension name.
 #' @param attribute A string, attribute name.
 #' @param from_attribute A string, attribute name.
+#' @param additional_attributes A vector, attribute names.
 #'
 #' @return A `geomultistar` object.
 #'
@@ -127,13 +137,17 @@ define_geoattribute.geomultistar <-
 define_geoattribute_from_attribute <- function(gms,
                                                dimension = NULL,
                                                attribute = NULL,
-                                               from_attribute = NULL) {
+                                               from_attribute = NULL,
+                                               additional_attributes = NULL) {
   stopifnot(!is.null(from_attribute))
   is_geographic_from_attribute <- from_attribute %in% names(gms$geodimension[[dimension]])
   stopifnot(is_geographic_from_attribute)
   geom <- gms$geodimension[[dimension]][[from_attribute]]
   from_attribute_geom_is_defined <- !is.null(geom)
   stopifnot(from_attribute_geom_is_defined)
+browser()
+  geom <- geom %>%
+    dplyr::left_join(gms$dimension[[dimension]], by = names(geom)[-length(names(geom))])
 
   if (attribute == sprintf("all_%s", dimension)) {
     gms$geodimension[[dimension]][[attribute]] <-
@@ -146,7 +160,7 @@ define_geoattribute_from_attribute <- function(gms,
   } else {
     key <- sprintf("%s_key", dimension)
     layer <-
-      gms$dimension[[dimension]][, c(key, attribute)] %>%
+      gms$dimension[[dimension]][, c(key, attribute, additional_attributes)] %>%
       dplyr::left_join(geom, by = key)
 
     from <- length(unique(layer[[from_attribute]]))
@@ -156,14 +170,14 @@ define_geoattribute_from_attribute <- function(gms,
 
     layer <- layer %>%
       sf::st_as_sf() %>%
-      dplyr::group_by_at(attribute) %>%
+      dplyr::group_by_at(c(attribute, additional_attributes)) %>%
       dplyr::summarize(.groups = "drop")
 
     gms$geodimension[[dimension]][[attribute]] <-
-      dplyr::left_join(gms$dimension[[dimension]][, c(key, attribute)], layer, by = attribute) %>%
+      dplyr::left_join(gms$dimension[[dimension]][, c(key, attribute, additional_attributes)], layer, by = c(attribute, additional_attributes)) %>%
       sf::st_as_sf()
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <-
-      length(unique(gms$geodimension[[dimension]][[attribute]][[attribute]]))
+      nrow(unique(gms$geodimension[[dimension]][[attribute]][, c(attribute, additional_attributes)]))
   }
   gms
 }
@@ -213,7 +227,7 @@ define_geoattribute_from_layer <- function(gms,
     stopifnot(relation_1_to_1_with_geometry)
 
     gms$geodimension[[dimension]][[attribute]] <-
-      gms$dimension[[dimension]][, c(key, attribute)] %>%
+      gms$dimension[[dimension]][, c(key, unique(c(attribute, names(by))))] %>%
       dplyr::left_join(geom, by = key) %>%
       sf::st_as_sf()
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <-

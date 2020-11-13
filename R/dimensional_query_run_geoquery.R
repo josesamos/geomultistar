@@ -85,7 +85,7 @@ run_geoquery.dimensional_query <-
            dimension = NULL,
            attribute = NULL,
            wider = FALSE) {
-
+browser()
     # run_query
     dq <- starschemar:::define_selected_facts(dq)
     dq <- starschemar:::define_selected_dimensions(dq)
@@ -186,15 +186,15 @@ default_attribute <- function(dq, dimension) {
 }
 
 
-#' Default attribute
+#' Specify geodimension
 #'
-#' Get the attribute with the most instances, if there is more than one.
+#' Get the geodimension data.
 #'
 #' @param dq A `dimensional_query` object.
 #' @param dimension A string, name of the geographic dimension.
 #' @param attribute A string, name of the selected geographic attribute.
 #'
-#' @return A string, name of the attribute.
+#' @return A `dimensional_query` object.
 #'
 #' @keywords internal
 specify_geodimension <- function(dq, dimension, attribute) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/dimensional_query_run_geoquery.R
 \name{specify_geodimension}
 \alias{specify_geodimension}
-\title{Default attribute}
+\title{Specify geodimension}
 \usage{
 specify_geodimension(dq, dimension, attribute)
 }
@@ -14,9 +14,9 @@ specify_geodimension(dq, dimension, attribute)
 \item{attribute}{A string, name of the selected geographic attribute.}
 }
 \value{
-A string, name of the attribute.
+A \code{dimensional_query} object.
 }
 \description{
-Get the attribute with the most instances, if there is more than one.
+Get the geodimension data.
 }
 \keyword{internal}
