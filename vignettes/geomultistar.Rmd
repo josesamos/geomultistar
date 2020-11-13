@@ -217,12 +217,12 @@ pander::pandoc.table(empty_county, split.table = Inf)
 
 It also happens for the same instances. In this case we can see that the associated geometry is of a different type.
 
-In the case of `state` and `state_name`, as they both have the same level of detail, they can be defined together from the same layer (`usa_states`).
+In the case of `state` the definition is carried out by associating the code to the corresponding one in the layer (`usa_states`).
 
 ```{r}
 gms <- gms %>%
   define_geoattribute(
-    attribute = c("state", "state_name"),
+    attribute = c("state"),
     from_layer = usa_states,
     by = c("state" = "state")
   ) 

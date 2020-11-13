@@ -20,8 +20,8 @@ test_that("get_empty_geoinstances works", {
     empty,
     structure(
       list(
-        where_key = 1L,
         city = "Bridgepor",
+        state = "CT",
         geometry = structure(
           list(structure(
             c(NA_real_, NA_real_), class = c("XY", "POINT",
@@ -46,18 +46,16 @@ test_that("get_empty_geoinstances works", {
         )
       ),
       row.names = c(NA,-1L),
-      name = "where",
-      type = "conformed",
       sf_column = "geometry",
       agr = structure(
-        c(where_key = NA_integer_,
-          city = NA_integer_),
+        c(city = NA_integer_,
+          state = NA_integer_),
         .Label = c("constant", "aggregate", "identity"),
         class = "factor"
       ),
       n_instances = 3L,
       class = c("sf", "tbl_df",
-                "tbl", "data.frame", "dimension_table")
+                "tbl", "data.frame")
     )
   )
 

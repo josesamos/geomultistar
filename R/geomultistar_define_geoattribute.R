@@ -145,39 +145,28 @@ define_geoattribute_from_attribute <- function(gms,
   geom <- gms$geodimension[[dimension]][[from_attribute]]
   from_attribute_geom_is_defined <- !is.null(geom)
   stopifnot(from_attribute_geom_is_defined)
-browser()
-  geom <- geom %>%
-    dplyr::left_join(gms$dimension[[dimension]], by = names(geom)[-length(names(geom))])
 
   if (attribute == sprintf("all_%s", dimension)) {
     gms$geodimension[[dimension]][[attribute]] <-
       as.data.frame(geom) %>%
-      dplyr::mutate(!!attribute := 0, .before = from_attribute) %>%
+      dplyr::mutate(!!attribute := attribute, .before = from_attribute) %>%
       sf::st_as_sf() %>%
       dplyr::group_by_at(attribute) %>%
       dplyr::summarize(.groups = "drop")
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <- 1
   } else {
-    key <- sprintf("%s_key", dimension)
-    layer <-
-      gms$dimension[[dimension]][, c(key, attribute, additional_attributes)] %>%
-      dplyr::left_join(geom, by = key)
-
-    from <- length(unique(layer[[from_attribute]]))
-    new <- length(unique(layer[[attribute]]))
-    from_attribute_is_more_detailed <- (from >= new)
-    stopifnot(from_attribute_is_more_detailed)
-
-    layer <- layer %>%
-      sf::st_as_sf() %>%
-      dplyr::group_by_at(c(attribute, additional_attributes)) %>%
+    names_geom <- names(geom)
+    names_geom <- names_geom[-length(names_geom)]
+    atts <- unique(c(attribute, additional_attributes))
+    layer <- geom %>%
+      dplyr::left_join(gms$dimension[[dimension]], by = names_geom) %>%
+      dplyr::select(atts) %>%
+      dplyr::group_by_at(atts) %>%
       dplyr::summarize(.groups = "drop")
 
-    gms$geodimension[[dimension]][[attribute]] <-
-      dplyr::left_join(gms$dimension[[dimension]][, c(key, attribute, additional_attributes)], layer, by = c(attribute, additional_attributes)) %>%
-      sf::st_as_sf()
+    gms$geodimension[[dimension]][[attribute]] <- layer
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <-
-      nrow(unique(gms$geodimension[[dimension]][[attribute]][, c(attribute, additional_attributes)]))
+      nrow(layer)
   }
   gms
 }
@@ -210,28 +199,26 @@ define_geoattribute_from_layer <- function(gms,
     geometry_level_all_length_is_1 <- (length(from_layer[[1]]) == 1)
     stopifnot(geometry_level_all_length_is_1)
     gms$geodimension[[dimension]][[attribute]] <-
-      tibble::tibble(!!attribute := 0,
+      tibble::tibble(!!attribute := attribute,
                      geometry = sf::st_geometry(from_layer)) %>%
       sf::st_as_sf()
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <- 1
   } else {
     stopifnot(!is.null(by))
-    key <- sprintf("%s_key", dimension)
+    atts <- unique(c(attribute, names(by)))
+    geom <- gms$dimension[[dimension]][, atts] %>%
+      dplyr::group_by_at(atts) %>%
+      dplyr::summarize(.groups = "drop")
     geom <-
-      dplyr::left_join(gms$dimension[[dimension]], from_layer, by = by) %>%
+      dplyr::left_join(geom, from_layer, by = by) %>%
       sf::st_as_sf() %>%
-      dplyr::select(key)
+      dplyr::select(atts) %>%
+      dplyr::group_by_at(atts) %>%
+      dplyr::summarize(.groups = "drop")
 
-    relation_1_to_1_with_geometry <-
-      length(gms$dimension[[dimension]][[1]]) == length(geom[[1]])
-    stopifnot(relation_1_to_1_with_geometry)
-
-    gms$geodimension[[dimension]][[attribute]] <-
-      gms$dimension[[dimension]][, c(key, unique(c(attribute, names(by))))] %>%
-      dplyr::left_join(geom, by = key) %>%
-      sf::st_as_sf()
+    gms$geodimension[[dimension]][[attribute]] <- geom
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <-
-      length(unique(gms$dimension[[dimension]][, names(by)])[[1]])
+      nrow(geom)
   }
   gms
 }

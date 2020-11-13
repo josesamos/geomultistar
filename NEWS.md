@@ -1,5 +1,7 @@
 # geomultistar 1.0.0.9000
 * Functions for defining dimensions and levels from geographic data layers: [geodimension()], [add_level()], [geolevel()], [add_geometry()], and [check_referential_integrity()].
+* Include the [wider] parameter in the [run_geoquery()] function to define layers where geographic elements are not repeated.
+* Funtion [save_as_geopackage()] to export the results of a geoquery as a layer with an explanatory table of the measurements.
 
 # geomultistar 1.0.0
 * Initial functionality.

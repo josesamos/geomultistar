@@ -85,48 +85,29 @@ run_geoquery.dimensional_query <-
            dimension = NULL,
            attribute = NULL,
            wider = FALSE) {
-browser()
-    # run_query
-    dq <- starschemar:::define_selected_facts(dq)
-    dq <- starschemar:::define_selected_dimensions(dq)
-    dq <- starschemar:::filter_selected_instances(dq)
-    dq <- starschemar:::delete_unused_foreign_keys(dq)
-    ###########
-
-    dq <- filter_geodimension(dq)
+    dq <- add_geodimension_additional_attributes(dq)
+    dq$output <- starschemar::run_query(dq, unify_by_grain)
+    ft <- starschemar::multistar_as_flat_table(dq$output, fact)
+    columns <- names(ft)
 
     if (is.null(dimension)) {
-      dimension <- names(dq$output$geodimension)[1]
+      dimension <- names(dq$input$geodimension)[1]
     }
     if (is.null(attribute)) {
       attribute <- default_attribute(dq, dimension)
     }
-    is_geographic_attribute <- attribute %in% names(dq$output$geodimension[[dimension]])
+    is_geographic_attribute <- attribute %in% names(dq$input$geodimension[[dimension]])
     stopifnot(is_geographic_attribute)
 
-    dq <- specify_geodimension(dq, dimension, attribute)
-    geodim <- dq$output$geodimension
-    dq$output$geodimension <- NULL
-
-    # run_query
-    dq <- starschemar:::remove_duplicate_dimension_rows(dq)
-    dq <- starschemar:::group_facts(dq)
-    if (unify_by_grain) {
-      dq <- starschemar:::unify_facts_by_grain (dq)
-    }
-    class(dq$output) <- class(dq$input)
-    ###########
-
-    ft <- starschemar::multistar_as_flat_table(dq$output, fact)
-    columns <- names(ft)
-
-    names_geodim <- names(geodim)
-    if (length(names_geodim) == 2) {
+    geodim <- dq$input$geodimension[[dimension]][[attribute]]
+    if (attribute == sprintf("all_%s", dimension)) {
       # all, geographic dimension not selected in query
-      ft[[attribute]] <- 0 # fk to join to the layer
+      ft <- tibble::add_column(ft, !!attribute := attribute, .before = 1)
+      # fk to join to the layer
       pk <- attribute
     } else {
-      pk <- names_geodim[2:(length(names_geodim) - 1)]
+      names_geodim <- names(geodim)
+      pk <- names_geodim[-length(names_geodim)]
     }
 
     if (wider) {
@@ -162,19 +143,11 @@ default_attribute <- function(dq, dimension) {
   attribute  <- sprintf("all_%s", dimension)
   if (!is.null(dq$output$dimension[[dimension]])) {
     candidates <- names(dq$output$dimension[[dimension]])[-1]
-    attribute <- candidates[1]
-    geographic_attribute_with_layer <-
-      !is.null(dq$output$geodimension[[dimension]][[attribute]])
-    stopifnot(geographic_attribute_with_layer)
-    n_instances <-
-      attr(dq$output$geodimension[[dimension]][[attribute]], "n_instances")
-    if (length(candidates) > 1) {
-      for (candidate in candidates) {
-        geographic_attribute_with_layer <-
-          !is.null(dq$output$geodimension[[dimension]][[candidate]])
-        stopifnot(geographic_attribute_with_layer)
+    n_instances <- 0
+    for (candidate in candidates) {
+      if (!is.null(dq$input$geodimension[[dimension]][[candidate]])) {
         ni <-
-          attr(dq$output$geodimension[[dimension]][[candidate]], "n_instances")
+          attr(dq$input$geodimension[[dimension]][[candidate]], "n_instances")
         if (ni > n_instances) {
           attribute <- candidate
           n_instances <- ni
@@ -186,78 +159,33 @@ default_attribute <- function(dq, dimension) {
 }
 
 
-#' Specify geodimension
-#'
-#' Get the geodimension data.
-#'
-#' @param dq A `dimensional_query` object.
-#' @param dimension A string, name of the geographic dimension.
-#' @param attribute A string, name of the selected geographic attribute.
-#'
-#' @return A `dimensional_query` object.
-#'
-#' @keywords internal
-specify_geodimension <- function(dq, dimension, attribute) {
-  all <- sprintf("all_%s", dimension)
-  if (is.null(dq$output$dimension[[dimension]])) {
-    # all, geographic dimension not selected in query
-    stopifnot(attribute == all)
-    geodim <- dq$output$geodimension[[dimension]][[all]]
-  }
-  else {
-    columns <- names(dq$output$dimension[[dimension]])
-    if (attribute == all) {
-      dq$output$dimension[[dimension]][[all]] <- 0 # fk to join to the layer
-    }
-    key <-
-      names(dq$output$geodimension[[dimension]][[attribute]])[1]
-    geodim <-
-      dplyr::left_join(dq$output$dimension[[dimension]], dq$output$geodimension[[dimension]][[attribute]][, key], by = key) %>%
-      sf::st_as_sf() %>%
-      dplyr::select(tidyselect::all_of(columns))
-    if (attribute == all) { # drop column all used to join
-      dq$output$dimension[[dimension]] <-
-        dq$output$dimension[[dimension]][, 1:(length(names(dq$output$dimension[[dimension]])) - 1)]
-    }
-  }
-  dq$output$geodimension <- geodim
-  dq
-}
 
-#' Filter geodimension
+#' Add geodimension additional attributes
 #'
-#' Filter the geodimension instances according to the query definition.
+#' Adds the geodimension attributes not explicitly selected in the query but
+#' included in the definition.
 #'
 #' @param dq A `dimensional_query` object.
 #'
 #' @return A `dimensional_query` object.
 #'
 #' @keywords internal
-filter_geodimension <- function(dq) {
-  for (dimension in names(dq$input$geodimension)) {
-    all <- sprintf("all_%s", dimension)
-    dq$output$geodimension[[dimension]][[all]] <-
-      dq$input$geodimension[[dimension]][[all]]
-  }
-  sel_geodimensions <-
-    intersect(names(dq$dimension), names(dq$input$geodimension))
-  for (dimension in sel_geodimensions) {
-    for (attribute in dq$dimension[[dimension]][-1]) {
-      if (!is.null(dq$input$geodimension[[dimension]][[attribute]])) {
-        if (!is.null(dq$key[[dimension]])) {
-          sel <- dq$input$geodimension[[dimension]][[attribute]][[1]] %in% dq$key[[dimension]]
-          dq$output$geodimension[[dimension]][[attribute]] <-
-            dq$input$geodimension[[dimension]][[attribute]][sel, ]
-        } else {
-          dq$output$geodimension[[dimension]][[attribute]] <-
-            dq$input$geodimension[[dimension]][[attribute]]
+add_geodimension_additional_attributes <- function(dq) {
+  names_geodimension <- names(dq$input$geodimension)
+  for (dimension in names(dq$dimension)) {
+    if (dimension %in% names_geodimension) {
+      sel_attributes <- dq$dimension[[dimension]][-1] # no pk
+      for (attribute in sel_attributes) {
+        names_attribute <- names(dq$input$geodimension[[dimension]][[attribute]])
+        if (length(names_attribute) > 2) {
+          names_attribute <- names_attribute[-length(names_attribute)]
+          dq$dimension[[dimension]] <- unique(c(dq$dimension[[dimension]], names_attribute))
         }
       }
     }
   }
   dq
 }
-
 
 
 #' widen_flat_table
@@ -306,7 +234,7 @@ widen_flat_table <- function(ft, pk, measures) {
     }
 
     ft <- dplyr::left_join(ft, ft_out, by = rest_out)
-    ft <- dplyr::select(ft,!rest_out)
+    ft <- dplyr::select(ft, !rest_out)
     names_ft <- names(ft)
     ft <- tidyr::pivot_wider(ft, names_from = names_ft[length(names_ft)], values_from = measures)
     ft <- tibble::add_column(ft, fid = 1:nrow(ft), .before = 1)
@@ -315,8 +243,7 @@ widen_flat_table <- function(ft, pk, measures) {
     for (m in measures[-1]) {
       out <- tibble::add_row(out, tibble::add_column(ft_out, measure = m, .after = 1))
     }
-    names_out <- names(out)
-    measure <- names_out[length(names_out)]
+    measure <- names(out)[2]
     out$id_variable <- paste(out[, measure][[1]], out$id_variable, sep = "_")
 
     list(sf = ft, variables = out)
