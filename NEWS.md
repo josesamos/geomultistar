@@ -1,3 +1,6 @@
+# geomultistar 1.1.0.9000
+
+
 # geomultistar 1.1.0
 * Include the [wider] parameter in the [run_geoquery()] function to define layers where geographic elements are not repeated.
 * Function [save_as_geopackage()] to export the results of a geoquery as a layer with an explanatory table of the measurements.
