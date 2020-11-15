@@ -15,6 +15,11 @@
 #' If no attribute is specified, the geographic attribute of the result with
 #' finer granularity is selected.
 #'
+#' In geographic layers, geographic objects are not repeated. The tables are
+#' wide: for each object the rest of the attributes are defined as columns. By
+#' means of the parameter `wider` we can indicate that we want a result of this
+#' type.
+#'
 #' @param dq A `dimensional_query` object.
 #' @param unify_by_grain A boolean, unify facts with the same grain.
 #' @param fact A string, name of the fact.
@@ -64,6 +69,9 @@
 #'
 #' sf <- gdq %>%
 #'   run_geoquery()
+#'
+#' sfw <- gdq %>%
+#'   run_geoquery(wider = TRUE)
 #'
 #' @export
 run_geoquery <-

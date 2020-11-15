@@ -158,7 +158,7 @@ gdqr <- dimensional_query(gms) %>%
     measures = c("pneumonia_and_influenza_deaths", "other_deaths")
   ) %>%
   filter_dimension(name = "when", week <= "03") %>%
-  run_geoquery()
+  run_geoquery(wider = TRUE)
 ```
 
 The result is a vector layer that we can save or we can see it as a map,
@@ -166,9 +166,9 @@ using the functions associated with the `sf` class.
 
 ``` r
 class(gdqr)
-#> [1] "sf"         "tbl_df"     "tbl"        "data.frame"
+#> [1] "list"
 
-plot(gdqr[,"n_deaths"])
+plot(gdqr$sf[,"n_deaths_01"])
 ```
 
 <img src="man/figures/README-example4-1.png" width="100%" />
@@ -181,3 +181,27 @@ level.
 Only the parts of the divisions made up of states where there is
 recorded data are shown. If we wanted to show the full extent of each
 division, we should have explicitly associated a layer at that level.
+
+The result includes the meaning of each variable in table form.
+
+|             id\_variable              |              measure              | week |
+| :-----------------------------------: | :-------------------------------: | :--: |
+|             n\_deaths\_01             |             n\_deaths             |  01  |
+|             n\_deaths\_02             |             n\_deaths             |  02  |
+|             n\_deaths\_03             |             n\_deaths             |  03  |
+|               count\_01               |               count               |  01  |
+|               count\_02               |               count               |  02  |
+|               count\_03               |               count               |  03  |
+| pneumonia\_and\_influenza\_deaths\_01 | pneumonia\_and\_influenza\_deaths |  01  |
+| pneumonia\_and\_influenza\_deaths\_02 | pneumonia\_and\_influenza\_deaths |  02  |
+| pneumonia\_and\_influenza\_deaths\_03 | pneumonia\_and\_influenza\_deaths |  03  |
+|           other\_deaths\_01           |           other\_deaths           |  01  |
+|           other\_deaths\_02           |           other\_deaths           |  02  |
+|           other\_deaths\_03           |           other\_deaths           |  03  |
+
+It can be saved directly as a *GeoPackage*, using the
+`save_as_geopackage` function.
+
+``` r
+save_as_geopackage(vl_sf_w, "division")
+```

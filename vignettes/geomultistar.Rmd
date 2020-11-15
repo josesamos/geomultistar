@@ -315,6 +315,41 @@ Although we have indicated in the query the attributes `division_name` and `regi
 
 Only the parts of the divisions made up of states where there is recorded data are shown. If we wanted to show the full extent of each division, we should have explicitly associated a layer at that level.
 
+## Get wide tables
+
+In geographic layers, geographic objects usually are not repeated. The tables are wide: for each object the rest of the attributes are defined as columns. By means of the parameter `wider` we can indicate that we want a result of this type.
+
+```{r}
+vl_sf_w <- gdqr %>%
+  run_geoquery(wider = TRUE)
+```
+
+The first rows of the result can be seen below in table form.
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(head(vl_sf_w$sf, 12), split.table = Inf)
+```
+
+We can see that the attributes that are multivalued for each geographic object have been eliminated from the result table, and new measurement columns have been generated: one for each combination of values of these attributes with the original measurements.
+
+The meaning of the name of the columns of the measurements is part of the result obtained, also in table format, as can be seen below.
+
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(head(vl_sf_w$variables, 12), split.table = Inf)
+```
+
+In this case there was only one variable with a multiplicity greater than one. If there were more variables in this situation, they would be added to this table in the same way.
+
+This dictionary table and layer structure can be saved in *GeoPackage* format using the `save_as_geopackage` function. 
+
+```{r, eval = FALSE}
+save_as_geopackage(vl_sf_w, "division")
+```
+
+The GeoPackages thus obtained can be used directly, for example in *QGIS*.
+
+
 # Conclusions
 
 To generate the multidimensional structure on which to define queries, we can use the functions of the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package or, if we already have the multidimensional design implemented, the import functions included in this package.

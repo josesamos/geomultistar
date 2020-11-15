@@ -54,6 +54,11 @@ there is only one available.
 
 If no attribute is specified, the geographic attribute of the result with
 finer granularity is selected.
+
+In geographic layers, geographic objects are not repeated. The tables are
+wide: for each object the rest of the attributes are defined as columns. By
+means of the parameter \code{wider} we can indicate that we want a result of this
+type.
 }
 \examples{
 library(tidyr)
@@ -92,6 +97,9 @@ gdq <- dimensional_query(gms) \%>\%
 
 sf <- gdq \%>\%
   run_geoquery()
+
+sfw <- gdq \%>\%
+  run_geoquery(wider = TRUE)
 
 }
 \seealso{

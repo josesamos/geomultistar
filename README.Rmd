@@ -136,7 +136,7 @@ gdqr <- dimensional_query(gms) %>%
     measures = c("pneumonia_and_influenza_deaths", "other_deaths")
   ) %>%
   filter_dimension(name = "when", week <= "03") %>%
-  run_geoquery()
+  run_geoquery(wider = TRUE)
 ```
 
 The result is a vector layer that we can save or we can see it as a map, using the functions associated with the `sf` class.
@@ -144,9 +144,22 @@ The result is a vector layer that we can save or we can see it as a map, using t
 ```{r example4}
 class(gdqr)
 
-plot(gdqr[,"n_deaths"])
+plot(gdqr$sf[,"n_deaths_01"])
 ```
 
 Although we have indicated in the query the attributes `division_name` and `region_name`, as can be seen in the figure, the result obtained is at the finest granularity level, in this case at the `division_name` level.
 
 Only the parts of the divisions made up of states where there is recorded data are shown. If we wanted to show the full extent of each division, we should have explicitly associated a layer at that level.
+
+The result includes the meaning of each variable in table form.
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(head(gdqr$variables, 12), split.table = Inf)
+```
+
+It can be saved directly as a *GeoPackage*, using the `save_as_geopackage` function. 
+
+```{r, eval = FALSE}
+save_as_geopackage(vl_sf_w, "division")
+```
+
