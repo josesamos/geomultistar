@@ -4,7 +4,7 @@ citEntry(entry = "Manual",
   title        = "{geomultistar}: Multidimensional Queries Enriched with Geographic Data",
   author       = personList(as.person("Jose Samos")),
   year         = "2020",
-  note         = "R package version 1.0.0",
+  note         = "R package version 1.1.0",
   url          = "https://CRAN.R-project.org/package=geomultistar",
 
   textVersion  =

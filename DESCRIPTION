@@ -1,7 +1,7 @@
 Package: geomultistar
 Type: Package
 Title: Multidimensional Queries Enriched with Geographic Data
-Version: 1.0.0.9000
+Version: 1.1.0
 Authors@R: 
     person(given = "Jose",
            family = "Samos",
