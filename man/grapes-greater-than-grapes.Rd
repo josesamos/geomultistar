@@ -8,13 +8,7 @@
 \alias{define_geoattribute_from_layer}
 \title{\code{geolevel} S3 class}
 \usage{
-new_geolevel(
-  name = NULL,
-  layer = NULL,
-  attributes = NULL,
-  key = NULL,
-  geometry = NULL
-)
+new_geolevel(name = NULL, layer = NULL, attributes = NULL, key = NULL)
 
 define_geoattribute_from_attribute(
   gms,
@@ -40,8 +34,6 @@ define_geoattribute_from_layer(
 \item{attributes}{A vector, selected attributes.}
 
 \item{key}{A vector, attributes that compose the key.}
-
-\item{geometry}{A string, type of geometry of the layer.}
 
 \item{gms}{A \code{geomultistar} object.}
 

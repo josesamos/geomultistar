@@ -5,16 +5,16 @@
 \alias{add_geometry.geolevel}
 \title{Add geometry to a level}
 \usage{
-add_geometry(gl, layer = NULL, key = NULL, geometry = NULL)
+add_geometry(gl, layer = NULL, key = NULL)
 
-\method{add_geometry}{geolevel}(gl, layer = NULL, key = NULL, geometry = NULL)
+\method{add_geometry}{geolevel}(gl, layer = NULL, key = NULL)
 }
 \arguments{
 \item{gl}{A \code{geolevel} object.}
 
 \item{layer}{A \code{sf} object.}
 
-\item{geometry}{A string, type of geometry of the layer.}
+\item{key}{A vector of string.}
 }
 \value{
 A \code{geolevel}.
@@ -35,7 +35,7 @@ Other geodimension functions:
 \code{\link{add_level}()},
 \code{\link{geodimension}()},
 \code{\link{geolevel}()},
-\code{\link{get_empty_geometry}()},
+\code{\link{get_empty_geometry_instances}()},
 \code{\link{get_unrelated_instances}()},
 \code{\link{relate_levels}()}
 }

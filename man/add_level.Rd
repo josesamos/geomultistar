@@ -33,7 +33,7 @@ Other geodimension functions:
 \code{\link{add_geometry}()},
 \code{\link{geodimension}()},
 \code{\link{geolevel}()},
-\code{\link{get_empty_geometry}()},
+\code{\link{get_empty_geometry_instances}()},
 \code{\link{get_unrelated_instances}()},
 \code{\link{relate_levels}()}
 }

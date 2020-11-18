@@ -6,7 +6,7 @@
 #'
 #' @param gl A `geolevel` object.
 #' @param layer A `sf` object.
-#' @param key
+#' @param key A vector of string.
 #'
 #' @return A `geolevel`.
 #'
@@ -32,6 +32,7 @@ add_geometry.geolevel <- function(gl,
                                   key = NULL) {
   geometry <- get_geometry(layer)
   stopifnot(geometry %in% c("polygon", "point", "line"))
+  stopifnot(!(geometry %in% names(gl$geometry)))
   level_key <- attr(gl, "key")
   if (is.null(key)) {
     key <- level_key
@@ -81,17 +82,17 @@ add_geometry.geolevel <- function(gl,
 #'
 #'
 #' @export
-get_empty_geometry <- function(gl,
+get_empty_geometry_instances <- function(gl,
                          geometry = NULL) {
-  UseMethod("get_empty_geometry")
+  UseMethod("get_empty_geometry_instances")
 }
 
 
-#' @rdname get_empty_geometry
+#' @rdname get_empty_geometry_instances
 #' @export
-get_empty_geometry.geolevel <- function(gl,
+get_empty_geometry_instances.geolevel <- function(gl,
                                   geometry = NULL) {
-browser()
+  stopifnot(!(geometry %in% names(gl$geometry)))
   if (is.null(geometry)) {
     geometry <- names(gl$geometry)[1]
   }

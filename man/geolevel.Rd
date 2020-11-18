@@ -4,13 +4,7 @@
 \alias{geolevel}
 \title{\code{geolevel} S3 class}
 \usage{
-geolevel(
-  name = NULL,
-  layer = NULL,
-  attributes = NULL,
-  key = NULL,
-  geometry = NULL
-)
+geolevel(name = NULL, layer = NULL, attributes = NULL, key = NULL)
 }
 \arguments{
 \item{name}{A string, level name.}
@@ -20,8 +14,6 @@ geolevel(
 \item{attributes}{A vector, selected attributes.}
 
 \item{key}{A vector, attributes that compose the key.}
-
-\item{geometry}{A string, type of geometry of the layer.}
 }
 \value{
 A \code{geolevel} object.
@@ -40,14 +32,8 @@ The \emph{Top} level of any dimension is a special case since it has only one
 object. This situation is indicated by a boolean parameter.
 }
 \examples{
+library(tidyr)
 
-city <-
-  geolevel(
-    name = "city",
-    layer = usa_cities,
-    key = c("city", "state"),
-    geometry = "point"
-  )
 
 }
 \seealso{
@@ -57,7 +43,7 @@ Other geodimension functions:
 \code{\link{add_geometry}()},
 \code{\link{add_level}()},
 \code{\link{geodimension}()},
-\code{\link{get_empty_geometry}()},
+\code{\link{get_empty_geometry_instances}()},
 \code{\link{get_unrelated_instances}()},
 \code{\link{relate_levels}()}
 }

@@ -54,7 +54,7 @@ relate_levels.geodimension <- function(gd,
     } else if ("line" %in% lower_geom) {
       lower_geom <- "line"
     }
-    res <- sf::st_join(gd$geolevel[[lower_level_name]]$geometry[[lower_geom]], gd$geolevel[[upper_level_name]]$geometry[["polygon"]], join = st_within) %>%
+    res <- sf::st_join(gd$geolevel[[lower_level_name]]$geometry[[lower_geom]], gd$geolevel[[upper_level_name]]$geometry[["polygon"]], join = sf::st_within) %>%
       sf::st_drop_geometry()
     names(res) <- c(lower_level_name, upper_level_name)
     gd$relation[[lower_level_name]] <-

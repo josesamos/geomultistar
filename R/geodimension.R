@@ -43,18 +43,8 @@ new_geodimension <-
 #' @seealso
 #'
 #' @examples
+#' library(tidyr)
 #'
-#' city <-
-#'   geolevel(
-#'     name = "city",
-#'     layer = usa_cities,
-#'     key = c("city", "state"),
-#'     geometry = "point"
-#'   )
-#'
-#' usa_city <-
-#'   geodimension(name = "usa_city",
-#'                level = city)
 #'
 #' @export
 geodimension <- function(name = NULL,

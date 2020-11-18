@@ -109,6 +109,7 @@ new_geolevel <-
 #' @seealso
 #'
 #' @examples
+#' library(tidyr)
 #'
 #'
 #' @export
@@ -132,13 +133,13 @@ geolevel <-
 #'
 #' @keywords internal
 get_geometry <- function(layer) {
-  geo <- as.character(sf::st_geometry_type(layer, by_geometry = FALSE))
-  if (geo %in% c("POINT", "MULTIPOINT")){
-    return("point")
-  } else if (geo %in% c("LINESTRING", "MULTILINESTRING", "CURVE", "MULTICURVE", "COMPOUNDCURVE")) {
-    return("line")
-  } else if (geo %in% c("CIRCULARSTRING", "CURVEPOLYGON", "MULTIPOLYGON", "TRIANGLE", "POLYGON")) {
+  geo <- unique(as.character(sf::st_geometry_type(layer, by_geometry = TRUE)))
+  if (length(intersect(geo, c("CIRCULARSTRING", "CURVEPOLYGON", "MULTIPOLYGON", "TRIANGLE", "POLYGON"))) > 0) {
     return("polygon")
+  } else if (length(intersect(geo, c("LINESTRING", "MULTILINESTRING", "CURVE", "MULTICURVE", "COMPOUNDCURVE"))) > 0) {
+    return("line")
+  } else if (length(intersect(geo, c("POINT", "MULTIPOINT"))) > 0) {
+    return("point")
   }
   return("other")
 }
