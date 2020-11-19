@@ -15,4 +15,3 @@ A string.
 \description{
 get_geometry
 }
-\keyword{internal}

@@ -42,6 +42,8 @@ library(tidyr)
 Other geodimension functions: 
 \code{\link{add_geometry}()},
 \code{\link{add_level}()},
+\code{\link{complete_point_geometry}()},
+\code{\link{complete_relation_by_geography}()},
 \code{\link{geodimension}()},
 \code{\link{get_empty_geometry_instances}()},
 \code{\link{get_unrelated_instances}()},

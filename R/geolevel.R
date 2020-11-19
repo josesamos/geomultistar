@@ -131,7 +131,7 @@ geolevel <-
 #'
 #' @return A string.
 #'
-#' @keywords internal
+#' @export
 get_geometry <- function(layer) {
   geo <- unique(as.character(sf::st_geometry_type(layer, by_geometry = TRUE)))
   if (length(intersect(geo, c("CIRCULARSTRING", "CURVEPOLYGON", "MULTIPOLYGON", "TRIANGLE", "POLYGON"))) > 0) {
