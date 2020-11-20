@@ -37,7 +37,8 @@ Imports:
     RSQLite,
     rgdal,
     tidyr,
-    pander
+    pander,
+    generics
 Suggests: 
     testthat,
     knitr,
