@@ -4,6 +4,10 @@
 # geomultistar: Multidimensional Queries Enriched with Geographic Data
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/geomultistar)](https://CRAN.R-project.org/package=geomultistar)
+[![R-CMD-check](https://github.com/josesamos/geomultistar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/josesamos/geomultistar/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 *Multidimensional systems* allow complex queries to be carried out in an

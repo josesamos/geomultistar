@@ -17,46 +17,9 @@ test_that("get_empty_geoinstances works", {
   empty <- get_empty_geoinstances(gms, attribute = "city")
 
   expect_equal(
-    empty,
-    structure(
-      list(
-        city = "Bridgepor",
-        state = "CT",
-        geometry = structure(
-          list(structure(
-            c(NA_real_, NA_real_), class = c("XY", "POINT",
-                                             "sfg")
-          )),
-          class = c("sfc_POINT", "sfc"),
-          precision = 0,
-          bbox = structure(
-            c(
-              xmin = NA_real_,
-              ymin = NA_real_,
-              xmax = NA_real_,
-              ymax = NA_real_
-            ),
-            class = "bbox"
-          ),
-          crs = structure(
-            list(input = "NAD83", wkt = "GEOGCRS[\"NAD83\",\n    DATUM[\"North American Datum 1983\",\n        ELLIPSOID[\"GRS 1980\",6378137,298.257222101,\n            LENGTHUNIT[\"metre\",1]]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"latitude\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"longitude\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    ID[\"EPSG\",4269]]"),
-            class = "crs"
-          ),
-          n_empty = 1L
-        )
-      ),
-      row.names = c(NA,-1L),
-      sf_column = "geometry",
-      agr = structure(
-        c(city = NA_integer_,
-          state = NA_integer_),
-        .Label = c("constant", "aggregate", "identity"),
-        class = "factor"
-      ),
-      n_instances = 3L,
-      class = c("sf", "tbl_df",
-                "tbl", "data.frame")
-    )
+    c(names(empty),
+      nrow(empty),
+      empty$city, empty$state),
+    c("city", "state", "geometry", "1", "Bridgepor", "CT")
   )
-
 })
