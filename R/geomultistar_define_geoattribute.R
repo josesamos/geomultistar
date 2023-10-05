@@ -176,7 +176,7 @@ define_geoattribute_from_attribute <- function(gms,
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
 #' @param attribute A string, attribute name.
-#' @param layer A `sf` object
+#' @param from_layer A `sf` object
 #' @param by a vector of correspondence of attributes of the dimension with the
 #'   `sf` structure.
 #'

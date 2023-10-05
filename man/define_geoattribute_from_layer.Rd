@@ -19,10 +19,10 @@ define_geoattribute_from_layer(
 
 \item{attribute}{A string, attribute name.}
 
+\item{from_layer}{A \code{sf} object}
+
 \item{by}{a vector of correspondence of attributes of the dimension with the
 \code{sf} structure.}
-
-\item{layer}{A \code{sf} object}
 }
 \value{
 A \code{geomultistar} object.

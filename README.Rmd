@@ -13,7 +13,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# geomultistar
+# geomultistar <a href="https://josesamos.github.io/geomultistar/"><img src="man/figures/logo.png" align="right" height="139" alt="geomultistar website" /></a>
+
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/geomultistar)](https://CRAN.R-project.org/package=geomultistar)

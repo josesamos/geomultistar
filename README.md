@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# geomultistar
+# geomultistar <a href="https://josesamos.github.io/geomultistar/"><img src="man/figures/logo.png" align="right" height="139" alt="geomultistar website" /></a>
 
 <!-- badges: start -->
 
