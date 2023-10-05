@@ -76,26 +76,6 @@ accessed by name (county and state), those of the same name within the state
 have been grouped together.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Read by:</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># filepath &lt;- "data/cb_2018_us_county_20m/cb_2018_us_county_20m.shp"</span></span></span>
-<span class="r-in"><span><span class="co"># usa_counties &lt;- st_read(filepath)  |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">#   dplyr::select(</span></span></span>
-<span class="r-in"><span><span class="co">#     geo_id = GEOID,</span></span></span>
-<span class="r-in"><span><span class="co">#     state_fp = STATEFP,</span></span></span>
-<span class="r-in"><span><span class="co">#     county_fp = COUNTYFP,</span></span></span>
-<span class="r-in"><span><span class="co">#     county = NAME</span></span></span>
-<span class="r-in"><span><span class="co">#   )</span></span></span>
-<span class="r-in"><span><span class="co"># states &lt;- sf::st_drop_geometry(usa_states[, c("geo_id", "state")])</span></span></span>
-<span class="r-in"><span><span class="co"># usa_counties &lt;- usa_counties |&gt;</span></span></span>
-<span class="r-in"><span><span class="co">#  dplyr::left_join(states, by = c("state_fp" = "geo_id"))</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
