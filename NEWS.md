@@ -1,4 +1,4 @@
-# geomultistar 1.1.0.9000
+# geomultistar 1.1.1
 * Update documentation and website.
 * Use core pipe operator.
 
