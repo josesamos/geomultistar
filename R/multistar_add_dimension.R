@@ -27,31 +27,29 @@
 #' @return A `multistar`.
 #'
 #' @family multistar functions
-#' @seealso
 #'
 #' @examples
-#' library(tidyr)
 #'
-#' ms <- multistar() %>%
+#' ms <- multistar() |>
 #'   add_facts(
 #'     fact_name = "mrs_age",
 #'     fact_table = mrs_fact_age,
 #'     measures = "n_deaths",
 #'     nrow_agg = "count"
-#'   ) %>%
+#'   ) |>
 #'   add_facts(
 #'     fact_name = "mrs_cause",
 #'     fact_table = mrs_fact_cause,
 #'     measures = c("pneumonia_and_influenza_deaths", "other_deaths"),
 #'     nrow_agg = "nrow_agg"
-#'   ) %>%
+#'   ) |>
 #'   add_dimension(
 #'     dimension_name = "where",
 #'     dimension_table = mrs_where,
 #'     dimension_key = "where_pk",
 #'     fact_name = "mrs_age",
 #'     fact_key = "where_fk"
-#'   ) %>%
+#'   ) |>
 #'   add_dimension(
 #'     dimension_name = "when",
 #'     dimension_table = mrs_when,
@@ -59,7 +57,7 @@
 #'     fact_name = "mrs_age",
 #'     fact_key = "when_fk",
 #'     key_as_data = TRUE
-#'   ) %>%
+#'   ) |>
 #'   add_dimension(
 #'     dimension_name = "who",
 #'     dimension_table = mrs_who,

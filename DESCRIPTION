@@ -1,48 +1,40 @@
-Package: geomultistar
 Type: Package
+Package: geomultistar
 Title: Multidimensional Queries Enriched with Geographic Data
 Version: 1.1.0.9000
 Authors@R: 
-    person(given = "Jose",
-           family = "Samos",
-           role = c("aut", "cre", "cph"),
-           email = "jsamos@ugr.es",
+    person("Jose", "Samos", , "jsamos@ugr.es", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-4457-3439"))
-Description: Multidimensional systems allow complex queries to be 
-    carried out in an easy way. The geographical dimension, 
-    together with the temporal dimension, plays a fundamental 
-    role in multidimensional systems. Through this package, vector 
-    layers can be associated to the attributes of geographic 
-    dimensions, so that the results of multidimensional queries 
-    can be obtained directly as vector layers. The multidimensional 
-    structures on which we can define the queries can be created 
-    from a flat table or imported directly using functions from 
+Description: Multidimensional systems allow complex queries to be carried
+    out in an easy way. The geographical dimension, together with the
+    temporal dimension, plays a fundamental role in multidimensional
+    systems. Through this package, vector layers can be associated to the
+    attributes of geographic dimensions, so that the results of
+    multidimensional queries can be obtained directly as vector layers.
+    The multidimensional structures on which we can define the queries can
+    be created from a flat table or imported directly using functions from
     this package.
 License: MIT + file LICENSE
+Depends: 
+    R (>= 2.10)
+Imports: 
+    dplyr,
+    rlang,
+    RSQLite,
+    sf,
+    starschemar,
+    tibble,
+    tidyr,
+    tidyselect
+Suggests: 
+    knitr,
+    pander,
+    rmarkdown,
+    testthat
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
-Imports: 
-    dplyr,
-    tibble,
-    tidyselect,
-    starschemar,
-    sf,
-    magrittr,
-    rlang,
-    stringr,
-    snakecase,
-    RSQLite,
-    rgdal,
-    tidyr,
-    pander,
-    generics
-Suggests: 
-    testthat,
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
-Depends: 
-    R (>= 2.10)
+RoxygenNote: 7.2.3

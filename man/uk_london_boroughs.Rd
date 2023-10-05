@@ -24,11 +24,11 @@ Since not so much detail is needed, the geometry has been simplified 20 m.
 # Read by:
 #
 # filepath <- "data/London_Borough_Excluding_MHW/London_Borough_Excluding_MHW.shp"
-# uk_london_boroughs <- st_read(filepath)  \%>\%
+# uk_london_boroughs <- st_read(filepath)  |>
 #     dplyr::select(
 #       borough = NAME,
 #       gss_code = GSS_CODE
-#     ) \%>\%
+#     ) |>
 #   st_simplify(dTolerance = 20)
 
 }

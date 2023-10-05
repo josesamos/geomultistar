@@ -21,7 +21,7 @@ From the original dataset, some fields have been selected and renamed.
 # Read by:
 #
 # filepath <- "data/cb_2018_us_region_20m/cb_2018_us_region_20m.shp"
-# usa_regions <- st_read(filepath)  \%>\%
+# usa_regions <- st_read(filepath)  |>
 #   dplyr::select(geo_id = GEOID,
 #                 region = NAME)
 

@@ -4,13 +4,10 @@
 # geomultistar: Multidimensional Queries Enriched with Geographic Data
 
 <!-- badges: start -->
-
-[![Travis build
-status](https://travis-ci.com/josesamos/geomultistar.svg?branch=master)](https://travis-ci.com/josesamos/geomultistar)
 <!-- badges: end -->
 
 *Multidimensional systems* allow complex queries to be carried out in an
-easy way. The *geographical dimension*, together with the *temporal
+easy way. The *geographic dimension*, together with the *temporal
 dimension*, plays a fundamental role in multidimensional systems.
 Through the `geomultistar` package, vector layers can be associated to
 the attributes of geographic dimensions, so that the results of
@@ -57,29 +54,28 @@ included below. The measures of the facts are defined and the
 relationships between facts and dimensions are established.
 
 ``` r
-library(tidyr)
 library(geomultistar)
 
-ms <- multistar() %>%
+ms <- multistar() |>
   add_facts(
     fact_name = "mrs_age",
     fact_table = mrs_fact_age,
     measures = "n_deaths",
     nrow_agg = "count"
-  ) %>%
+  ) |>
   add_facts(
     fact_name = "mrs_cause",
     fact_table = mrs_fact_cause,
     measures = c("pneumonia_and_influenza_deaths", "other_deaths"),
     nrow_agg = "nrow_agg"
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "where",
     dimension_table = mrs_where,
     dimension_key = "where_pk",
     fact_name = "mrs_age",
     fact_key = "where_fk"
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "when",
     dimension_table = mrs_when,
@@ -87,17 +83,17 @@ ms <- multistar() %>%
     fact_name = "mrs_age",
     fact_key = "when_fk",
     key_as_data = TRUE
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "who",
     dimension_table = mrs_who,
     dimension_key = "who_pk",
     fact_name = "mrs_age",
     fact_key = "who_fk"
-  ) %>%
+  ) |>
   relate_dimension(dimension_name = "where",
                    fact_name = "mrs_cause",
-                   fact_key = "where_fk") %>%
+                   fact_key = "where_fk") |>
   relate_dimension(dimension_name = "when",
                    fact_name = "mrs_cause",
                    fact_key = "when_fk")
@@ -110,25 +106,25 @@ a `geomultistar` structure.
 
 ``` r
 library(sf)
-#> Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1
+#> Linking to GEOS 3.11.2, GDAL 3.6.2, PROJ 9.2.0; sf_use_s2() is TRUE
 
 gms <-
-  geomultistar(ms, geodimension = "where") %>%
+  geomultistar(ms, geodimension = "where") |>
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,
     by = c("city" = "city", "state" = "state")
-  ) %>%
+  ) |>
   define_geoattribute(
     attribute = "county",
     from_layer = usa_counties,
     by = c("county" = "county", "state" = "state")
-  )  %>%
+  )  |>
   define_geoattribute(
     attribute = c("state"),
     from_layer = usa_states,
     by = c("state" = "state")
-  ) %>%
+  ) |>
   define_geoattribute(from_attribute = "state")
 ```
 
@@ -146,18 +142,18 @@ taken into account to result in a new vector layer.
 ``` r
 library(starschemar)
 
-gdqr <- dimensional_query(gms) %>%
+gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
-                   attributes = c("division_name", "region_name")) %>%
+                   attributes = c("division_name", "region_name")) |>
   select_dimension(name = "when",
-                   attributes = c("year", "week")) %>%
+                   attributes = c("year", "week")) |>
   select_fact(name = "mrs_age",
-              measures = c("n_deaths")) %>%
+              measures = c("n_deaths")) |>
   select_fact(
     name = "mrs_cause",
     measures = c("pneumonia_and_influenza_deaths", "other_deaths")
-  ) %>%
-  filter_dimension(name = "when", week <= "03") %>%
+  ) |>
+  filter_dimension(name = "when", week <= "03") |>
   run_geoquery(wider = TRUE)
 ```
 
@@ -184,20 +180,20 @@ division, we should have explicitly associated a layer at that level.
 
 The result includes the meaning of each variable in table form.
 
-|             id\_variable              |              measure              | week |
-| :-----------------------------------: | :-------------------------------: | :--: |
-|             n\_deaths\_01             |             n\_deaths             |  01  |
-|             n\_deaths\_02             |             n\_deaths             |  02  |
-|             n\_deaths\_03             |             n\_deaths             |  03  |
-|               count\_01               |               count               |  01  |
-|               count\_02               |               count               |  02  |
-|               count\_03               |               count               |  03  |
-| pneumonia\_and\_influenza\_deaths\_01 | pneumonia\_and\_influenza\_deaths |  01  |
-| pneumonia\_and\_influenza\_deaths\_02 | pneumonia\_and\_influenza\_deaths |  02  |
-| pneumonia\_and\_influenza\_deaths\_03 | pneumonia\_and\_influenza\_deaths |  03  |
-|           other\_deaths\_01           |           other\_deaths           |  01  |
-|           other\_deaths\_02           |           other\_deaths           |  02  |
-|           other\_deaths\_03           |           other\_deaths           |  03  |
+|                 id_variable                 |                 measure                  | week |
+|:-------------------------------------------:|:----------------------------------------:|:----:|
+|                 n_deaths_01                 |                 n_deaths                 |  01  |
+|                 n_deaths_02                 |                 n_deaths                 |  02  |
+|                 n_deaths_03                 |                 n_deaths                 |  03  |
+|                  count_01                   |                  count                   |  01  |
+|                  count_02                   |                  count                   |  02  |
+|                  count_03                   |                  count                   |  03  |
+| mrs_cause_pneumonia_and_influenza_deaths_01 | mrs_cause_pneumonia_and_influenza_deaths |  01  |
+| mrs_cause_pneumonia_and_influenza_deaths_02 | mrs_cause_pneumonia_and_influenza_deaths |  02  |
+| mrs_cause_pneumonia_and_influenza_deaths_03 | mrs_cause_pneumonia_and_influenza_deaths |  03  |
+|          mrs_cause_other_deaths_01          |          mrs_cause_other_deaths          |  01  |
+|          mrs_cause_other_deaths_02          |          mrs_cause_other_deaths          |  02  |
+|          mrs_cause_other_deaths_03          |          mrs_cause_other_deaths          |  03  |
 
 It can be saved directly as a *GeoPackage*, using the
 `save_as_geopackage` function.

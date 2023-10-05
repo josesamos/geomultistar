@@ -25,7 +25,6 @@ new_multistar <-
 #' @return A `multistar` object.
 #'
 #' @family multistar functions
-#' @seealso
 #'
 #' @examples
 #'

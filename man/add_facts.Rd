@@ -60,15 +60,14 @@ attribute of the table or the name that you want to assign to it (if it does
 not exist, it is added to the table).
 }
 \examples{
-library(tidyr)
 
-ms <- multistar() \%>\%
+ms <- multistar() |>
   add_facts(
     fact_name = "mrs_age",
     fact_table = mrs_fact_age,
     measures = "n_deaths",
     nrow_agg = "count"
-  ) \%>\%
+  ) |>
   add_facts(
     fact_name = "mrs_cause",
     fact_table = mrs_fact_cause,
@@ -78,8 +77,6 @@ ms <- multistar() \%>\%
 
 }
 \seealso{
-
-
 Other multistar functions: 
 \code{\link{add_dimension}()},
 \code{\link{multistar}()},

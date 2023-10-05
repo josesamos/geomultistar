@@ -31,28 +31,26 @@
 #' @return A `geomultistar` object.
 #'
 #' @family geo functions
-#' @seealso
 #'
 #' @examples
-#' library(tidyr)
 #' library(starschemar)
 #' library(sf)
 #'
-#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
 #'     by = c("city" = "city", "state" = "state")
 #'   )
 #'
-#' gms <- gms %>%
+#' gms <- gms |>
 #'   define_geoattribute(attribute = c("region", "all_where"),
 #'                       from_attribute = "city")
 #'
-#' gms <- gms %>%
+#' gms <- gms |>
 #'   define_geoattribute(from_attribute = "city")
 #'
-#' gms <- gms %>%
+#' gms <- gms |>
 #'   define_geoattribute(attribute = "all_where",
 #'                       from_layer = usa_nation)
 #'
@@ -122,8 +120,6 @@ define_geoattribute.geomultistar <-
 #'
 #' Define a geoattribute from another.
 #'
-#' @importFrom magrittr %>%
-#' @name %>%
 #' @importFrom rlang :=
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
@@ -148,20 +144,20 @@ define_geoattribute_from_attribute <- function(gms,
 
   if (attribute == sprintf("all_%s", dimension)) {
     gms$geodimension[[dimension]][[attribute]] <-
-      as.data.frame(geom) %>%
-      dplyr::mutate(!!attribute := attribute, .before = from_attribute) %>%
-      sf::st_as_sf() %>%
-      dplyr::group_by_at(attribute) %>%
+      as.data.frame(geom) |>
+      dplyr::mutate(!!attribute := attribute, .before = from_attribute) |>
+      sf::st_as_sf() |>
+      dplyr::group_by_at(attribute) |>
       dplyr::summarize(.groups = "drop")
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <- 1
   } else {
     names_geom <- names(geom)
     names_geom <- names_geom[-length(names_geom)]
     atts <- unique(c(attribute, additional_attributes))
-    layer <- geom %>%
-      dplyr::left_join(gms$dimension[[dimension]], by = names_geom) %>%
-      dplyr::select(atts) %>%
-      dplyr::group_by_at(atts) %>%
+    layer <- geom |>
+      dplyr::left_join(gms$dimension[[dimension]], by = names_geom) |>
+      dplyr::select(atts) |>
+      dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
 
     gms$geodimension[[dimension]][[attribute]] <- layer
@@ -176,8 +172,6 @@ define_geoattribute_from_attribute <- function(gms,
 #'
 #' Define an attribute from a layer.
 #'
-#' @importFrom magrittr %>%
-#' @name %>%
 #' @importFrom rlang :=
 #' @param gms A `geomultistar` object.
 #' @param dimension A string, dimension name.
@@ -200,20 +194,20 @@ define_geoattribute_from_layer <- function(gms,
     stopifnot(geometry_level_all_length_is_1)
     gms$geodimension[[dimension]][[attribute]] <-
       tibble::tibble(!!attribute := attribute,
-                     geometry = sf::st_geometry(from_layer)) %>%
+                     geometry = sf::st_geometry(from_layer)) |>
       sf::st_as_sf()
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <- 1
   } else {
     stopifnot(!is.null(by))
     atts <- unique(c(attribute, names(by)))
-    geom <- gms$dimension[[dimension]][, atts] %>%
-      dplyr::group_by_at(atts) %>%
+    geom <- gms$dimension[[dimension]][, atts] |>
+      dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
     geom <-
-      dplyr::left_join(geom, from_layer, by = by) %>%
-      sf::st_as_sf() %>%
-      dplyr::select(atts) %>%
-      dplyr::group_by_at(atts) %>%
+      dplyr::left_join(geom, from_layer, by = by) |>
+      sf::st_as_sf() |>
+      dplyr::select(atts) |>
+      dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
 
     gms$geodimension[[dimension]][[attribute]] <- geom

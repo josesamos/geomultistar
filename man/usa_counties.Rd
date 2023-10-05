@@ -28,7 +28,7 @@ have been grouped together.
 # Read by:
 #
 # filepath <- "data/cb_2018_us_county_20m/cb_2018_us_county_20m.shp"
-# usa_counties <- st_read(filepath)  \%>\%
+# usa_counties <- st_read(filepath)  |>
 #   dplyr::select(
 #     geo_id = GEOID,
 #     state_fp = STATEFP,
@@ -36,7 +36,7 @@ have been grouped together.
 #     county = NAME
 #   )
 # states <- sf::st_drop_geometry(usa_states[, c("geo_id", "state")])
-# usa_counties <- usa_counties \%>\%
+# usa_counties <- usa_counties |>
 #  dplyr::left_join(states, by = c("state_fp" = "geo_id"))
 
 }

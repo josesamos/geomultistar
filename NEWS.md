@@ -1,5 +1,6 @@
 # geomultistar 1.1.0.9000
-
+* Update documentation and website.
+* Use core pipe operator.
 
 # geomultistar 1.1.0
 * Include the [wider] parameter in the [run_geoquery()] function to define layers where geographic elements are not repeated.

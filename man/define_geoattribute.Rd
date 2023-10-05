@@ -65,32 +65,29 @@ they are obtained from the attribute indicated in the \code{from_attribute}
 parameter.
 }
 \examples{
-library(tidyr)
 library(starschemar)
 library(sf)
 
-gms <- geomultistar(ms = ms_mrs, geodimension = "where") \%>\%
+gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,
     by = c("city" = "city", "state" = "state")
   )
 
-gms <- gms \%>\%
+gms <- gms |>
   define_geoattribute(attribute = c("region", "all_where"),
                       from_attribute = "city")
 
-gms <- gms \%>\%
+gms <- gms |>
   define_geoattribute(from_attribute = "city")
 
-gms <- gms \%>\%
+gms <- gms |>
   define_geoattribute(attribute = "all_where",
                       from_layer = usa_nation)
 
 }
 \seealso{
-
-
 Other geo functions: 
 \code{\link{geomultistar}()},
 \code{\link{get_empty_geoinstances}()},

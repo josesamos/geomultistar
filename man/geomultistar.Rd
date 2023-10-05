@@ -19,18 +19,15 @@ A \code{geomultistar} object is created. Dimensions that contain geographic
 information are indicated.
 }
 \examples{
-library(tidyr)
 library(starschemar)
 
-ms_mrs <- ct_mrs \%>\%
+ms_mrs <- ct_mrs |>
   constellation_as_multistar()
 
 gms <- geomultistar(ms = ms_mrs, geodimension = "where")
 
 }
 \seealso{
-
-
 Other geo functions: 
 \code{\link{define_geoattribute}()},
 \code{\link{get_empty_geoinstances}()},

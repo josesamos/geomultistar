@@ -16,10 +16,9 @@ knitr::opts_chunk$set(
 # geomultistar: Multidimensional Queries Enriched with Geographic Data
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.com/josesamos/geomultistar.svg?branch=master)](https://travis-ci.com/josesamos/geomultistar)
 <!-- badges: end -->
 
-*Multidimensional systems* allow complex queries to be carried out in an easy way. The *geographical dimension*, together with the *temporal dimension*, plays a fundamental role in multidimensional systems. Through the `geomultistar` package, vector layers can be associated to the attributes of geographic dimensions, so that the results of multidimensional queries can be obtained directly as vector layers. In other words, this package allows **enriching multidimensional queries with geographic data**.
+*Multidimensional systems* allow complex queries to be carried out in an easy way. The *geographic dimension*, together with the *temporal dimension*, plays a fundamental role in multidimensional systems. Through the `geomultistar` package, vector layers can be associated to the attributes of geographic dimensions, so that the results of multidimensional queries can be obtained directly as vector layers. In other words, this package allows **enriching multidimensional queries with geographic data**.
 
 The multidimensional structures on which we can define the queries can be created from flat tables with [`starschemar`](https://CRAN.R-project.org/package=starschemar) package or imported directly using functions from `geomultistar` package.
 
@@ -45,29 +44,28 @@ If we start from a flat table, we can generate a star schema using the [`starsch
 If we have a star schema in another tool, we need to import the fact and dimension tables into R in the form of tables implemented by `tibble` (`mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who` in the example). Once we have them in this format, we have to build a `multistar` structure from them: This structure can contain multiple fact and dimension tables, so facts can share dimensions. The definition for tables obtained from the case detailed in [`starschemar`](https://CRAN.R-project.org/package=starschemar) is included below. The measures of the facts are defined and the relationships between facts and dimensions are established.
 
 ```{r example1}
-library(tidyr)
 library(geomultistar)
 
-ms <- multistar() %>%
+ms <- multistar() |>
   add_facts(
     fact_name = "mrs_age",
     fact_table = mrs_fact_age,
     measures = "n_deaths",
     nrow_agg = "count"
-  ) %>%
+  ) |>
   add_facts(
     fact_name = "mrs_cause",
     fact_table = mrs_fact_cause,
     measures = c("pneumonia_and_influenza_deaths", "other_deaths"),
     nrow_agg = "nrow_agg"
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "where",
     dimension_table = mrs_where,
     dimension_key = "where_pk",
     fact_name = "mrs_age",
     fact_key = "where_fk"
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "when",
     dimension_table = mrs_when,
@@ -75,17 +73,17 @@ ms <- multistar() %>%
     fact_name = "mrs_age",
     fact_key = "when_fk",
     key_as_data = TRUE
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "who",
     dimension_table = mrs_who,
     dimension_key = "who_pk",
     fact_name = "mrs_age",
     fact_key = "who_fk"
-  ) %>%
+  ) |>
   relate_dimension(dimension_name = "where",
                    fact_name = "mrs_cause",
-                   fact_key = "where_fk") %>%
+                   fact_key = "where_fk") |>
   relate_dimension(dimension_name = "when",
                    fact_name = "mrs_cause",
                    fact_key = "when_fk")
@@ -98,22 +96,22 @@ Once we have a `multistar` structure, we will associate vector layers to the att
 library(sf)
 
 gms <-
-  geomultistar(ms, geodimension = "where") %>%
+  geomultistar(ms, geodimension = "where") |>
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,
     by = c("city" = "city", "state" = "state")
-  ) %>%
+  ) |>
   define_geoattribute(
     attribute = "county",
     from_layer = usa_counties,
     by = c("county" = "county", "state" = "state")
-  )  %>%
+  )  |>
   define_geoattribute(
     attribute = c("state"),
     from_layer = usa_states,
     by = c("state" = "state")
-  ) %>%
+  ) |>
   define_geoattribute(from_attribute = "state")
 ```
 
@@ -124,18 +122,18 @@ Finally, we can define multidimensional queries on this structure using the func
 ```{r example3}
 library(starschemar)
 
-gdqr <- dimensional_query(gms) %>%
+gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
-                   attributes = c("division_name", "region_name")) %>%
+                   attributes = c("division_name", "region_name")) |>
   select_dimension(name = "when",
-                   attributes = c("year", "week")) %>%
+                   attributes = c("year", "week")) |>
   select_fact(name = "mrs_age",
-              measures = c("n_deaths")) %>%
+              measures = c("n_deaths")) |>
   select_fact(
     name = "mrs_cause",
     measures = c("pneumonia_and_influenza_deaths", "other_deaths")
-  ) %>%
-  filter_dimension(name = "when", week <= "03") %>%
+  ) |>
+  filter_dimension(name = "when", week <= "03") |>
   run_geoquery(wider = TRUE)
 ```
 

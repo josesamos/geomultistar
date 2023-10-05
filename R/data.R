@@ -9,7 +9,7 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/citiesx010g/citiesx010g.shp"
-#' # usa_cities <- st_read(filepath)  %>%
+#' # usa_cities <- st_read(filepath)  |>
 #' #   dplyr::select(
 #' #     gnis_id = GNIS_ID,
 #' #     ansi_code = ANSICODE,
@@ -42,7 +42,7 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/cb_2018_us_county_20m/cb_2018_us_county_20m.shp"
-#' # usa_counties <- st_read(filepath)  %>%
+#' # usa_counties <- st_read(filepath)  |>
 #' #   dplyr::select(
 #' #     geo_id = GEOID,
 #' #     state_fp = STATEFP,
@@ -50,7 +50,7 @@
 #' #     county = NAME
 #' #   )
 #' # states <- sf::st_drop_geometry(usa_states[, c("geo_id", "state")])
-#' # usa_counties <- usa_counties %>%
+#' # usa_counties <- usa_counties |>
 #' #  dplyr::left_join(states, by = c("state_fp" = "geo_id"))
 #'
 #' @format A `sf`.
@@ -69,7 +69,7 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp"
-#' # usa_states <- st_read(filepath)  %>%
+#' # usa_states <- st_read(filepath)  |>
 #' #   dplyr::select(geo_id = GEOID,
 #' #                 state = STUSPS,
 #' #                 state_name = NAME)
@@ -88,7 +88,7 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/cb_2018_us_division_20m/cb_2018_us_division_20m.shp"
-#' # usa_divisions <- st_read(filepath)  %>%
+#' # usa_divisions <- st_read(filepath)  |>
 #' #   dplyr::select(geo_id = GEOID,
 #' #                 division = NAME)
 #'
@@ -106,7 +106,7 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/cb_2018_us_region_20m/cb_2018_us_region_20m.shp"
-#' # usa_regions <- st_read(filepath)  %>%
+#' # usa_regions <- st_read(filepath)  |>
 #' #   dplyr::select(geo_id = GEOID,
 #' #                 region = NAME)
 #'
@@ -124,7 +124,7 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/cb_2018_us_nation_20m/cb_2018_us_nation_20m.shp"
-#' # usa_nation <- st_read(filepath)  %>%
+#' # usa_nation <- st_read(filepath)  |>
 #' #   dplyr::select(geo_id = GEOID,
 #' #                 name = NAME)
 #'
@@ -145,11 +145,11 @@
 #' # Read by:
 #' #
 #' # filepath <- "data/London_Borough_Excluding_MHW/London_Borough_Excluding_MHW.shp"
-#' # uk_london_boroughs <- st_read(filepath)  %>%
+#' # uk_london_boroughs <- st_read(filepath)  |>
 #' #     dplyr::select(
 #' #       borough = NAME,
 #' #       gss_code = GSS_CODE
-#' #     ) %>%
+#' #     ) |>
 #' #   st_simplify(dTolerance = 20)
 #'
 #' @format A `sf`.

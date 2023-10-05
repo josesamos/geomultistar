@@ -22,7 +22,7 @@ only includes the Mortality Reporting System states.
 # Read by:
 #
 # filepath <- "data/cb_2018_us_state_20m/cb_2018_us_state_20m.shp"
-# usa_states <- st_read(filepath)  \%>\%
+# usa_states <- st_read(filepath)  |>
 #   dplyr::select(geo_id = GEOID,
 #                 state = STUSPS,
 #                 state_name = NAME)

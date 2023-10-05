@@ -19,8 +19,6 @@ ms <- multistar()
 
 }
 \seealso{
-
-
 Other multistar functions: 
 \code{\link{add_dimension}()},
 \code{\link{add_facts}()},

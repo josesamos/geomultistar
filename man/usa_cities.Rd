@@ -22,7 +22,7 @@ only includes the Mortality Reporting System cities.
 # Read by:
 #
 # filepath <- "data/citiesx010g/citiesx010g.shp"
-# usa_cities <- st_read(filepath)  \%>\%
+# usa_cities <- st_read(filepath)  |>
 #   dplyr::select(
 #     gnis_id = GNIS_ID,
 #     ansi_code = ANSICODE,

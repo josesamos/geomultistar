@@ -33,22 +33,22 @@ test_that("run_geoquery works", {
       from_layer = usa_nation,
     )
 
-  gdq <- starschemar::dimensional_query(gms) %>%
+  gdq <- starschemar::dimensional_query(gms) |>
     starschemar::select_dimension(name = "where",
-                                  attributes = c("city", "state", "region")) %>%
+                                  attributes = c("city", "state", "region")) |>
     starschemar::select_dimension(name = "when",
-                                  attributes = c("year", "week")) %>%
+                                  attributes = c("year", "week")) |>
     starschemar::select_fact(
       name = "mrs_age",
       measures = c("deaths"),
       agg_functions = c("SUM")
-    ) %>%
+    ) |>
     starschemar::select_fact(name = "mrs_cause",
-                             measures = c("pneumonia_and_influenza_deaths", "other_deaths")) %>%
-    starschemar::filter_dimension(name = "when", week <= "03") %>%
+                             measures = c("pneumonia_and_influenza_deaths", "other_deaths")) |>
+    starschemar::filter_dimension(name = "when", week <= "03") |>
     starschemar::filter_dimension(name = "where", city == "Bridgeport")
 
-  gr1 <- gdq %>%
+  gr1 <- gdq |>
     run_geoquery(attribute = "city")
 
   expect_equal(gr1,
@@ -113,7 +113,7 @@ test_that("run_geoquery works", {
                  )
                ))
 
-  gr3 <- gdq %>%
+  gr3 <- gdq |>
     run_geoquery()
 
   expect_equal(sf::st_drop_geometry(gr3),
@@ -135,7 +135,7 @@ test_that("run_geoquery works", {
                  class = c("tbl_df", "tbl", "data.frame")
                ))
 
-  gr4 <- gdq %>%
+  gr4 <- gdq |>
     run_geoquery(wider = TRUE)
 
   expect_equal(gr4,
@@ -258,22 +258,22 @@ test_that("run_geoquery works", {
                  )
                ))
 
-  gdq <- starschemar::dimensional_query(gms) %>%
+  gdq <- starschemar::dimensional_query(gms) |>
     # starschemar::select_dimension(name = "where",
-    #                               attributes = c("city", "state", "region")) %>%
+    #                               attributes = c("city", "state", "region")) |>
     starschemar::select_dimension(name = "when",
-                                  attributes = c("year", "week")) %>%
+                                  attributes = c("year", "week")) |>
     starschemar::select_fact(
       name = "mrs_age",
       measures = c("deaths"),
       agg_functions = c("SUM")
-    ) %>%
+    ) |>
     starschemar::select_fact(name = "mrs_cause",
-                             measures = c("pneumonia_and_influenza_deaths", "other_deaths")) %>%
-    starschemar::filter_dimension(name = "when", week <= "03") %>%
+                             measures = c("pneumonia_and_influenza_deaths", "other_deaths")) |>
+    starschemar::filter_dimension(name = "when", week <= "03") |>
     starschemar::filter_dimension(name = "where", city == "Bridgeport")
 
-  gr5 <- gdq %>%
+  gr5 <- gdq |>
     run_geoquery(wider = TRUE)
 
   expect_equal(sf::st_drop_geometry(gr5$sf),

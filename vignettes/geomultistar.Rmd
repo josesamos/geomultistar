@@ -54,10 +54,9 @@ In this case, we are going to suppose that we have tables of facts and dimension
 We create an empty object, to which we will add elements. First we have to add a fact table, later we will add dimension tables or other fact tables.
 
 ```{r}
-library(tidyr)
 library(geomultistar)
 
-ms <- multistar() %>%
+ms <- multistar() |>
   add_facts(
     fact_name = "mrs_age",
     fact_table = mrs_fact_age,
@@ -75,7 +74,7 @@ Finally, you can indicate the name of a field that represents the number of rows
 Next we add another table of facts with characteristics similar to the previous one. 
 
 ```{r}
-ms <- ms %>%
+ms <- ms |>
   add_facts(
     fact_name = "mrs_cause",
     fact_table = mrs_fact_cause,
@@ -91,7 +90,7 @@ In this case, the column that contains the number of grouped rows precisely has 
 Once we have at least one fact table, we can add dimension tables.
 
 ```{r}
-ms <- ms %>%
+ms <- ms |>
   add_dimension(
     dimension_name = "where",
     dimension_table = mrs_where,
@@ -106,7 +105,7 @@ For each dimension we define its name, the table that contains the data, the nam
 To establish the relationship successfully, it is verified that there is referential integrity between the tables using the indicated columns. The columns corresponding to the primary and foreign keys are renamed and are no longer available for queries. If you want to keep the field in the dimension, it can be indicated by a parameter, as is shown below by parameter `key_as_data`.
 
 ```{r}
-ms <- ms %>%
+ms <- ms |>
   add_dimension(
     dimension_name = "when",
     dimension_table = mrs_when,
@@ -114,7 +113,7 @@ ms <- ms %>%
     fact_name = "mrs_age",
     fact_key = "when_fk",
     key_as_data = TRUE
-  ) %>%
+  ) |>
   add_dimension(
     dimension_name = "who",
     dimension_table = mrs_who,
@@ -132,10 +131,10 @@ If a dimension is related to more than one fact table, when it is added, its rel
 Once a dimension is included in the `multistar`, we can relate it to other fact tables.
 
 ```{r}
-ms <- ms %>%
+ms <- ms |>
   relate_dimension(dimension_name = "where",
                    fact_name = "mrs_cause",
-                   fact_key = "where_fk") %>%
+                   fact_key = "where_fk") |>
   relate_dimension(dimension_name = "when",
                    fact_name = "mrs_cause",
                    fact_key = "when_fk")
@@ -164,7 +163,7 @@ gms <-
 For each attribute of a geographic dimension that we want to use in queries, we can define a vector layer with which a relationship can be established using one or more attributes of the dimension.
 
 ```{r}
-gms <- gms %>%
+gms <- gms |>
   define_geoattribute(
     attribute = "city",
     from_layer = usa_cities,
@@ -179,7 +178,7 @@ For the `city` attribute, a relationship is defined with a vector layer in `sf` 
 Sometimes there may be problems establishing the correspondence between the geographic attributes and the vector layer: Instances may remain unrelated. To detect these situations, we can query the rows that do not have associated geometry using the following function.
 
 ```{r}
-empty_city <- gms %>%
+empty_city <- gms |>
   get_empty_geoinstances(attribute = "city")
 ```
 
@@ -194,7 +193,7 @@ In this case, for the unknown cities, their location has not been determined. Th
 In the same way, the relationship for `county` with the corresponding layer (`usa_counties`) is defined.
 
 ```{r}
-gms <- gms %>%
+gms <- gms |>
   define_geoattribute(
     attribute = "county",
     from_layer = usa_counties,
@@ -205,7 +204,7 @@ gms <- gms %>%
 We check if they have all been related.
 
 ```{r}
-empty_county <- gms %>%
+empty_county <- gms |>
   get_empty_geoinstances(attribute = "county")
 ```
 
@@ -220,7 +219,7 @@ It also happens for the same instances. In this case we can see that the associa
 In the case of `state` the definition is carried out by associating the code to the corresponding one in the layer (`usa_states`).
 
 ```{r}
-gms <- gms %>%
+gms <- gms |>
   define_geoattribute(
     attribute = c("state"),
     from_layer = usa_states,
@@ -231,7 +230,7 @@ gms <- gms %>%
 Additionally, for an attribute we can generate its layer from the one associated with another related attribute of the dimension. This is what has been done below for `division`.
 
 ```{r}
-gms <- gms %>%
+gms <- gms |>
   define_geoattribute(
     attribute = "division",
     from_attribute = "state"
@@ -243,7 +242,7 @@ In this case, the vector layer is generated from the data available in the layer
 If no attribute name is indicated, this operation is applied to the rest of the attributes of the dimension that do not have an associated vector layer by any of the methods presented, as shown below.
 
 ```{r}
-gms <- gms %>%
+gms <- gms |>
   define_geoattribute(from_attribute = "state")
 ```
 
@@ -258,17 +257,17 @@ Multidimensional queries are defined from a `multistar` object in the `starschem
 ```{r}
 library(starschemar)
 
-gdqr <- dimensional_query(gms) %>%
+gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
-                   attributes = c("division_name", "region_name")) %>%
+                   attributes = c("division_name", "region_name")) |>
   select_dimension(name = "when",
-                   attributes = c("year", "week")) %>%
+                   attributes = c("year", "week")) |>
   select_fact(name = "mrs_age",
-              measures = c("n_deaths")) %>%
+              measures = c("n_deaths")) |>
   select_fact(
     name = "mrs_cause",
     measures = c("pneumonia_and_influenza_deaths", "other_deaths")
-  ) %>%
+  ) |>
   filter_dimension(name = "when", week <= "03")
 ```
 
@@ -277,8 +276,8 @@ The definition functions of this type of queries are quite intuitive, they are e
 If we use the function `run_query` of the mentioned package, a normal multidimensional query is executed, as shown below.
 
 ```{r}
-ft <- gdqr %>%
-  run_query() %>%
+ft <- gdqr |>
+  run_query() |>
   multistar_as_flat_table()
 ```
 
@@ -293,7 +292,7 @@ pander::pandoc.table(head(ft, 12), split.table = Inf)
 If instead of executing the standard query, we execute `run_geoquery` function, from this package, we automatically obtain a vector layer at the finest possible level of detail, depending on the definition of the query.
 
 ```{r}
-vl_sf <- gdqr %>%
+vl_sf <- gdqr |>
   run_geoquery()
 ```
 
@@ -320,7 +319,7 @@ Only the parts of the divisions made up of states where there is recorded data a
 In geographic layers, geographic objects usually are not repeated. The tables are wide: for each object the rest of the attributes are defined as columns. By means of the parameter `wider` we can indicate that we want a result of this type.
 
 ```{r}
-vl_sf_w <- gdqr %>%
+vl_sf_w <- gdqr |>
   run_geoquery(wider = TRUE)
 ```
 

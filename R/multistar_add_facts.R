@@ -29,18 +29,16 @@
 #' @return A `multistar`.
 #'
 #' @family multistar functions
-#' @seealso
 #'
 #' @examples
-#' library(tidyr)
 #'
-#' ms <- multistar() %>%
+#' ms <- multistar() |>
 #'   add_facts(
 #'     fact_name = "mrs_age",
 #'     fact_table = mrs_fact_age,
 #'     measures = "n_deaths",
 #'     nrow_agg = "count"
-#'   ) %>%
+#'   ) |>
 #'   add_facts(
 #'     fact_name = "mrs_cause",
 #'     fact_table = mrs_fact_cause,

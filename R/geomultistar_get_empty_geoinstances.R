@@ -11,21 +11,19 @@
 #' @return A `sf` object.
 #'
 #' @family geo functions
-#' @seealso
 #'
 #' @examples
-#' library(tidyr)
 #' library(starschemar)
 #' library(sf)
 #'
-#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") %>%
+#' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
 #'     attribute = "city",
 #'     from_layer = usa_cities,
 #'     by = c("city" = "city", "state" = "state")
 #'   )
 #'
-#'   empty <- gms %>%
+#'   empty <- gms |>
 #'      get_empty_geoinstances(attribute = "city")
 #'
 #' @export
