@@ -15,6 +15,9 @@ Description: Multidimensional systems allow complex queries to be carried
     be created from a flat table or imported directly using functions from
     this package.
 License: MIT + file LICENSE
+URL: https://josesamos.github.io/geomultistar/,
+    https://github.com/josesamos/geomultistar
+BugReports: https://github.com/josesamos/geomultistar/issues
 Depends: 
     R (>= 2.10)
 Imports: 
