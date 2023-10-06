@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">geomultistar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,9 +149,7 @@ that share two of the three dimensions.</p>
 have to add a fact table, later we will add dimension tables or other
 fact tables.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://josesamos.github.io/geomultistar/">geomultistar</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multistar.html">multistar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multistar.html">multistar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/add_facts.html">add_facts</a></span><span class="op">(</span></span>
 <span>    fact_name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
 <span>    fact_table <span class="op">=</span> <span class="va">mrs_fact_age</span>,</span>
@@ -264,10 +262,7 @@ this information.</p>
 <code>multistar</code> one defining the names of the dimensions that
 contain geographic information. In the example only one dimension.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span>
-<span></span>
-<span><span class="va">gms</span> <span class="op">&lt;-</span></span>
+<code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/geomultistar.html">geomultistar</a></span><span class="op">(</span><span class="va">ms</span>, geodimension <span class="op">=</span> <span class="st">"where"</span><span class="op">)</span></span></code></pre></div>
 <p>For each attribute of a geographic dimension that we want to use in
 queries, we can define a vector layer with which a relationship can be
