@@ -47,10 +47,9 @@
 #'
 #' sf <- gdq |>
 #'   run_geoquery(wider = TRUE)
-#'
-#' \dontrun{
-#' save_as_geopackage(sf, "city")
-#' }
+#'\donttest{
+#' save_as_geopackage(sf, "city", filepath = tempdir())
+#'}
 save_as_geopackage <- function(sf, layer_name, file_name = NULL, filepath = NULL) {
   if (is.null(file_name)) {
     file_name <- layer_name
