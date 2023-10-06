@@ -110,9 +110,6 @@ or generate them from the previous definitions. As a result we will have
 a `geomultistar` structure.
 
 ``` r
-library(sf)
-#> Linking to GEOS 3.11.2, GDAL 3.6.2, PROJ 9.2.0; sf_use_s2() is TRUE
-
 gms <-
   geomultistar(ms, geodimension = "where") |>
   define_geoattribute(

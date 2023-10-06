@@ -97,8 +97,6 @@ ms <- multistar() |>
 Once we have a `multistar` structure, we will associate vector layers to the attributes of the geographic dimensions. We can use existing layers or generate them from the previous definitions. As a result we will have a `geomultistar` structure.
 
 ```{r example2}
-library(sf)
-
 gms <-
   geomultistar(ms, geodimension = "where") |>
   define_geoattribute(

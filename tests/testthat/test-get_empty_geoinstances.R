@@ -1,8 +1,5 @@
 context("test get_empty_geoinstances")
 
-#skip("geometry in tibble error")
-library(sf) # It has to be included even if it is not used directly.
-
 test_that("get_empty_geoinstances works", {
   gms <-
     geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")

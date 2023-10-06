@@ -1,8 +1,5 @@
 context("test run_geoquery")
 
-# skip("geometry in tibble error")
-library(sf) # It has to be included even if it is not used directly.
-
 test_that("run_geoquery works", {
   gms <- geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
   gms <-

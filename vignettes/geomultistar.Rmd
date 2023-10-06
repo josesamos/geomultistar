@@ -54,8 +54,6 @@ In this case, we are going to suppose that we have tables of facts and dimension
 We create an empty object, to which we will add elements. First we have to add a fact table, later we will add dimension tables or other fact tables.
 
 ```{r}
-library(geomultistar)
-
 ms <- multistar() |>
   add_facts(
     fact_name = "mrs_age",
@@ -154,8 +152,6 @@ To define the dimensions and geographic attributes of a `multistar` object, we m
 We create a `geomultistar` object from a `multistar` one defining the names of the dimensions that contain geographic information. In the example only one dimension.
 
 ```{r}
-library(sf)
-
 gms <-
   geomultistar(ms, geodimension = "where")
 ```
