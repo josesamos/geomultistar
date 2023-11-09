@@ -56,12 +56,12 @@ new_geomultistar <-
 #' @family geo functions
 #'
 #' @examples
-#' library(starschemar)
+#' #library(starschemar)
 #'
-#' r <- ct_mrs |>
-#'   constellation_as_multistar()
+#' #r <- ct_mrs |>
+#' #  constellation_as_multistar()
 #'
-#' gms <- geomultistar(ms = r, geodimension = "where")
+#' # gms <- geomultistar(ms = r, geodimension = "where")
 #'
 #' @export
 geomultistar <- function(ms = NULL, geodimension = NULL) {

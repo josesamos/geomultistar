@@ -91,8 +91,8 @@ run_geoquery.dimensional_query <-
            attribute = NULL,
            wider = FALSE) {
     dq <- add_geodimension_additional_attributes(dq)
-    dq$output <- starschemar::run_query(dq, unify_by_grain)
-    ft <- starschemar::multistar_as_flat_table(dq$output, fact)
+    dq$output <- run_query(dq, unify_by_grain)
+    ft <- multistar_as_flat_table(dq$output, fact)
     columns <- names(ft)
 
     if (is.null(dimension)) {

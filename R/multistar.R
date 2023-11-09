@@ -5,7 +5,7 @@
 #'
 #' @return A `multistar` object.
 #' @keywords internal
-new_multistar <-
+new_multistar_geo <-
   function() {
     star <-
       list(
@@ -32,6 +32,6 @@ new_multistar <-
 #'
 #' @export
 multistar <- function() {
-  new_multistar()
+  new_multistar_geo()
 }
 
