@@ -49,9 +49,8 @@ devtools::install_github("josesamos/geomultistar")
 ## Example
 
 If we start from a flat table, we can generate a star schema using the
-[`rolap`](https://CRAN.R-project.org/package=rolap) or
-[`starschemar`](https://CRAN.R-project.org/package=starschemar)
-packages, as described in their examples.
+[`rolap`](https://CRAN.R-project.org/package=rolap) package, as
+described in its vignettes.
 
 If we have a star schema in another tool, we need to import the fact and
 dimension tables into R in the form of tables implemented by `tibble`
@@ -108,10 +107,10 @@ ms <- multistar() |>
                    fact_key = "when_fk")
 ```
 
-Once we have a `multistar` structure, we will associate vector layers to
-the attributes of the geographic dimensions. We can use existing layers
-or generate them from the previous definitions. As a result we will have
-a `geomultistar` structure.
+Once we have a `multistar` structure, we will associate vector
+geographic data layers to the attributes of the geographic dimension. We
+can use existing layers or generate them from the previous definitions.
+As a result we will have a `geomultistar` structure.
 
 ``` r
 gms <-
@@ -140,9 +139,8 @@ the layer associated with the indicated parameter.
 
 Finally, we can define multidimensional queries on this structure using
 the functions available in this package. When executing these queries,
-using the functionality implemented in package `geomultistar`, the
-vector layers of the attributes will be taken into account to result in
-a new vector layer.
+the vector geographic data layers of the attributes will be taken into
+account to result in a new vector geographic data layer.
 
 ``` r
 gdqr <- dimensional_query(gms) |>
@@ -160,8 +158,8 @@ gdqr <- dimensional_query(gms) |>
   run_geoquery(wider = TRUE)
 ```
 
-The result is a vector layer that we can save or we can see it as a map,
-using the functions associated with the `sf` class.
+The result is a vector geographic data layer that we can save or we can
+see it as a map, using the functions associated with the `sf` class.
 
 ``` r
 class(gdqr)
@@ -199,7 +197,7 @@ The result includes the meaning of each variable in table form.
 |          mrs_cause_other_deaths_03          |          mrs_cause_other_deaths          |  03  |
 
 It can be saved directly as a *GeoPackage*, using the
-`save_as_geopackage` function.
+`save_as_geopackage()` function.
 
 ``` r
 save_as_geopackage(vl_sf_w, "division")
