@@ -46,6 +46,27 @@
     <loc>https://josesamos.github.io/geomultistar/reference/define_geoattribute_from_layer.html</loc>
   </url>
   <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/define_selected_dimensions.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/define_selected_facts.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/delete_unused_foreign_keys.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/dereference_dimension.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/dimensional_query.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/filter_dimension.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/filter_selected_instances.html</loc>
+  </url>
+  <url>
     <loc>https://josesamos.github.io/geomultistar/reference/geomultistar.html</loc>
   </url>
   <url>
@@ -55,7 +76,16 @@
     <loc>https://josesamos.github.io/geomultistar/reference/get_selected_measure_names.html</loc>
   </url>
   <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/group_facts.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/group_table.html</loc>
+  </url>
+  <url>
     <loc>https://josesamos.github.io/geomultistar/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/mrs_age_test.html</loc>
   </url>
   <url>
     <loc>https://josesamos.github.io/geomultistar/reference/mrs_fact_age.html</loc>
@@ -73,7 +103,22 @@
     <loc>https://josesamos.github.io/geomultistar/reference/mrs_who.html</loc>
   </url>
   <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/ms_mrs.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/ms_mrs_test.html</loc>
+  </url>
+  <url>
     <loc>https://josesamos.github.io/geomultistar/reference/multistar.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/multistar_as_flat_table.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/new_dimensional_query.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/new_fact_table.html</loc>
   </url>
   <url>
     <loc>https://josesamos.github.io/geomultistar/reference/new_geomultistar.html</loc>
@@ -82,16 +127,43 @@
     <loc>https://josesamos.github.io/geomultistar/reference/new_multistar.html</loc>
   </url>
   <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/new_multistar_empty.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/prepare_join.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/reference_dimension.html</loc>
+  </url>
+  <url>
     <loc>https://josesamos.github.io/geomultistar/reference/relate_dimension.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/remove_duplicate_dimension_rows.html</loc>
   </url>
   <url>
     <loc>https://josesamos.github.io/geomultistar/reference/run_geoquery.html</loc>
   </url>
   <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/run_query.html</loc>
+  </url>
+  <url>
     <loc>https://josesamos.github.io/geomultistar/reference/save_as_geopackage.html</loc>
   </url>
   <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/select_dimension.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/select_fact.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/st_mrs_age_test.html</loc>
+  </url>
+  <url>
     <loc>https://josesamos.github.io/geomultistar/reference/uk_london_boroughs.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/unify_facts_by_grain.html</loc>
   </url>
   <url>
     <loc>https://josesamos.github.io/geomultistar/reference/usa_cities.html</loc>
@@ -110,6 +182,9 @@
   </url>
   <url>
     <loc>https://josesamos.github.io/geomultistar/reference/usa_states.html</loc>
+  </url>
+  <url>
+    <loc>https://josesamos.github.io/geomultistar/reference/validate_names.html</loc>
   </url>
   <url>
     <loc>https://josesamos.github.io/geomultistar/reference/widen_flat_table.html</loc>

@@ -92,7 +92,7 @@
 <p>The <em>multidimensional data model</em> was defined with the aim of
 supporting data analysis. In multidimensional systems, data is
 structured in facts and dimensions<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Basic concepts of dimensional modelling and star schemas
-are presented in &lt;a href="https://CRAN.R-project.org/package=starschemar" class="external-link"&gt;&lt;code&gt;starschemar&lt;/code&gt;&lt;/a&gt;
+are presented in &lt;a href="https://CRAN.R-project.org/package=rolap" class="external-link"&gt;`rolap``&lt;/a&gt;
 vignettes.&lt;/p&gt;'><sup>1</sup></a>.</p>
 <p>The star model is widely accepted, it is recommended for use in
 widely distributed end-user tools. In it we have a table for facts and a
@@ -121,12 +121,13 @@ with conclusions.</p>
 <h2 id="an-illustrative-example">An illustrative example<a class="anchor" aria-label="anchor" href="#an-illustrative-example"></a>
 </h2>
 <p>To perform multidimensional queries, the <code>multistar</code> class
-was defined in the <a href="https://CRAN.R-project.org/package=starschemar" class="external-link"><code>starschemar</code></a>
-package. A <code>multistar</code> implements the star schemas: it has a
-table for each dimension and a table for the facts; however, it can
-contain multiple fact tables with some dimensions in common.</p>
-<p>Using the functions defined in <code>starschemar</code> package,
-starting from a flat table implemented by means of a
+was defined in this package. A <code>multistar</code> implements star
+schemas: it has a table for each dimension and a table for the facts;
+however, it can contain multiple fact tables with some dimensions in
+common.</p>
+<p>Using the functions defined in the <a href="https://CRAN.R-project.org/package=rolap" class="external-link"><code>rolap</code></a>
+or <a href="https://CRAN.R-project.org/package=starschemar" class="external-link"><code>starschemar</code></a>
+packages, starting from a flat table implemented by means of a
 <code>tibble</code>, we can generate a <code>multistar</code>
 object.</p>
 <p>If we already have a star schema, <code>geomultistar</code> package
@@ -139,9 +140,8 @@ fact and dimension tables in <code>tibble</code> format.</p>
 and dimensions in <code>tibble</code> format, which we have imported
 into R. In particular, we have the tables <code>mrs_fact_age</code>,
 <code>mrs_fact_cause</code>, <code>mrs_where</code>,
-<code>mrs_when</code> and <code>mrs_who</code>, obtained from the
-example presented in package <code>starschemar</code>: Two fact tables
-that share two of the three dimensions.</p>
+<code>mrs_when</code> and <code>mrs_who</code>: Two fact tables that
+share two of the three dimensions.</p>
 <div class="section level4">
 <h4 id="add-fact-tables">Add fact tables<a class="anchor" aria-label="anchor" href="#add-fact-tables"></a>
 </h4>
@@ -158,11 +158,11 @@ fact tables.</p>
 <span>  <span class="op">)</span> </span></code></pre></div>
 <p>For the facts we indicate a name, the table that contains its data
 and the names of the columns that contain the measures.</p>
-<p>You can indicate an aggregation function associated with each
-measure. This parameter should be defined only if some measure is not
-additive. In this case it is not necessary.</p>
-<p>Finally, you can indicate the name of a field that represents the
-number of rows grouped in each query: You can indicate the name of an
+<p>We can indicate an aggregation function associated with each measure.
+This parameter should be defined only if some measure is not additive.
+In this case it is not necessary.</p>
+<p>Finally, we can indicate the name of a field that represents the
+number of rows grouped in each query: We can indicate the name of an
 existing column in the table for that purpose, or the name that you want
 to give to the column to be added if none exists. In this case, the name
 of a column in the table is assigned.</p>
@@ -227,8 +227,8 @@ relationships can be defined, as we will see next.</p>
 <div class="section level4">
 <h4 id="relate-dimensions">Relate dimensions<a class="anchor" aria-label="anchor" href="#relate-dimensions"></a>
 </h4>
-<p>Once a dimension is included in the <code>multistar</code>, we can
-relate it to other fact tables.</p>
+<p>Once a dimension is included in the <code>multistar</code> object, we
+can relate it to other fact tables.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ms</span> <span class="op">&lt;-</span> <span class="va">ms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/relate_dimension.html">relate_dimension</a></span><span class="op">(</span>dimension_name <span class="op">=</span> <span class="st">"where"</span>,</span>
@@ -244,11 +244,10 @@ name.</p>
 <h4 id="additional-operations-on-the-multistar-object">Additional operations on the <code>multistar</code> object<a class="anchor" aria-label="anchor" href="#additional-operations-on-the-multistar-object"></a>
 </h4>
 <p>Through the previous operations, we generate a <code>multistar</code>
-object to which we can apply the operations defined in the
-<code>starschemar</code> package for this class. At this moment we can
-export it as a flat table, using <code>multistar_as_flat_table</code>,
-or define multidimensional queries, as we will later use
-<code>dimensional_query</code>.</p>
+object to which we can apply the operations defined for this class. At
+this moment we can export it as a flat table, using
+<code>multistar_as_flat_table</code>, or define multidimensional
+queries, as we will later use <code>dimensional_query</code>.</p>
 </div>
 </div>
 <div class="section level3">
@@ -265,8 +264,9 @@ contain geographic information. In the example only one dimension.</p>
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/geomultistar.html">geomultistar</a></span><span class="op">(</span><span class="va">ms</span>, geodimension <span class="op">=</span> <span class="st">"where"</span><span class="op">)</span></span></code></pre></div>
 <p>For each attribute of a geographic dimension that we want to use in
-queries, we can define a vector layer with which a relationship can be
-established using one or more attributes of the dimension.</p>
+queries, we can define a vector geographic data layer with which a
+relationship can be established using one or more attributes of the
+dimension.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/define_geoattribute.html">define_geoattribute</a></span><span class="op">(</span></span>
@@ -275,12 +275,12 @@ established using one or more attributes of the dimension.</p>
 <span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"city"</span> <span class="op">=</span> <span class="st">"city"</span>, <span class="st">"state"</span> <span class="op">=</span> <span class="st">"state"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> </span></code></pre></div>
 <p>For the <code>city</code> attribute, a relationship is defined with a
-vector layer in <code>sf</code> format (<code>usa_cities</code>), using
-the <code>city</code> and <code>state</code> attributes<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;It is appropriate to use &lt;code&gt;city&lt;/code&gt; and
+vector geographic data layer in <code>sf</code> format
+(<code>usa_cities</code>), using the <code>city</code> and
+<code>state</code> attributes<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;It is appropriate to use &lt;code&gt;city&lt;/code&gt; and
 &lt;code&gt;state&lt;/code&gt; to establish the relationship because the granularity
 of the data is &lt;code&gt;city&lt;/code&gt; and there can be repeated city names in
-different states.&lt;/p&gt;"><sup>2</sup></a> that have the same
-name in the layer.</p>
+different states.&lt;/p&gt;"><sup>2</sup></a> that have the same name in the layer.</p>
 <p>Sometimes there may be problems establishing the correspondence
 between the geographic attributes and the vector layer: Instances may
 remain unrelated. To detect these situations, we can query the rows that
@@ -380,36 +380,33 @@ rest.</p>
 <h3 id="define-multidimensional-queries">Define multidimensional queries<a class="anchor" aria-label="anchor" href="#define-multidimensional-queries"></a>
 </h3>
 <p>Multidimensional queries are defined from a <code>multistar</code>
-object in the <code>starschemar</code> package. Since we are working
-with <code>geomultistar</code>, a specialization of
-<code>multistar</code>, we can use this object to define the query.</p>
+object. Since we are working with <code>geomultistar</code>, a
+specialization of <code>multistar</code>, we can use this object to
+define the query.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://josesamos.github.io/starschemar/" class="external-link">starschemar</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">gdqr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/dimensional_query.html" class="external-link">dimensional_query</a></span><span class="op">(</span><span class="va">gms</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/select_dimension.html" class="external-link">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span>,</span>
+<code class="sourceCode R"><span><span class="va">gdqr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dimensional_query.html">dimensional_query</a></span><span class="op">(</span><span class="va">gms</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span>,</span>
 <span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"division_name"</span>, <span class="st">"region_name"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/select_dimension.html" class="external-link">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>,</span>
+<span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>,</span>
 <span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/select_fact.html" class="external-link">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
 <span>              measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n_deaths"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/select_fact.html" class="external-link">select_fact</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span></span>
 <span>    name <span class="op">=</span> <span class="st">"mrs_cause"</span>,</span>
 <span>    measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pneumonia_and_influenza_deaths"</span>, <span class="st">"other_deaths"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/filter_dimension.html" class="external-link">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>, <span class="va">week</span> <span class="op">&lt;=</span> <span class="st">"03"</span><span class="op">)</span></span></code></pre></div>
-<p>The definition functions of this type of queries are quite intuitive,
-they are explained in the vignette of package <a href="https://CRAN.R-project.org/package=starschemar" class="external-link"><code>starschemar</code></a>.</p>
-<p>If we use the function <code>run_query</code> of the mentioned
-package, a normal multidimensional query is executed, as shown
-below.</p>
+<span>  <span class="fu"><a href="../reference/filter_dimension.html">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>, <span class="va">week</span> <span class="op">&lt;=</span> <span class="st">"03"</span><span class="op">)</span></span></code></pre></div>
+<p>The definition functions of this type of queries is based on the
+selection of facts and dimensions, and the filter of dimensions.</p>
+<p>If we use the function <code><a href="../reference/run_query.html">run_query()</a></code>, a multidimensional
+query is executed, as shown below.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="va">gdqr</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/run_query.html" class="external-link">run_query</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://josesamos.github.io/starschemar/reference/multistar_as_flat_table.html" class="external-link">multistar_as_flat_table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/run_query.html">run_query</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/multistar_as_flat_table.html">multistar_as_flat_table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The result of this type of query is a <code>multistar</code> object,
 which we can transform into a flat table to display it more easily, as
-we do below for the first rows..</p>
+we do below for the first rows.</p>
 <table style="width:100%;" class="table">
 <colgroup>
 <col width="4%">
@@ -573,8 +570,8 @@ we do below for the first rows..</p>
 <h3 id="run-queries-adding-geographic-information">Run queries adding geographic information<a class="anchor" aria-label="anchor" href="#run-queries-adding-geographic-information"></a>
 </h3>
 <p>If instead of executing the standard query, we execute
-<code>run_geoquery</code> function, from this package, we automatically
-obtain a vector layer at the finest possible level of detail, depending
+<code><a href="../reference/run_geoquery.html">run_geoquery()</a></code> function, we automatically obtain a vector
+geographic data layer at the finest possible level of detail, depending
 on the definition of the query.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vl_sf</span> <span class="op">&lt;-</span> <span class="va">gdqr</span> <span class="op">|&gt;</span></span>
@@ -752,9 +749,9 @@ on the definition of the query.</p>
 </tr>
 </tbody>
 </table>
-<p>The result is a vector layer that we can save, perform spatial
-analysis or queries on it, or we can see it as a map, using the
-functions associated with the <code>sf</code> class.</p>
+<p>The result is a vector geographic data layer that we can save,
+perform spatial analysis or queries on it, or we can see it as a map,
+using the functions associated with the <code>sf</code> class.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">vl_sf</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></span>
@@ -1110,33 +1107,34 @@ the result obtained, also in table format, as can be seen below.</p>
 <p>In this case there was only one variable with a multiplicity greater
 than one. If there were more variables in this situation, they would be
 added to this table in the same way.</p>
-<p>This dictionary table and layer structure can be saved in
-<em>GeoPackage</em> format using the <code>save_as_geopackage</code>
+<p>This data dictionary table and layer structure can be saved in
+<em>GeoPackage</em> format using the <code><a href="../reference/save_as_geopackage.html">save_as_geopackage()</a></code>
 function.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_as_geopackage.html">save_as_geopackage</a></span><span class="op">(</span><span class="va">vl_sf_w</span>, <span class="st">"division"</span><span class="op">)</span></span></code></pre></div>
-<p>The GeoPackages thus obtained can be used directly, for example in
-<em>QGIS</em>.</p>
+<p>The <em>GeoPackages</em> thus obtained can be used directly, for
+example in <em>QGIS</em>.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
 </h2>
 <p>To generate the multidimensional structure on which to define
-queries, we can use the functions of the <a href="https://CRAN.R-project.org/package=starschemar" class="external-link"><code>starschemar</code></a>
+queries, we can use the functions of the <a href="https://CRAN.R-project.org/package=rolap" class="external-link"><code>rolap</code></a>
 package or, if we already have the multidimensional design implemented,
 the import functions included in this package.</p>
-<p><code>geomultistar</code> package allows generating vector layers in
-<code>sf</code> format as a result of multidimensional queries. To do
-this, all we need is to associate vector layers with some of the
-attributes of the geographic dimensions, so that the layers associated
-with the rest of the attributes can be obtained automatically. Queries
-do not present any additional difficulties due to the fact of returning
-geographic data.</p>
+<p>The <code>geomultistar</code> package allows generating vector
+geographic data layers in <code>sf</code> format as a result of
+multidimensional queries. To do this, all we need is to associate vector
+geographic data layers with some of the attributes of the geographic
+dimensions, so that the layers associated with the rest of the
+attributes can be obtained automatically. Queries do not present any
+additional difficulties due to the fact of returning geographic
+data.</p>
 <p>The data obtained can be processed with the <code>sf</code> package
 to define spatial queries or analysis, be presented in maps or saved as
-a file to be used by a GIS (<em>Geographical Information
-System</em>).</p>
+a file to be used by a GIS (<em>Geographical Information System</em>)
+tool.</p>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
