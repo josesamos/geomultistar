@@ -128,3 +128,12 @@
 #'   \url{https://CRAN.R-project.org/package=starschemar}
 "mrs_fact_cause"
 
+#' Multistar for Mortality Reporting System
+#'
+#' Multistar for the Mortality Reporting System considering age and cause
+#' classification.
+#'
+#' @format A `multistar` object.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"ms_mrs"

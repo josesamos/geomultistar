@@ -24,7 +24,6 @@ Gets the instances of the given geographic attribute that do not have a
 geometry associated with them.
 }
 \examples{
-library(starschemar)
 
 gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
   define_geoattribute(

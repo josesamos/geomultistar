@@ -124,8 +124,6 @@ In the last definition, because no geographic attribute is specified, the rest o
 Finally, we can define multidimensional queries on this structure using the functions available in the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package. When executing these queries, using the functionality implemented in package `geomultistar`, the vector layers of the attributes will be taken into account to result in a new vector layer.
 
 ```{r example3}
-library(starschemar)
-
 gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
                    attributes = c("division_name", "region_name")) |>

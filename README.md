@@ -145,8 +145,6 @@ package `geomultistar`, the vector layers of the attributes will be
 taken into account to result in a new vector layer.
 
 ``` r
-library(starschemar)
-
 gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
                    attributes = c("division_name", "region_name")) |>

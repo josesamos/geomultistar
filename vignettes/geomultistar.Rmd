@@ -251,8 +251,6 @@ With this we have all the attributes of the dimension with an associated layer, 
 Multidimensional queries are defined from a `multistar` object in the `starschemar` package. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
 
 ```{r}
-library(starschemar)
-
 gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
                    attributes = c("division_name", "region_name")) |>

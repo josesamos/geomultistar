@@ -33,7 +33,6 @@
 #' @family geo functions
 #'
 #' @examples
-#' library(starschemar)
 #'
 #' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
