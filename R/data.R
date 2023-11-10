@@ -137,3 +137,13 @@
 #' @source
 #'   \url{https://CRAN.R-project.org/package=starschemar}
 "ms_mrs"
+
+#' Multistar for Mortality Reporting System Test
+#'
+#' Multistar for the Mortality Reporting System considering age and cause
+#' classification data test.
+#'
+#' @format A `multistar` object.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"ms_mrs_test"
