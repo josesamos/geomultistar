@@ -1,4 +1,7 @@
 # geomultistar (development version)
+* Define error messages.
+* Include `multistar` class code to be independent of the `starschemar` package.
+* Include test and test data for `multistar` class code.
 
 # geomultistar 1.1.1
 * Update documentation and website.

@@ -13,7 +13,6 @@
 #' @export
 #'
 #' @examples
-#' library(starschemar)
 #'
 #' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
@@ -47,9 +46,9 @@
 #'
 #' sf <- gdq |>
 #'   run_geoquery(wider = TRUE)
-#'\donttest{
+#'
 #' save_as_geopackage(sf, "city", filepath = tempdir())
-#'}
+#'
 save_as_geopackage <- function(sf, layer_name, file_name = NULL, filepath = NULL) {
   if (is.null(file_name)) {
     file_name <- layer_name

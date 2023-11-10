@@ -1,7 +1,7 @@
 context("test geomultistar")
 
 test_that("geomultistar works", {
-  gms <- geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
+  gms <- geomultistar(ms = ms_mrs_test, geodimension = "where")
 
   expect_equal(class(gms), c("multistar", "geomultistar"))
   expect_equal(gms$geodimension, list(where = list(

@@ -2,7 +2,7 @@ context("test define_geoattribute")
 
 test_that("define_geoattribute works", {
   gms <-
-    geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
+    geomultistar(ms = ms_mrs_test, geodimension = "where")
   gms <-
     define_geoattribute(
       gms,

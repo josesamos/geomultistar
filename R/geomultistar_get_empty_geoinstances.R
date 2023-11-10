@@ -13,7 +13,6 @@
 #' @family geo functions
 #'
 #' @examples
-#' library(starschemar)
 #'
 #' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
@@ -42,14 +41,8 @@ get_empty_geoinstances.geomultistar <-
     if (is.null(dimension)) {
       dimension <- names(gms$geodimension)[1]
     }
-    is_geographic_dimension <-
-      dimension %in% names(gms$geodimension)
-    stopifnot(is_geographic_dimension)
-    is_geographic_attribute <-
-      attribute %in% names(gms$geodimension[[dimension]])
-    stopifnot(is_geographic_attribute)
-    the_attribute_is_defined <- !is.null(gms$geodimension[[dimension]][[attribute]])
-    stopifnot(the_attribute_is_defined)
-
+    validate_names(names(gms$geodimension), dimension, concept = 'geographic dimension')
+    validate_names(names(gms$geodimension[[dimension]]), attribute, concept = 'geographic attribute')
+    stopifnot("The attribute is defined." = !is.null(gms$geodimension[[dimension]][[attribute]]))
     gms$geodimension[[dimension]][[attribute]][is.na(sf::st_dimension(gms$geodimension[[dimension]][[attribute]])), ]
   }

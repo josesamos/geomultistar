@@ -2,7 +2,7 @@ context("test get_empty_geoinstances")
 
 test_that("get_empty_geoinstances works", {
   gms <-
-    geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
+    geomultistar(ms = ms_mrs_test, geodimension = "where")
   gms <-
     define_geoattribute(
       gms,

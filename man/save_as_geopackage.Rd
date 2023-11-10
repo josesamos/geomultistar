@@ -24,7 +24,6 @@ the form of a flat table or a list consisting of a layer and a description
 table of the variables.
 }
 \examples{
-library(starschemar)
 
 gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
   define_geoattribute(
@@ -58,7 +57,7 @@ gdq <- dimensional_query(gms) |>
 
 sf <- gdq |>
   run_geoquery(wider = TRUE)
-\donttest{
+
 save_as_geopackage(sf, "city", filepath = tempdir())
-}
+
 }

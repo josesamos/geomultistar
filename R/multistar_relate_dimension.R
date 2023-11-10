@@ -74,18 +74,19 @@ relate_dimension.multistar <- function(ms,
                                        dimension_name = NULL,
                                        fact_name = NULL,
                                        fact_key = NULL) {
-  stopifnot(!is.null(dimension_name))
-  stopifnot(dimension_name %in% names(ms$dimension))
-  stopifnot(fact_name %in% names(ms$fact))
+  stopifnot("The name of the dimension must be indicated." = !is.null(dimension_name))
+  validate_names(names(ms$dimension), dimension_name, concept = 'dimension name')
   if (is.null(fact_name)) {
     fact_name <- names(ms$fact)[1]
   }
-  stopifnot(!is.null(fact_key))
-  stopifnot(fact_key %in% names(ms$fact[[fact_name]]))
+  validate_names(names(ms$fact), fact_name, concept = 'fact name')
+  stopifnot("The key of facts must be indicated." = !is.null(fact_key))
+  validate_names(names(ms$fact[[fact_name]]), fact_key, concept = 'fact key')
   key <- names(ms$dimension[[dimension_name]])[1]
-  stopifnot(unique(ms$fact[[fact_name]][[fact_key]]) %in% ms$dimension[[dimension_name]][[key]])
-  stopifnot(!(key %in% names(ms$fact[[fact_name]])))
-
+  validate_names(ms$dimension[[dimension_name]][[key]], unique(ms$fact[[fact_name]][[fact_key]]), concept = 'fact key instance')
+  if (key %in% names(ms$fact[[fact_name]])) {
+    stop(sprintf("'%s' is already defined in the dimension.", key))
+  }
   attr_names <- names(ms$fact[[fact_name]])
   attr_names[which(attr_names == fact_key)] <- key
   names(ms$fact[[fact_name]]) <- attr_names

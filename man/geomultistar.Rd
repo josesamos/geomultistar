@@ -19,12 +19,8 @@ A \code{geomultistar} object is created. Dimensions that contain geographic
 information are indicated.
 }
 \examples{
-library(starschemar)
 
-r <- ct_mrs |>
-  constellation_as_multistar()
-
-gms <- geomultistar(ms = r, geodimension = "where")
+# gms <- geomultistar(ms = ms_mrs, geodimension = "where")
 
 }
 \seealso{

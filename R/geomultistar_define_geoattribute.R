@@ -33,7 +33,6 @@
 #' @family geo functions
 #'
 #' @examples
-#' library(starschemar)
 #'
 #' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
@@ -78,21 +77,16 @@ define_geoattribute.geomultistar <-
     if (is.null(dimension)) {
       dimension <- names(gms$geodimension)[1]
     }
-    is_geographic_dimension <-
-      dimension %in% names(gms$geodimension)
-    stopifnot(is_geographic_dimension)
-    is_geographic_attribute <-
-      attribute %in% names(gms$geodimension[[dimension]])
-    stopifnot(is_geographic_attribute)
-    is_geographic_additional_attributes <-
-      additional_attributes %in% names(gms$geodimension[[dimension]])
-    stopifnot(is_geographic_additional_attributes)
-    is_geographic_names_by <-
-      names(by) %in% names(gms$geodimension[[dimension]])
-    stopifnot(is_geographic_names_by)
+    validate_names(names(gms$geodimension), dimension, concept = 'geographic dimension')
+    if (!is.null(attribute)) {
+      validate_names(names(gms$geodimension[[dimension]]), attribute, concept = 'geographic attribute')
+    }
+    validate_names(names(gms$geodimension[[dimension]]), additional_attributes, concept = 'geographic attribute')
+    validate_names(names(gms$geodimension[[dimension]]), names(by), concept = 'geographic name by')
+
     if (is.null(attribute)) {
       # default
-      stopifnot(!is.null(from_attribute))
+      stopifnot("The from_attribute must be indicated." = !is.null(from_attribute))
       for (attribute in names(gms$geodimension[[dimension]])) {
         if (is.null(gms$geodimension[[dimension]][[attribute]])) {
           gms <-
@@ -134,17 +128,15 @@ define_geoattribute_from_attribute <- function(gms,
                                                attribute = NULL,
                                                from_attribute = NULL,
                                                additional_attributes = NULL) {
-  stopifnot(!is.null(from_attribute))
-  is_geographic_from_attribute <- from_attribute %in% names(gms$geodimension[[dimension]])
-  stopifnot(is_geographic_from_attribute)
+  stopifnot("The from_attribute must be indicated." = !is.null(from_attribute))
+  validate_names(names(gms$geodimension[[dimension]]), from_attribute, concept = 'from attribute')
+
   geom <- gms$geodimension[[dimension]][[from_attribute]]
-  from_attribute_geom_is_defined <- !is.null(geom)
-  stopifnot(from_attribute_geom_is_defined)
+  stopifnot("The geom of the from attribute must be defined." = !is.null(geom))
 
   if (attribute == sprintf("all_%s", dimension)) {
-    gms$geodimension[[dimension]][[attribute]] <-
-      as.data.frame(geom) |>
-      dplyr::mutate(!!attribute := attribute, .before = from_attribute) |>
+    gms$geodimension[[dimension]][[attribute]] <- as.data.frame(geom) |>
+      dplyr::mutate(!!attribute := attribute, .before = tidyselect::all_of(from_attribute)) |>
       sf::st_as_sf() |>
       dplyr::group_by_at(attribute) |>
       dplyr::summarize(.groups = "drop")
@@ -155,7 +147,7 @@ define_geoattribute_from_attribute <- function(gms,
     atts <- unique(c(attribute, additional_attributes))
     layer <- geom |>
       dplyr::left_join(gms$dimension[[dimension]], by = names_geom) |>
-      dplyr::select(atts) |>
+      dplyr::select(tidyselect::all_of(atts)) |>
       dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
 
@@ -187,17 +179,17 @@ define_geoattribute_from_layer <- function(gms,
                                            attribute = NULL,
                                            from_layer = NULL,
                                            by = NULL) {
-  stopifnot(!is.null(from_layer))
+  stopifnot("The from_layer must be indicated." = !is.null(from_layer))
   if (attribute == sprintf("all_%s", dimension)) {
     geometry_level_all_length_is_1 <- (length(from_layer[[1]]) == 1)
-    stopifnot(geometry_level_all_length_is_1)
+    stopifnot("The length of the from layer must be 1." = length(from_layer[[1]]) == 1)
     gms$geodimension[[dimension]][[attribute]] <-
       tibble::tibble(!!attribute := attribute,
                      geometry = sf::st_geometry(from_layer)) |>
       sf::st_as_sf()
     attr(gms$geodimension[[dimension]][[attribute]], 'n_instances') <- 1
   } else {
-    stopifnot(!is.null(by))
+    stopifnot("The by parameter must be indicated." = !is.null(by))
     atts <- unique(c(attribute, names(by)))
     geom <- gms$dimension[[dimension]][, atts] |>
       dplyr::group_by_at(atts) |>
@@ -205,7 +197,7 @@ define_geoattribute_from_layer <- function(gms,
     geom <-
       dplyr::left_join(geom, from_layer, by = by) |>
       sf::st_as_sf() |>
-      dplyr::select(atts) |>
+      dplyr::select(tidyselect::all_of(atts)) |>
       dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
 

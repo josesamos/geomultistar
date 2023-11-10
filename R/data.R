@@ -128,3 +128,49 @@
 #'   \url{https://CRAN.R-project.org/package=starschemar}
 "mrs_fact_cause"
 
+#' Multistar for Mortality Reporting System
+#'
+#' Multistar for the Mortality Reporting System considering age and cause
+#' classification.
+#'
+#' @format A `multistar` object.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"ms_mrs"
+
+#' Multistar for Mortality Reporting System Test
+#'
+#' Multistar for the Mortality Reporting System considering age and cause
+#' classification data test.
+#'
+#' @format A `multistar` object.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"ms_mrs_test"
+
+#' Mortality Reporting System by Age Test
+#'
+#' Selection of data from the 2 Cities Mortality Reporting System by age
+#' group, for the first 3 weeks of 1962.
+#'
+#' The original dataset begins in 1962. For each week, in 122 US cities,
+#' mortality figures by age group and cause, considered separately, are included
+#' (i.e., the combination of age group and cause is not included). In the cause,
+#' only a distinction is made between pneumonia or influenza and others.
+#'
+#' Two additional dates have been generated, which were not present in the
+#' original dataset.
+#'
+#' @format A `tibble`.
+#' @source \url{https://catalog.data.gov/dataset/deaths-in-122-u-s-cities-1962-2016-122-cities-mortality-reporting-system}
+"mrs_age_test"
+
+#' Star Schema for Mortality Reporting System by Age Test
+#'
+#' Star Schema for the Mortality Reporting System considering the age
+#' classification data test.
+#'
+#' @format A `star_schema` object.
+#' @source
+#'   \url{https://CRAN.R-project.org/package=starschemar}
+"st_mrs_age_test"

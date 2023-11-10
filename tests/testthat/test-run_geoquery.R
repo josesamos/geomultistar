@@ -1,7 +1,7 @@
 context("test run_geoquery")
 
 test_that("run_geoquery works", {
-  gms <- geomultistar(ms = starschemar::ms_mrs_test, geodimension = "where")
+  gms <- geomultistar(ms = ms_mrs_test, geodimension = "where")
   gms <-
     define_geoattribute(
       gms,
@@ -30,20 +30,20 @@ test_that("run_geoquery works", {
       from_layer = usa_nation,
     )
 
-  gdq <- starschemar::dimensional_query(gms) |>
-    starschemar::select_dimension(name = "where",
+  gdq <- dimensional_query(gms) |>
+    select_dimension(name = "where",
                                   attributes = c("city", "state", "region")) |>
-    starschemar::select_dimension(name = "when",
+    select_dimension(name = "when",
                                   attributes = c("year", "week")) |>
-    starschemar::select_fact(
+    select_fact(
       name = "mrs_age",
       measures = c("deaths"),
       agg_functions = c("SUM")
     ) |>
-    starschemar::select_fact(name = "mrs_cause",
+    select_fact(name = "mrs_cause",
                              measures = c("pneumonia_and_influenza_deaths", "other_deaths")) |>
-    starschemar::filter_dimension(name = "when", week <= "03") |>
-    starschemar::filter_dimension(name = "where", city == "Bridgeport")
+    filter_dimension(name = "when", week <= "03") |>
+    filter_dimension(name = "where", city == "Bridgeport")
 
   gr1 <- gdq |>
     run_geoquery(attribute = "city")
@@ -165,20 +165,20 @@ test_that("run_geoquery works", {
     )
   )
 
-  gdq <- starschemar::dimensional_query(gms) |>
-    # starschemar::select_dimension(name = "where",
+  gdq <- dimensional_query(gms) |>
+    # select_dimension(name = "where",
     #                               attributes = c("city", "state", "region")) |>
-    starschemar::select_dimension(name = "when",
+    select_dimension(name = "when",
                                   attributes = c("year", "week")) |>
-    starschemar::select_fact(
+    select_fact(
       name = "mrs_age",
       measures = c("deaths"),
       agg_functions = c("SUM")
     ) |>
-    starschemar::select_fact(name = "mrs_cause",
+    select_fact(name = "mrs_cause",
                              measures = c("pneumonia_and_influenza_deaths", "other_deaths")) |>
-    starschemar::filter_dimension(name = "when", week <= "03") |>
-    starschemar::filter_dimension(name = "where", city == "Bridgeport")
+    filter_dimension(name = "when", week <= "03") |>
+    filter_dimension(name = "where", city == "Bridgeport")
 
   gr5 <- gdq |>
     run_geoquery(wider = TRUE)

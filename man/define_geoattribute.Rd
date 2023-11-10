@@ -65,7 +65,6 @@ they are obtained from the attribute indicated in the \code{from_attribute}
 parameter.
 }
 \examples{
-library(starschemar)
 
 gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
   define_geoattribute(

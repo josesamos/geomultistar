@@ -3,7 +3,6 @@ title: "Geographical Queries on Multidimensional Data"
 author: "Jose Samos (jsamos@ugr.es)"
 date: "2020-09-15"
 output: rmarkdown::html_vignette
-bibliography: bibliography.bib
 vignette: >
   %\VignetteIndexEntry{Geographical Queries on Multidimensional Data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -25,7 +24,7 @@ library(geomultistar)
 
 The *multidimensional data model* was defined with the aim of supporting data analysis. In multidimensional systems, data is structured in facts and dimensions[^1]. 
 
-[^1]: Basic concepts of dimensional modelling and star schemas are presented in [`starschemar`](https://CRAN.R-project.org/package=starschemar) vignettes.
+[^1]: Basic concepts of dimensional modelling and star schemas are presented in [`rolap``](https://CRAN.R-project.org/package=rolap) vignettes.
 
 The star model is widely accepted, it is recommended for use in widely distributed end-user tools. In it we have a table for  facts and a table for each dimension. Dimensions provide factual views for easy querying.
 
@@ -39,15 +38,15 @@ The rest of this document is structured as follows: An illustrative example of h
 
 # An illustrative example
 
-To perform multidimensional queries, the `multistar` class was defined in the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package. A `multistar` implements the star schemas: it has a table for each dimension and a table for the facts; however, it can contain multiple fact tables with some dimensions in common.
+To perform multidimensional queries, the `multistar` class was defined in this package. A `multistar` implements star schemas: it has a table for each dimension and a table for the facts; however, it can contain multiple fact tables with some dimensions in common.
 
-Using the functions defined in `starschemar` package, starting from a flat table implemented by means of a `tibble`, we can generate a `multistar` object.
+Using the functions defined in the [`rolap`](https://CRAN.R-project.org/package=rolap) or  [`starschemar`](https://CRAN.R-project.org/package=starschemar) packages, starting from a flat table implemented by means of a `tibble`, we can generate a `multistar` object.
 
 If we already have a star schema, `geomultistar` package offers functions to generate a `multistar` object from the fact and dimension tables in `tibble` format.
 
 ## Generate a `multistar` object
 
-In this case, we are going to suppose that we have tables of facts and dimensions in `tibble` format, which we have imported into R. In particular, we have the tables `mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who`, obtained from the example presented in package `starschemar`: Two fact tables that share two of the three dimensions.
+In this case, we are going to suppose that we have tables of facts and dimensions in `tibble` format, which we have imported into R. In particular, we have the tables `mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who`: Two fact tables that share two of the three dimensions.
 
 ### Add fact tables
 
@@ -65,9 +64,9 @@ ms <- multistar() |>
 
 For the facts we indicate a name, the table that contains its data and the names of the columns that contain the measures.
 
-You can indicate an aggregation function associated with each measure. This parameter should be defined only if some measure is not additive. In this case it is not necessary.
+We can indicate an aggregation function associated with each measure. This parameter should be defined only if some measure is not additive. In this case it is not necessary.
 
-Finally, you can indicate the name of a field that represents the number of rows grouped in each query: You can indicate the name of an existing column in the table for that purpose, or the name that you want to give to the column to be added if none exists. In this case, the name of a column in the table is assigned.
+Finally, we can indicate the name of a field that represents the number of rows grouped in each query: We can indicate the name of an existing column in the table for that purpose, or the name that you want to give to the column to be added if none exists. In this case, the name of a column in the table is assigned.
 
 Next we add another table of facts with characteristics similar to the previous one. 
 
@@ -126,7 +125,7 @@ If a dimension is related to more than one fact table, when it is added, its rel
 
 ### Relate dimensions
 
-Once a dimension is included in the `multistar`, we can relate it to other fact tables.
+Once a dimension is included in the `multistar` object, we can relate it to other fact tables.
 
 ```{r}
 ms <- ms |>
@@ -142,7 +141,7 @@ In this case, to specify the dimension we only have to indicate its name.
 
 ### Additional operations on the `multistar` object
 
-Through the previous operations, we generate a `multistar` object to which we can apply the operations defined in the `starschemar` package for this class. At this moment we can export it as a flat table, using `multistar_as_flat_table`, or define multidimensional queries, as we will later use `dimensional_query`.
+Through the previous operations, we generate a `multistar` object to which we can apply the operations defined for this class. At this moment we can export it as a flat table, using `multistar_as_flat_table`, or define multidimensional queries, as we will later use `dimensional_query`.
 
 
 ## Define geographic dimensions and attributes
@@ -156,7 +155,7 @@ gms <-
   geomultistar(ms, geodimension = "where")
 ```
 
-For each attribute of a geographic dimension that we want to use in queries, we can define a vector layer with which a relationship can be established using one or more attributes of the dimension.
+For each attribute of a geographic dimension that we want to use in queries, we can define a vector geographic data layer with which a relationship can be established using one or more attributes of the dimension.
 
 ```{r}
 gms <- gms |>
@@ -167,7 +166,7 @@ gms <- gms |>
   ) 
 ```
 
-For the `city` attribute, a relationship is defined with a vector layer in `sf` format (`usa_cities`), using the `city` and `state` attributes[^2] that have the same name in the layer. 
+For the `city` attribute, a relationship is defined with a vector geographic data layer in `sf` format (`usa_cities`), using the `city` and `state` attributes[^2] that have the same name in the layer. 
 
 [^2]: It is appropriate to use `city` and `state` to establish the relationship because the granularity of the data is `city` and there can be repeated city names in different states.
 
@@ -242,17 +241,15 @@ gms <- gms |>
   define_geoattribute(from_attribute = "state")
 ```
 
-With this we have all the attributes of the dimension with an associated layer, defined at its level of granularity[^3].  On the other hand, we can change the layer of any attribute at any time, independently of the rest.
+With this we have all the attributes of the dimension with an associated layer, defined at its level of granularity[^3]. On the other hand, we can change the layer of any attribute at any time, independently of the rest.
 
 [^3]: If we are not going to use them in queries it is not necessary that they have the associated layer.
 
 ## Define multidimensional queries
 
-Multidimensional queries are defined from a `multistar` object in the `starschemar` package. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
+Multidimensional queries are defined from a `multistar` object. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
 
 ```{r}
-library(starschemar)
-
 gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
                    attributes = c("division_name", "region_name")) |>
@@ -267,9 +264,9 @@ gdqr <- dimensional_query(gms) |>
   filter_dimension(name = "when", week <= "03")
 ```
 
-The definition functions of this type of queries are quite intuitive, they are explained in the vignette of package [`starschemar`](https://CRAN.R-project.org/package=starschemar).
+The definition functions of this type of queries is based on the selection of facts and dimensions, and the filter of dimensions.
 
-If we use the function `run_query` of the mentioned package, a normal multidimensional query is executed, as shown below.
+If we use the function `run_query()`, a multidimensional query is executed, as shown below.
 
 ```{r}
 ft <- gdqr |>
@@ -277,7 +274,7 @@ ft <- gdqr |>
   multistar_as_flat_table()
 ```
 
-The result of this type of query is a `multistar` object, which we can transform into a flat table to display it more easily, as we do below for the first rows..
+The result of this type of query is a `multistar` object, which we can transform into a flat table to display it more easily, as we do below for the first rows.
 
 ```{r, results = "asis", echo = FALSE}
 pander::pandoc.table(head(ft, 12), split.table = Inf)
@@ -285,7 +282,7 @@ pander::pandoc.table(head(ft, 12), split.table = Inf)
 
 ## Run queries adding geographic information
 
-If instead of executing the standard query, we execute `run_geoquery` function, from this package, we automatically obtain a vector layer at the finest possible level of detail, depending on the definition of the query.
+If instead of executing the standard query, we execute `run_geoquery()` function, we automatically obtain a vector geographic data layer at the finest possible level of detail, depending on the definition of the query.
 
 ```{r}
 vl_sf <- gdqr |>
@@ -298,7 +295,7 @@ The first rows of the result can be seen below in table form.
 pander::pandoc.table(head(vl_sf, 12), split.table = Inf)
 ```
 
-The result is a vector layer that we can save, perform spatial analysis or queries on it, or we can see it as a map, using the functions associated with the `sf` class.
+The result is a vector geographic data layer that we can save, perform spatial analysis or queries on it, or we can see it as a map, using the functions associated with the `sf` class.
 
 ```{r}
 class(vl_sf)
@@ -329,26 +326,25 @@ We can see that the attributes that are multivalued for each geographic object h
 
 The meaning of the name of the columns of the measurements is part of the result obtained, also in table format, as can be seen below.
 
-
 ```{r, results = "asis", echo = FALSE}
 pander::pandoc.table(head(vl_sf_w$variables, 12), split.table = Inf)
 ```
 
 In this case there was only one variable with a multiplicity greater than one. If there were more variables in this situation, they would be added to this table in the same way.
 
-This dictionary table and layer structure can be saved in *GeoPackage* format using the `save_as_geopackage` function. 
+This data dictionary table and layer structure can be saved in *GeoPackage* format using the `save_as_geopackage()` function. 
 
 ```{r, eval = FALSE}
 save_as_geopackage(vl_sf_w, "division")
 ```
 
-The GeoPackages thus obtained can be used directly, for example in *QGIS*.
+The *GeoPackages* thus obtained can be used directly, for example in *QGIS*.
 
 
 # Conclusions
 
-To generate the multidimensional structure on which to define queries, we can use the functions of the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package or, if we already have the multidimensional design implemented, the import functions included in this package.
+To generate the multidimensional structure on which to define queries, we can use the functions of the [`rolap`](https://CRAN.R-project.org/package=rolap) package or, if we already have the multidimensional design implemented, the import functions included in this package.
 
-`geomultistar` package allows generating vector layers in `sf` format as a result of multidimensional queries. To do this, all we need is to associate vector layers with some of the attributes of the geographic dimensions, so that the layers associated with the rest of the attributes can be obtained automatically. Queries do not present any additional difficulties due to the fact of returning geographic data.
+The `geomultistar` package allows generating vector geographic data layers in `sf` format as a result of multidimensional queries. To do this, all we need is to associate vector geographic data layers with some of the attributes of the geographic dimensions, so that the layers associated with the rest of the attributes can be obtained automatically. Queries do not present any additional difficulties due to the fact of returning geographic data.
 
-The data obtained can be processed with the `sf` package to define spatial queries or analysis, be presented in maps or saved as a file to be used by a GIS (*Geographical Information System*).
+The data obtained can be processed with the `sf` package to define spatial queries or analysis, be presented in maps or saved as a file to be used by a GIS (*Geographical Information System*) tool.

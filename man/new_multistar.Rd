@@ -4,7 +4,12 @@
 \alias{new_multistar}
 \title{\code{multistar} S3 class}
 \usage{
-new_multistar()
+new_multistar(fl = list(), dl = list())
+}
+\arguments{
+\item{fl}{A \code{fact_table} list.}
+
+\item{dl}{A \code{dimension_table} list.}
 }
 \value{
 A \code{multistar} object.
@@ -12,5 +17,9 @@ A \code{multistar} object.
 \description{
 Internal low-level constructor that creates new objects with the correct
 structure.
+}
+\details{
+It only distinguishes between general and conformed dimensions, each
+dimension has its own data. It can contain multiple fact tables.
 }
 \keyword{internal}

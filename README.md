@@ -17,20 +17,22 @@ coverage](https://codecov.io/gh/josesamos/geomultistar/branch/master/graph/badge
 *Multidimensional systems* allow complex queries to be carried out in an
 easy way. The *geographic dimension*, together with the *temporal
 dimension*, plays a fundamental role in multidimensional systems.
-Through the `geomultistar` package, vector layers can be associated to
-the attributes of geographic dimensions, so that the results of
-multidimensional queries can be obtained directly as vector layers. In
-other words, this package allows **enriching multidimensional queries
-with geographic data**.
+Through the `geomultistar` package, vector geographic data layers can be
+associated to the attributes of geographic dimensions, so that the
+results of multidimensional queries can be obtained directly as vector
+geographic data layers. In other words, this package allows **enriching
+multidimensional queries with geographic data**.
 
 The multidimensional structures on which we can define the queries can
-be created from flat tables with
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) package
-or imported directly using functions from `geomultistar` package.
+be created from flat tables with the
+[`rolap`](https://CRAN.R-project.org/package=rolap) or
+[`starschemar`](https://CRAN.R-project.org/package=starschemar)
+packages, or imported directly using functions from the `geomultistar`
+package.
 
 ## Installation
 
-You can install the released version of geomultistar from
+You can install the released version of `geomultistar` from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -47,8 +49,8 @@ devtools::install_github("josesamos/geomultistar")
 ## Example
 
 If we start from a flat table, we can generate a star schema using the
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) package,
-as described in its examples.
+[`rolap`](https://CRAN.R-project.org/package=rolap) package, as
+described in its vignettes.
 
 If we have a star schema in another tool, we need to import the fact and
 dimension tables into R in the form of tables implemented by `tibble`
@@ -56,10 +58,8 @@ dimension tables into R in the form of tables implemented by `tibble`
 in the example). Once we have them in this format, we have to build a
 `multistar` structure from them: This structure can contain multiple
 fact and dimension tables, so facts can share dimensions. The definition
-for tables obtained from the case detailed in
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) is
-included below. The measures of the facts are defined and the
-relationships between facts and dimensions are established.
+for tables is included below. The measures of the facts are defined and
+the relationships between facts and dimensions are established.
 
 ``` r
 library(geomultistar)
@@ -107,10 +107,10 @@ ms <- multistar() |>
                    fact_key = "when_fk")
 ```
 
-Once we have a `multistar` structure, we will associate vector layers to
-the attributes of the geographic dimensions. We can use existing layers
-or generate them from the previous definitions. As a result we will have
-a `geomultistar` structure.
+Once we have a `multistar` structure, we will associate vector
+geographic data layers to the attributes of the geographic dimension. We
+can use existing layers or generate them from the previous definitions.
+As a result we will have a `geomultistar` structure.
 
 ``` r
 gms <-
@@ -138,15 +138,11 @@ the rest of the dimension’s attributes are automatically defined from
 the layer associated with the indicated parameter.
 
 Finally, we can define multidimensional queries on this structure using
-the functions available in the
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) package.
-When executing these queries, using the functionality implemented in
-package `geomultistar`, the vector layers of the attributes will be
-taken into account to result in a new vector layer.
+the functions available in this package. When executing these queries,
+the vector geographic data layers of the attributes will be taken into
+account to result in a new vector geographic data layer.
 
 ``` r
-library(starschemar)
-
 gdqr <- dimensional_query(gms) |>
   select_dimension(name = "where",
                    attributes = c("division_name", "region_name")) |>
@@ -162,8 +158,8 @@ gdqr <- dimensional_query(gms) |>
   run_geoquery(wider = TRUE)
 ```
 
-The result is a vector layer that we can save or we can see it as a map,
-using the functions associated with the `sf` class.
+The result is a vector geographic data layer that we can save or we can
+see it as a map, using the functions associated with the `sf` class.
 
 ``` r
 class(gdqr)
@@ -201,7 +197,7 @@ The result includes the meaning of each variable in table form.
 |          mrs_cause_other_deaths_03          |          mrs_cause_other_deaths          |  03  |
 
 It can be saved directly as a *GeoPackage*, using the
-`save_as_geopackage` function.
+`save_as_geopackage()` function.
 
 ``` r
 save_as_geopackage(vl_sf_w, "division")

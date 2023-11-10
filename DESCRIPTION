@@ -8,12 +8,12 @@ Authors@R:
 Description: Multidimensional systems allow complex queries to be carried
     out in an easy way. The geographical dimension, together with the
     temporal dimension, plays a fundamental role in multidimensional
-    systems. Through this package, vector layers can be associated to the
-    attributes of geographic dimensions, so that the results of
-    multidimensional queries can be obtained directly as vector layers.
-    The multidimensional structures on which we can define the queries can
-    be created from a flat table or imported directly using functions from
-    this package.
+    systems. Through this package, vector geographic data layers can be
+    associated to the attributes of geographic dimensions, so that the
+    results of multidimensional queries can be obtained directly as vector
+    layers.  The multidimensional structures on which we can define the
+    queries can be created from a flat table or imported directly using
+    functions from this package.
 License: MIT + file LICENSE
 URL: https://josesamos.github.io/geomultistar/,
     https://github.com/josesamos/geomultistar
@@ -22,10 +22,11 @@ Depends:
     R (>= 2.10)
 Imports: 
     dplyr,
+    generics,
+    purrr,
     rlang,
     RSQLite,
     sf,
-    starschemar,
     tibble,
     tidyr,
     tidyselect

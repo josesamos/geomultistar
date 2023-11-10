@@ -1,4 +1,3 @@
-
 #' Add a dimension table to a `multistar`
 #'
 #' To add a dimension table to a `multistar` object, we must indicate the name
@@ -87,28 +86,33 @@ add_dimension.multistar <- function(ms,
                                     fact_name = NULL,
                                     fact_key = NULL,
                                     key_as_data = FALSE) {
-  stopifnot(!is.null(dimension_name))
-  stopifnot(!(dimension_name %in% names(ms$dimension)))
-  stopifnot(tibble::is_tibble(dimension_table))
-  stopifnot(!is.null(dimension_key))
-  stopifnot(dimension_key %in% names(dimension_table))
-  stopifnot(length(dimension_table[[dimension_key]]) == length(unique(dimension_table[[dimension_key]])))
-  stopifnot(fact_name %in% names(ms$fact))
+  stopifnot("The name of the dimension must be indicated." = !is.null(dimension_name))
+  stopifnot("The dimension is already included." = !(dimension_name %in% names(ms$dimension)))
+  stopifnot("The dimension table must be a 'tibble'." = tibble::is_tibble(dimension_table))
+  stopifnot("The key of the dimension must be indicated." = !is.null(dimension_key))
+  validate_names(names(dimension_table), dimension_key, concept = 'dimension key')
+  stopifnot("Dimension key values cannot be repeated." = length(dimension_table[[dimension_key]]) == length(unique(dimension_table[[dimension_key]])))
   if (is.null(fact_name)) {
     fact_name <- names(ms$fact)[1]
   }
-  stopifnot(!is.null(fact_key))
-  stopifnot(fact_key %in% names(ms$fact[[fact_name]]))
-  stopifnot(unique(ms$fact[[fact_name]][[fact_key]]) %in% dimension_table[[dimension_key]])
+  validate_names(names(ms$fact), fact_name, concept = 'fact name')
+  stopifnot("The key of the fact must be indicated." = !is.null(fact_key))
+  validate_names(names(ms$fact[[fact_name]]), fact_key, concept = 'fact key')
+  validate_names(dimension_table[[dimension_key]], unique(ms$fact[[fact_name]][[fact_key]]), concept = 'fact key value')
+
   key <- sprintf("%s_key", dimension_name)
-  stopifnot(!(key %in% names(dimension_table)))
-  stopifnot(!(key %in% names(ms$fact[[fact_name]])))
+  if (key %in% names(dimension_table)) {
+    stop(sprintf("'%s' is already defined in the dimension.", key))
+  }
+  if (key %in% names(ms$fact[[fact_name]])) {
+    stop(sprintf("'%s' is already defined in facts.", key))
+  }
 
   dimension_table <-
     dplyr::mutate(dimension_table,!!key := dimension_table[[dimension_key]], .before = 1)
   if (!key_as_data) {
     dimension_table <-
-      dplyr::select(dimension_table,-(!!dimension_key))
+      dplyr::select(dimension_table,-tidyselect::all_of(!!dimension_key))
   }
   ms$dimension[[dimension_name]] <-
     structure(

@@ -32,7 +32,6 @@
 #' @family geo functions
 #'
 #' @examples
-#' library(starschemar)
 #'
 #' gms <- geomultistar(ms = ms_mrs, geodimension = "where") |>
 #'   define_geoattribute(
@@ -91,8 +90,8 @@ run_geoquery.dimensional_query <-
            attribute = NULL,
            wider = FALSE) {
     dq <- add_geodimension_additional_attributes(dq)
-    dq$output <- starschemar::run_query(dq, unify_by_grain)
-    ft <- starschemar::multistar_as_flat_table(dq$output, fact)
+    dq$output <- run_query(dq, unify_by_grain)
+    ft <- multistar_as_flat_table(dq$output, fact)
     columns <- names(ft)
 
     if (is.null(dimension)) {
@@ -102,7 +101,7 @@ run_geoquery.dimensional_query <-
       attribute <- default_attribute(dq, dimension)
     }
     is_geographic_attribute <- attribute %in% names(dq$input$geodimension[[dimension]])
-    stopifnot(is_geographic_attribute)
+    stopifnot("The attribute is not a geographic attribute." = is_geographic_attribute)
 
     geodim <- dq$input$geodimension[[dimension]][[attribute]]
     if (attribute == sprintf("all_%s", dimension)) {
@@ -207,8 +206,8 @@ add_geodimension_additional_attributes <- function(dq) {
 #' @keywords internal
 widen_flat_table <- function(ft, pk, measures) {
   names_ft <- names(ft)
-  stopifnot(pk %in% names_ft)
-  stopifnot(measures %in% names_ft)
+  validate_names(names_ft, pk, concept = 'primary key')
+  validate_names(names_ft, measures, concept = 'measure')
   pk <- unique(pk)
   measures <- unique(measures)
   rest <- names_ft[!(names_ft %in% c(pk, measures))]
@@ -239,9 +238,9 @@ widen_flat_table <- function(ft, pk, measures) {
     }
 
     ft <- dplyr::left_join(ft, ft_out, by = rest_out)
-    ft <- dplyr::select(ft, !rest_out)
+    ft <- dplyr::select(ft, !tidyselect::all_of(rest_out))
     names_ft <- names(ft)
-    ft <- tidyr::pivot_wider(ft, names_from = names_ft[length(names_ft)], values_from = measures)
+    ft <- tidyr::pivot_wider(ft, names_from = names_ft[length(names_ft)], values_from = tidyselect::all_of(measures))
     ft <- tibble::add_column(ft, fid = 1:nrow(ft), .before = 1)
 
     out <- tibble::add_column(ft_out, measure = measures[1], .after = 1)
@@ -274,5 +273,3 @@ get_selected_measure_names <- function(dq, ft) {
   names_ft <- names(ft)
   names_ft[(length(names_ft) - num_measures + 1):length(names_ft)]
 }
-
-
