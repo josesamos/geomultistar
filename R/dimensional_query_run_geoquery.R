@@ -238,9 +238,9 @@ widen_flat_table <- function(ft, pk, measures) {
     }
 
     ft <- dplyr::left_join(ft, ft_out, by = rest_out)
-    ft <- dplyr::select(ft, !rest_out)
+    ft <- dplyr::select(ft, !tidyselect::all_of(rest_out))
     names_ft <- names(ft)
-    ft <- tidyr::pivot_wider(ft, names_from = names_ft[length(names_ft)], values_from = measures)
+    ft <- tidyr::pivot_wider(ft, names_from = names_ft[length(names_ft)], values_from = tidyselect::all_of(measures))
     ft <- tibble::add_column(ft, fid = 1:nrow(ft), .before = 1)
 
     out <- tibble::add_column(ft_out, measure = measures[1], .after = 1)

@@ -108,7 +108,7 @@ add_dimension.multistar <- function(ms,
     dplyr::mutate(dimension_table,!!key := dimension_table[[dimension_key]], .before = 1)
   if (!key_as_data) {
     dimension_table <-
-      dplyr::select(dimension_table,-(!!dimension_key))
+      dplyr::select(dimension_table,-tidyselect::all_of(!!dimension_key))
   }
   ms$dimension[[dimension_name]] <-
     structure(

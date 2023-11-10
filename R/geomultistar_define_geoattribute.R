@@ -141,9 +141,8 @@ define_geoattribute_from_attribute <- function(gms,
   stopifnot(from_attribute_geom_is_defined)
 
   if (attribute == sprintf("all_%s", dimension)) {
-    gms$geodimension[[dimension]][[attribute]] <-
-      as.data.frame(geom) |>
-      dplyr::mutate(!!attribute := attribute, .before = from_attribute) |>
+    gms$geodimension[[dimension]][[attribute]] <- as.data.frame(geom) |>
+      dplyr::mutate(!!attribute := attribute, .before = tidyselect::all_of(from_attribute)) |>
       sf::st_as_sf() |>
       dplyr::group_by_at(attribute) |>
       dplyr::summarize(.groups = "drop")
@@ -154,7 +153,7 @@ define_geoattribute_from_attribute <- function(gms,
     atts <- unique(c(attribute, additional_attributes))
     layer <- geom |>
       dplyr::left_join(gms$dimension[[dimension]], by = names_geom) |>
-      dplyr::select(atts) |>
+      dplyr::select(tidyselect::all_of(atts)) |>
       dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
 
@@ -204,7 +203,7 @@ define_geoattribute_from_layer <- function(gms,
     geom <-
       dplyr::left_join(geom, from_layer, by = by) |>
       sf::st_as_sf() |>
-      dplyr::select(atts) |>
+      dplyr::select(tidyselect::all_of(atts)) |>
       dplyr::group_by_at(atts) |>
       dplyr::summarize(.groups = "drop")
 
