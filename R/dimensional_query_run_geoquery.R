@@ -273,5 +273,3 @@ get_selected_measure_names <- function(dq, ft) {
   names_ft <- names(ft)
   names_ft[(length(names_ft) - num_measures + 1):length(names_ft)]
 }
-
-
