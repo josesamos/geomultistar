@@ -25,7 +25,7 @@ library(geomultistar)
 
 The *multidimensional data model* was defined with the aim of supporting data analysis. In multidimensional systems, data is structured in facts and dimensions[^1]. 
 
-[^1]: Basic concepts of dimensional modelling and star schemas are presented in [`starschemar`](https://CRAN.R-project.org/package=starschemar) vignettes.
+[^1]: Basic concepts of dimensional modelling and star schemas are presented in [`rolap``](https://CRAN.R-project.org/package=rolap) vignettes.
 
 The star model is widely accepted, it is recommended for use in widely distributed end-user tools. In it we have a table for  facts and a table for each dimension. Dimensions provide factual views for easy querying.
 
@@ -39,15 +39,15 @@ The rest of this document is structured as follows: An illustrative example of h
 
 # An illustrative example
 
-To perform multidimensional queries, the `multistar` class was defined in the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package. A `multistar` implements the star schemas: it has a table for each dimension and a table for the facts; however, it can contain multiple fact tables with some dimensions in common.
+To perform multidimensional queries, the `multistar` class was defined in this package. A `multistar` implements the star schemas: it has a table for each dimension and a table for the facts; however, it can contain multiple fact tables with some dimensions in common.
 
-Using the functions defined in `starschemar` package, starting from a flat table implemented by means of a `tibble`, we can generate a `multistar` object.
+Using the functions defined in the [`rolap`](https://CRAN.R-project.org/package=rolap) or  [`starschemar`](https://CRAN.R-project.org/package=starschemar) packages, starting from a flat table implemented by means of a `tibble`, we can generate a `multistar` object.
 
 If we already have a star schema, `geomultistar` package offers functions to generate a `multistar` object from the fact and dimension tables in `tibble` format.
 
 ## Generate a `multistar` object
 
-In this case, we are going to suppose that we have tables of facts and dimensions in `tibble` format, which we have imported into R. In particular, we have the tables `mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who`, obtained from the example presented in package `starschemar`: Two fact tables that share two of the three dimensions.
+In this case, we are going to suppose that we have tables of facts and dimensions in `tibble` format, which we have imported into R. In particular, we have the tables `mrs_fact_age`, `mrs_fact_cause`, `mrs_where`, `mrs_when` and `mrs_who`: Two fact tables that share two of the three dimensions.
 
 ### Add fact tables
 
@@ -142,7 +142,7 @@ In this case, to specify the dimension we only have to indicate its name.
 
 ### Additional operations on the `multistar` object
 
-Through the previous operations, we generate a `multistar` object to which we can apply the operations defined in the `starschemar` package for this class. At this moment we can export it as a flat table, using `multistar_as_flat_table`, or define multidimensional queries, as we will later use `dimensional_query`.
+Through the previous operations, we generate a `multistar` object to which we can apply the operations defined for this class. At this moment we can export it as a flat table, using `multistar_as_flat_table`, or define multidimensional queries, as we will later use `dimensional_query`.
 
 
 ## Define geographic dimensions and attributes
@@ -248,7 +248,7 @@ With this we have all the attributes of the dimension with an associated layer, 
 
 ## Define multidimensional queries
 
-Multidimensional queries are defined from a `multistar` object in the `starschemar` package. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
+Multidimensional queries are defined from a `multistar` object. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
 
 ```{r}
 gdqr <- dimensional_query(gms) |>
@@ -265,7 +265,7 @@ gdqr <- dimensional_query(gms) |>
   filter_dimension(name = "when", week <= "03")
 ```
 
-The definition functions of this type of queries are quite intuitive, they are explained in the vignette of package [`starschemar`](https://CRAN.R-project.org/package=starschemar).
+The definition functions of this type of queries are quite intuitive.
 
 If we use the function `run_query` of the mentioned package, a normal multidimensional query is executed, as shown below.
 
@@ -345,7 +345,7 @@ The GeoPackages thus obtained can be used directly, for example in *QGIS*.
 
 # Conclusions
 
-To generate the multidimensional structure on which to define queries, we can use the functions of the [`starschemar`](https://CRAN.R-project.org/package=starschemar) package or, if we already have the multidimensional design implemented, the import functions included in this package.
+To generate the multidimensional structure on which to define queries, we can use the functions of the [`rolap`](https://CRAN.R-project.org/package=rolap) or  [`starschemar`](https://CRAN.R-project.org/package=starschemar) packages or, if we already have the multidimensional design implemented, the import functions included in this package.
 
 `geomultistar` package allows generating vector layers in `sf` format as a result of multidimensional queries. To do this, all we need is to associate vector layers with some of the attributes of the geographic dimensions, so that the layers associated with the rest of the attributes can be obtained automatically. Queries do not present any additional difficulties due to the fact of returning geographic data.
 

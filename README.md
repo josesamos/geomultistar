@@ -24,13 +24,15 @@ other words, this package allows **enriching multidimensional queries
 with geographic data**.
 
 The multidimensional structures on which we can define the queries can
-be created from flat tables with
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) package
-or imported directly using functions from `geomultistar` package.
+be created from flat tables with the
+[`rolap`](https://CRAN.R-project.org/package=rolap) or
+[`starschemar`](https://CRAN.R-project.org/package=starschemar)
+packages, or imported directly using functions from `geomultistar`
+package.
 
 ## Installation
 
-You can install the released version of geomultistar from
+You can install the released version of `geomultistar` from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -47,8 +49,9 @@ devtools::install_github("josesamos/geomultistar")
 ## Example
 
 If we start from a flat table, we can generate a star schema using the
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) package,
-as described in its examples.
+[`rolap`](https://CRAN.R-project.org/package=rolap) or
+[`starschemar`](https://CRAN.R-project.org/package=starschemar)
+packages, as described in their examples.
 
 If we have a star schema in another tool, we need to import the fact and
 dimension tables into R in the form of tables implemented by `tibble`
@@ -56,10 +59,8 @@ dimension tables into R in the form of tables implemented by `tibble`
 in the example). Once we have them in this format, we have to build a
 `multistar` structure from them: This structure can contain multiple
 fact and dimension tables, so facts can share dimensions. The definition
-for tables obtained from the case detailed in
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) is
-included below. The measures of the facts are defined and the
-relationships between facts and dimensions are established.
+for tables is included below. The measures of the facts are defined and
+the relationships between facts and dimensions are established.
 
 ``` r
 library(geomultistar)
@@ -138,11 +139,10 @@ the rest of the dimension’s attributes are automatically defined from
 the layer associated with the indicated parameter.
 
 Finally, we can define multidimensional queries on this structure using
-the functions available in the
-[`starschemar`](https://CRAN.R-project.org/package=starschemar) package.
-When executing these queries, using the functionality implemented in
-package `geomultistar`, the vector layers of the attributes will be
-taken into account to result in a new vector layer.
+the functions available in this package. When executing these queries,
+using the functionality implemented in package `geomultistar`, the
+vector layers of the attributes will be taken into account to result in
+a new vector layer.
 
 ``` r
 gdqr <- dimensional_query(gms) |>
