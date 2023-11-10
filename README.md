@@ -17,17 +17,17 @@ coverage](https://codecov.io/gh/josesamos/geomultistar/branch/master/graph/badge
 *Multidimensional systems* allow complex queries to be carried out in an
 easy way. The *geographic dimension*, together with the *temporal
 dimension*, plays a fundamental role in multidimensional systems.
-Through the `geomultistar` package, vector layers can be associated to
-the attributes of geographic dimensions, so that the results of
-multidimensional queries can be obtained directly as vector layers. In
-other words, this package allows **enriching multidimensional queries
-with geographic data**.
+Through the `geomultistar` package, vector geographic data layers can be
+associated to the attributes of geographic dimensions, so that the
+results of multidimensional queries can be obtained directly as vector
+geographic data layers. In other words, this package allows **enriching
+multidimensional queries with geographic data**.
 
 The multidimensional structures on which we can define the queries can
 be created from flat tables with the
 [`rolap`](https://CRAN.R-project.org/package=rolap) or
 [`starschemar`](https://CRAN.R-project.org/package=starschemar)
-packages, or imported directly using functions from `geomultistar`
+packages, or imported directly using functions from the `geomultistar`
 package.
 
 ## Installation

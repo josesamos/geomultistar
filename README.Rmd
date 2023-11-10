@@ -24,9 +24,9 @@ knitr::opts_chunk$set(
 
 <!-- [![Downloads](http://cranlogs.r-pkg.org/badges/geomultistar?color=brightgreen)](https://www.r-pkg.org:443/pkg/geomultistar) -->
 
-*Multidimensional systems* allow complex queries to be carried out in an easy way. The *geographic dimension*, together with the *temporal dimension*, plays a fundamental role in multidimensional systems. Through the `geomultistar` package, vector layers can be associated to the attributes of geographic dimensions, so that the results of multidimensional queries can be obtained directly as vector layers. In other words, this package allows **enriching multidimensional queries with geographic data**.
+*Multidimensional systems* allow complex queries to be carried out in an easy way. The *geographic dimension*, together with the *temporal dimension*, plays a fundamental role in multidimensional systems. Through the `geomultistar` package, vector geographic data layers can be associated to the attributes of geographic dimensions, so that the results of multidimensional queries can be obtained directly as vector geographic data layers. In other words, this package allows **enriching multidimensional queries with geographic data**.
 
-The multidimensional structures on which we can define the queries can be created from flat tables with the [`rolap`](https://CRAN.R-project.org/package=rolap) or  [`starschemar`](https://CRAN.R-project.org/package=starschemar) packages, or imported directly using functions from `geomultistar` package.
+The multidimensional structures on which we can define the queries can be created from flat tables with the [`rolap`](https://CRAN.R-project.org/package=rolap) or  [`starschemar`](https://CRAN.R-project.org/package=starschemar) packages, or imported directly using functions from the `geomultistar` package.
 
 ## Installation
 
