@@ -52,12 +52,12 @@ select_fact.dimensional_query <- function(dq,
                                          name = NULL,
                                          measures = NULL,
                                          agg_functions = NULL) {
-  stopifnot(!is.null(name))
-  stopifnot(name %in% names(dq$input$fact))
-  stopifnot(!(name %in% names(dq$fact)))
-  stopifnot(length(measures) == length(unique(measures)))
+  stopifnot("The name of the fact must be indicated." = !is.null(name))
+  validate_names(names(dq$input$fact), name, concept = 'fact name')
+  stopifnot("The fact had already been selected." = !(name %in% names(dq$fact)))
+  stopifnot("There are repeated measures" = length(measures) == length(unique(measures)))
   for (af in agg_functions) {
-    stopifnot(af %in% c("SUM", "MAX", "MIN"))
+    validate_names(c("SUM", "MAX", "MIN"), af, concept = 'aggregation function')
   }
   all_measures <- attr(dq$input$fact[[name]], "measures")
   nrow_agg <- attr(dq$input$fact[[name]], "nrow_agg")
@@ -66,10 +66,10 @@ select_fact.dimensional_query <- function(dq,
   all_functions <- attr(dq$input$fact[[name]], "agg_functions")
   all_functions <- all_functions[-pos]
   for (measure in measures) {
-    stopifnot(measure %in% all_measures)
+    validate_names(all_measures, measure, concept = 'measure')
   }
   if (length(agg_functions) > 0) {
-    stopifnot(length(measures) == length(agg_functions))
+    stopifnot("Measures and aggregation functions do not correspond." = length(measures) == length(agg_functions))
   } else {
     measures <- all_measures[which(measures %in% all_measures)]
     agg_functions <- all_functions[which(measures %in% all_measures)]

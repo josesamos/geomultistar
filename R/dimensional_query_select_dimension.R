@@ -35,15 +35,15 @@ select_dimension <- function(dq,
 select_dimension.dimensional_query <- function(dq,
                                               name = NULL,
                                               attributes = NULL) {
-  stopifnot(!is.null(name))
-  stopifnot(name %in% names(dq$input$dimension))
-  stopifnot(!(name %in% names(dq$dimension)))
-  stopifnot(length(attributes) == length(unique(attributes)))
+  stopifnot("The name of the dimension must be indicated." = !is.null(name))
+  validate_names(names(dq$input$dimension), name, concept = 'dimension name')
+  stopifnot("The dimension had already been selected." = !(name %in% names(dq$dimension)))
+  stopifnot("There are repeated attributes." = length(attributes) == length(unique(attributes)))
   all_attributes <- names(dq$input$dimension[[name]])
   key <- all_attributes[1]
   attributes_defined <- all_attributes[-1]
   for (attribute in attributes) {
-    stopifnot(attribute %in% attributes_defined)
+    validate_names(attributes_defined, attribute, concept = 'attribute')
   }
   if (is.null(attributes) |
       setequal(attributes, attributes_defined)) {

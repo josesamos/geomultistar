@@ -90,8 +90,8 @@ multistar_as_flat_table.multistar <- function(ms, fact = NULL) {
   if (length(ms$fact) == 1) {
     ft <- ms$fact[[1]]
   } else {
-    stopifnot(!is.null(fact))
-    stopifnot(fact %in% names(ms$fact))
+    stopifnot("The name of facts must be indicated." = !is.null(fact))
+    validate_names(names(ms$fact), fact, concept = 'fact name')
     ft <- ms$fact[[fact]]
   }
   ft_fk <- attr(ft, "foreign_keys")
@@ -103,3 +103,32 @@ multistar_as_flat_table.multistar <- function(ms, fact = NULL) {
   tibble::as_tibble(ft)
 }
 
+
+#' Validate names
+#'
+#' @param defined_names A vector of strings, defined attribute names.
+#' @param names A vector of strings, new attribute names.
+#' @param concept A string, treated concept.
+#' @param repeated A boolean, repeated names allowed.
+#'
+#' @return A vector of strings, names.
+#'
+#' @keywords internal
+validate_names <- function(defined_names, names, concept = 'name', repeated = FALSE) {
+  if (is.null(names)) {
+    names <- defined_names
+  } else {
+    if (!repeated) {
+      stopifnot("There are repeated values." = length(names) == length(unique(names)))
+    }
+    for (name in names) {
+      if (!(name %in% defined_names)) {
+        stop(sprintf(
+          "'%s' is not defined as %s.",
+          name, concept
+        ))
+      }
+    }
+  }
+  names
+}

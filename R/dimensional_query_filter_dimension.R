@@ -29,16 +29,14 @@ filter_dimension <- function(dq,
   UseMethod("filter_dimension")
 }
 
-
-
 #' @rdname filter_dimension
 #' @export
 filter_dimension.dimensional_query <- function(dq,
                                                name = NULL,
                                                ...) {
-  stopifnot(!is.null(name))
-  stopifnot(name %in% names(dq$input$dimension))
-  stopifnot(!(name %in% names(dq$key)))
+  stopifnot("The name of the dimension must be indicated." = !is.null(name))
+  stopifnot("The name does not correspond to any dimension." = name %in% names(dq$input$dimension))
+  stopifnot("The dimension has already been filtered." = !(name %in% names(dq$key)))
   key <- dplyr::filter(tibble::as_tibble(dq$input$dimension[[name]]), ...)[[1]]
   if (is.null(dq$key)) {
     dq$key <- list(name = key)

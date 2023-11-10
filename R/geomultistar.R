@@ -11,9 +11,8 @@
 #' @keywords internal
 new_geomultistar <-
   function(ms = NULL, geodimension = NULL) {
-    stopifnot(geodimension %in% names(ms$dimension))
-    stopifnot(!is.null(geodimension))
-
+    stopifnot("The name of the geodimension must be indicated." = !is.null(geodimension))
+    validate_names(names(ms$dimension), geodimension, concept = 'geodimension')
     for (dimension in geodimension) {
       if (is.null(ms$geodimension)) {
         ms$geodimension <- list(name = NULL)

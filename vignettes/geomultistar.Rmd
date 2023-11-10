@@ -3,7 +3,6 @@ title: "Geographical Queries on Multidimensional Data"
 author: "Jose Samos (jsamos@ugr.es)"
 date: "2020-09-15"
 output: rmarkdown::html_vignette
-bibliography: bibliography.bib
 vignette: >
   %\VignetteIndexEntry{Geographical Queries on Multidimensional Data}
   %\VignetteEngine{knitr::rmarkdown}

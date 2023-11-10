@@ -152,8 +152,8 @@ new_fact_table <-
            agg_functions = NULL,
            nrow_agg = NULL) {
     # Check the type of the base object
-    stopifnot(tibble::is_tibble(ft))
-    stopifnot(!is.null(name))
+    stopifnot("Fact table must be a 'tibble'." = tibble::is_tibble(ft))
+    stopifnot("The name of facts must be indicated." = !is.null(name))
 
     fk <- c()
     for (n in names(ft)) {

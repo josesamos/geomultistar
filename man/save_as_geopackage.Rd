@@ -57,7 +57,7 @@ gdq <- dimensional_query(gms) |>
 
 sf <- gdq |>
   run_geoquery(wider = TRUE)
-\donttest{
+
 save_as_geopackage(sf, "city", filepath = tempdir())
-}
+
 }

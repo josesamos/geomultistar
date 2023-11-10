@@ -101,7 +101,7 @@ run_geoquery.dimensional_query <-
       attribute <- default_attribute(dq, dimension)
     }
     is_geographic_attribute <- attribute %in% names(dq$input$geodimension[[dimension]])
-    stopifnot(is_geographic_attribute)
+    stopifnot("The attribute is not a geographic attribute." = is_geographic_attribute)
 
     geodim <- dq$input$geodimension[[dimension]][[attribute]]
     if (attribute == sprintf("all_%s", dimension)) {
@@ -206,8 +206,8 @@ add_geodimension_additional_attributes <- function(dq) {
 #' @keywords internal
 widen_flat_table <- function(ft, pk, measures) {
   names_ft <- names(ft)
-  stopifnot(pk %in% names_ft)
-  stopifnot(measures %in% names_ft)
+  validate_names(names_ft, pk, concept = 'primary key')
+  validate_names(names_ft, measures, concept = 'measure')
   pk <- unique(pk)
   measures <- unique(measures)
   rest <- names_ft[!(names_ft %in% c(pk, measures))]

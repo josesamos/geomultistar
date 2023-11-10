@@ -65,20 +65,20 @@ add_facts.multistar <- function(ms,
                                 measures = NULL,
                                 agg_functions = NULL,
                                 nrow_agg = "nrow_agg") {
-  stopifnot(!is.null(fact_name))
-  stopifnot(!(fact_name %in% names(ms$fact)))
-  stopifnot(tibble::is_tibble(fact_table))
+  stopifnot("The name of facts must be indicated." = !is.null(fact_name))
+  stopifnot("Facts are already included." = !(fact_name %in% names(ms$fact)))
+  stopifnot("Fact table must be a 'tibble'." = tibble::is_tibble(fact_table))
   if (is.null(agg_functions)) {
     agg_functions <-  rep("SUM", length(measures))
   }
-  stopifnot(length(measures) == length(agg_functions))
+  stopifnot("Measures and aggregation functions do not correspond." = length(measures) == length(agg_functions))
   for (af in agg_functions) {
-    stopifnot(af %in% c("SUM", "MAX", "MIN"))
+    validate_names(c("SUM", "MAX", "MIN"), af, concept = 'aggregation function')
   }
-  stopifnot(length(c(measures, nrow_agg)) == length(unique(c(measures, nrow_agg))))
+  stopifnot("There are repeated measures" = length(c(measures, nrow_agg)) == length(unique(c(measures, nrow_agg))))
   attributes_defined <- names(fact_table)
   for (measure in measures) {
-    stopifnot(measure %in% attributes_defined)
+    validate_names(attributes_defined, measure, concept = 'measure')
   }
   if (!(nrow_agg %in% attributes_defined)) {
     fact_table <- dplyr::mutate(fact_table, !!nrow_agg := as.integer(1))
@@ -88,7 +88,7 @@ add_facts.multistar <- function(ms,
     dplyr::summarise_all(fact_table[, c(measures, nrow_agg)], class)
   for (n in seq_along(measures_type)) {
     type <- measures_type[[n]][1]
-    stopifnot(type %in% c("integer", "double", "integer64", "numeric"))
+    validate_names(c("integer", "double", "integer64", "numeric"), type, concept = 'type')
   }
 
   ms$fact[[fact_name]] <-
