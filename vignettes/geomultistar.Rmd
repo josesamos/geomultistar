@@ -1,10 +1,10 @@
 ---
-title: "Geographical Queries on Multidimensional Data"
+title: "Queries on Multidimensional Data Enriched with Geographic Information"
 author: "Jose Samos (jsamos@ugr.es)"
-date: "2020-09-15"
+date: "2020-09-15 (updated 2023-11-10)" 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Geographical Queries on Multidimensional Data}
+  %\VignetteIndexEntry{Queries on Multidimensional Data Enriched with Geographic Information}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -34,15 +34,23 @@ These dimensions allow us to associate places of different levels of detail with
 
 It is very interesting to have the possibility of representing the reports obtained from multidimensional systems, using their geographic dimensions, on a map, or performing spatial analysis on them. Thus, the goal of this package is **to enrich multidimensional queries with geographic data**. In other words, it is not a question of making spatial queries but of generating a spatial layer with the result of the multidimensional queries and that this generation is done automatically, once the configuration of the geographical dimensions has been made.
 
-The rest of this document is structured as follows: An illustrative example of how the package works is presented. Then, the document ends with conclusions.
+The rest of this document is structured as follows: First we show various ways to obtain a `multistar` object. Afterwards, the functions that allow us to define multidimensional queries are presented. The following section shows how to add geographic information to the model and also how to include it in the results of multidimensional queries. Then, the document ends with conclusions.
 
-# An illustrative example
+# Get a `multistar` object
 
 To perform multidimensional queries, the `multistar` class was defined in this package. A `multistar` implements star schemas: it has a table for each dimension and a table for the facts; however, it can contain multiple fact tables with some dimensions in common.
 
-Using the functions defined in the [`rolap`](https://CRAN.R-project.org/package=rolap) or  [`starschemar`](https://CRAN.R-project.org/package=starschemar) packages, starting from a flat table implemented by means of a `tibble`, we can generate a `multistar` object.
+Using the functions defined in the [`rolap`](https://CRAN.R-project.org/package=rolap) package, starting from a flat table implemented by means of a `tibble`, we can generate a star database from which we can directly obtain a `multistar` object.
 
 If we already have a star schema, `geomultistar` package offers functions to generate a `multistar` object from the fact and dimension tables in `tibble` format.
+
+
+## Get a `multistar` object from the `rolap` package
+
+The `rolap` package allows us to obtain a multidimensional database from one or more flat tables. 
+
+Using the `as_multistar()` function of this package, we obtain an object of class `multistar` that we can work with directly using the `geomultistar` package.
+
 
 ## Generate a `multistar` object
 
@@ -143,6 +151,140 @@ In this case, to specify the dimension we only have to indicate its name.
 
 Through the previous operations, we generate a `multistar` object to which we can apply the operations defined for this class. At this moment we can export it as a flat table, using `multistar_as_flat_table`, or define multidimensional queries, as we will later use `dimensional_query`.
 
+
+# `geomultistar` query functions
+
+A query is defined on a `multistar` object and the result is another `multistar` object.
+
+This section presents the functions available to define queries.
+
+## `dimensional_query()`
+
+From a `multistar` object, an empty `dimensional_query` object is created where we can select fact measures, dimension attributes and filter dimension rows. 
+
+Example:
+
+```{r}
+dq <- dimensional_query(ms)
+```
+
+## `select_fact()`
+
+To define the fact table to be consulted, its name is indicated, optionally, a vector of names of selected measures and another of aggregation functions are also indicated. If the name of any measure is not indicated, only the one corresponding to the number of aggregated rows is included, which is always included. If no aggregation function is included, those defined for the measures are considered.
+
+Examples:
+
+```{r}
+dq_1 <- dq |>
+  select_fact(
+    name = "mrs_age",
+    measures = "n_deaths",
+    agg_functions = "MAX"
+  )
+```
+
+The measure is considered with the indicated aggregation function. In addition, the measure corresponding to the number of grouped records that make up the result is automatically included.
+
+```{r}
+dq_2 <- dq |>
+  select_fact(name = "mrs_age",
+              measures = "n_deaths")
+```
+
+The measure is considered with the aggregation function defined in the multidimensional scheme.
+
+```{r}
+dq_3 <- dq |>
+  select_fact(name = "mrs_age")
+```
+
+Only the measure corresponding to the number of grouped records is included.
+
+```{r}
+dq_4 <- dq |>
+  select_fact(name = "mrs_age",
+              measures = "n_deaths") |>
+  select_fact(name = "mrs_cause")
+```
+
+
+More than one fact table can be selected in a query.
+
+## `select_dimension()`
+
+To include a dimension in a `dimensional_query` object, we have to define its name and a subset of the dimension attributes. If only the name of the dimension is indicated, it is considered that all its attributes should be added. 
+
+Example:
+
+```{r}
+dq_1 <- dq |>
+  select_dimension(name = "where",
+                   attributes = c("city", "state"))
+```
+
+Only the indicated attributes of the dimension will be included.
+
+```{r}
+dq_2 <- dq |>
+  select_dimension(name = "where")
+```
+
+All attributes of the dimension will be included.
+
+
+## `filter_dimension()`
+
+Allows us to define selection conditions for dimension rows. Conditions can be defined on any attribute of the dimension, not only on attributes selected in the query for the dimension. The selection is made based on the function `dplyr::filter()`. Conditions are defined in exactly the same way as in that function. 
+
+Example:
+
+```{r}
+dq <- dq |>
+  filter_dimension(name = "when", week <= "03") |>
+  filter_dimension(name = "where", city == "Bridgeport")
+```
+
+## `run_query()`
+
+Once we have selected the facts, dimensions and defined the conditions on the instances, we can execute the query to obtain the result.  
+
+Example:
+
+```{r}
+dq <- dimensional_query(ms) |>
+  select_dimension(name = "where",
+                   attributes = c("division_name", "region_name")) |>
+  select_dimension(name = "when",
+                   attributes = c("year", "week")) |>
+  select_fact(name = "mrs_age",
+              measures = "n_deaths") |>
+  filter_dimension(name = "when", week <= "03")
+
+ms_2 <- dq |>
+  run_query()
+
+class(ms_2)
+```
+
+The result of a query is an object of the `multistar` class that meets the defined conditions. Other queries can continue to be defined on this object.
+
+In this case we transform it into a flat table to more easily show the result.
+
+```{r}
+ft <- ms_2 |>
+  multistar_as_flat_table()
+```
+
+Below are the first rows of the result.
+
+```{r, results = "asis", echo = FALSE}
+pander::pandoc.table(head(ft), split.table = Inf)
+```
+
+
+# Add geographic information
+
+Both the multidimensional data model and multidimensional queries can be enriched with geographic information. This is what we are going to do in this section.
 
 ## Define geographic dimensions and attributes
 
@@ -245,61 +387,45 @@ With this we have all the attributes of the dimension with an associated layer, 
 
 [^3]: If we are not going to use them in queries it is not necessary that they have the associated layer.
 
-## Define multidimensional queries
 
-Multidimensional queries are defined from a `multistar` object. Since we are working with `geomultistar`, a specialization of `multistar`, we can use this object to define the query.
+## Run queries adding geographic information
+
+Next we define the same query as before but on the data model enriched with geographic information.
 
 ```{r}
-gdqr <- dimensional_query(gms) |>
+gdq <- dimensional_query(gms) |>
   select_dimension(name = "where",
                    attributes = c("division_name", "region_name")) |>
   select_dimension(name = "when",
                    attributes = c("year", "week")) |>
   select_fact(name = "mrs_age",
-              measures = c("n_deaths")) |>
-  select_fact(
-    name = "mrs_cause",
-    measures = c("pneumonia_and_influenza_deaths", "other_deaths")
-  ) |>
+              measures = "n_deaths") |>
   filter_dimension(name = "when", week <= "03")
+
+gms_2 <- gdq |>
+  run_query()
+
+class(gms_2)
 ```
-
-The definition functions of this type of queries is based on the selection of facts and dimensions, and the filter of dimensions.
-
-If we use the function `run_query()`, a multidimensional query is executed, as shown below.
-
-```{r}
-ft <- gdqr |>
-  run_query() |>
-  multistar_as_flat_table()
-```
-
-The result of this type of query is a `multistar` object, which we can transform into a flat table to display it more easily, as we do below for the first rows.
-
-```{r, results = "asis", echo = FALSE}
-pander::pandoc.table(head(ft, 12), split.table = Inf)
-```
-
-## Run queries adding geographic information
 
 If instead of executing the standard query, we execute `run_geoquery()` function, we automatically obtain a vector geographic data layer at the finest possible level of detail, depending on the definition of the query.
 
 ```{r}
-vl_sf <- gdqr |>
+vl_sf <- gdq |>
   run_geoquery()
+
+class(vl_sf)
 ```
 
 The first rows of the result can be seen below in table form.
 
 ```{r, results = "asis", echo = FALSE}
-pander::pandoc.table(head(vl_sf, 12), split.table = Inf)
+pander::pandoc.table(head(vl_sf), split.table = Inf)
 ```
 
 The result is a vector geographic data layer that we can save, perform spatial analysis or queries on it, or we can see it as a map, using the functions associated with the `sf` class.
 
 ```{r}
-class(vl_sf)
-
 plot(vl_sf[,"n_deaths"])
 ```
 
@@ -312,14 +438,14 @@ Only the parts of the divisions made up of states where there is recorded data a
 In geographic layers, geographic objects usually are not repeated. The tables are wide: for each object the rest of the attributes are defined as columns. By means of the parameter `wider` we can indicate that we want a result of this type.
 
 ```{r}
-vl_sf_w <- gdqr |>
+vl_sf_w <- gdq |>
   run_geoquery(wider = TRUE)
 ```
 
 The first rows of the result can be seen below in table form.
 
 ```{r, results = "asis", echo = FALSE}
-pander::pandoc.table(head(vl_sf_w$sf, 12), split.table = Inf)
+pander::pandoc.table(head(vl_sf_w$sf), split.table = Inf)
 ```
 
 We can see that the attributes that are multivalued for each geographic object have been eliminated from the result table, and new measurement columns have been generated: one for each combination of values of these attributes with the original measurements.
@@ -327,15 +453,19 @@ We can see that the attributes that are multivalued for each geographic object h
 The meaning of the name of the columns of the measurements is part of the result obtained, also in table format, as can be seen below.
 
 ```{r, results = "asis", echo = FALSE}
-pander::pandoc.table(head(vl_sf_w$variables, 12), split.table = Inf)
+pander::pandoc.table(head(vl_sf_w$variables), split.table = Inf)
 ```
 
 In this case there was only one variable with a multiplicity greater than one. If there were more variables in this situation, they would be added to this table in the same way.
 
 This data dictionary table and layer structure can be saved in *GeoPackage* format using the `save_as_geopackage()` function. 
 
-```{r, eval = FALSE}
-save_as_geopackage(vl_sf_w, "division")
+```{r}
+filepath <- tempdir()
+l <- save_as_geopackage(vl_sf_w, "division", filepath = filepath)
+
+file <- paste0(filepath, "/division.gpkg")
+sf::st_layers(file)
 ```
 
 The *GeoPackages* thus obtained can be used directly, for example in *QGIS*.
