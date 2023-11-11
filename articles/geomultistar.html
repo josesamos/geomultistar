@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="geomultistar">
-<title>Geographical Queries on Multidimensional Data • geomultistar</title>
+<title>Queries on Multidimensional Data Enriched with Geographic Information • geomultistar</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Geographical Queries on Multidimensional Data">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Queries on Multidimensional Data Enriched with Geographic Information">
 <meta property="og:description" content="geomultistar">
 <meta property="og:image" content="https://josesamos.github.io/geomultistar/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -75,10 +75,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Geographical Queries on Multidimensional Data</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Queries on Multidimensional Data Enriched with Geographic Information</h1>
                         <h4 data-toc-skip class="author">Jose Samos (<a href="mailto:jsamos@ugr.es" class="email">jsamos@ugr.es</a>)</h4>
             
-            <h4 data-toc-skip class="date">2020-09-15</h4>
+            <h4 data-toc-skip class="date">2020-09-15 (updated
+2023-11-10)</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/josesamos/geomultistar/blob/HEAD/vignettes/geomultistar.Rmd" class="external-link"><code>vignettes/geomultistar.Rmd</code></a></small>
       <div class="d-none name"><code>geomultistar.Rmd</code></div>
@@ -113,12 +114,15 @@ geographic data</strong>. In other words, it is not a question of making
 spatial queries but of generating a spatial layer with the result of the
 multidimensional queries and that this generation is done automatically,
 once the configuration of the geographical dimensions has been made.</p>
-<p>The rest of this document is structured as follows: An illustrative
-example of how the package works is presented. Then, the document ends
-with conclusions.</p>
+<p>The rest of this document is structured as follows: First we show
+various ways to obtain a <code>multistar</code> object. Afterwards, the
+functions that allow us to define multidimensional queries are
+presented. The following section shows how to add geographic information
+to the model and also how to include it in the results of
+multidimensional queries. Then, the document ends with conclusions.</p>
 </div>
 <div class="section level2">
-<h2 id="an-illustrative-example">An illustrative example<a class="anchor" aria-label="anchor" href="#an-illustrative-example"></a>
+<h2 id="get-a-multistar-object">Get a <code>multistar</code> object<a class="anchor" aria-label="anchor" href="#get-a-multistar-object"></a>
 </h2>
 <p>To perform multidimensional queries, the <code>multistar</code> class
 was defined in this package. A <code>multistar</code> implements star
@@ -126,13 +130,22 @@ schemas: it has a table for each dimension and a table for the facts;
 however, it can contain multiple fact tables with some dimensions in
 common.</p>
 <p>Using the functions defined in the <a href="https://CRAN.R-project.org/package=rolap" class="external-link"><code>rolap</code></a>
-or <a href="https://CRAN.R-project.org/package=starschemar" class="external-link"><code>starschemar</code></a>
-packages, starting from a flat table implemented by means of a
-<code>tibble</code>, we can generate a <code>multistar</code>
-object.</p>
+package, starting from a flat table implemented by means of a
+<code>tibble</code>, we can generate a star database from which we can
+directly obtain a <code>multistar</code> object.</p>
 <p>If we already have a star schema, <code>geomultistar</code> package
 offers functions to generate a <code>multistar</code> object from the
 fact and dimension tables in <code>tibble</code> format.</p>
+<div class="section level3">
+<h3 id="get-a-multistar-object-from-the-rolap-package">Get a <code>multistar</code> object from the <code>rolap</code>
+package<a class="anchor" aria-label="anchor" href="#get-a-multistar-object-from-the-rolap-package"></a>
+</h3>
+<p>The <code>rolap</code> package allows us to obtain a multidimensional
+database from one or more flat tables.</p>
+<p>Using the <code>as_multistar()</code> function of this package, we
+obtain an object of class <code>multistar</code> that we can work with
+directly using the <code>geomultistar</code> package.</p>
+</div>
 <div class="section level3">
 <h3 id="generate-a-multistar-object">Generate a <code>multistar</code> object<a class="anchor" aria-label="anchor" href="#generate-a-multistar-object"></a>
 </h3>
@@ -250,6 +263,206 @@ this moment we can export it as a flat table, using
 queries, as we will later use <code>dimensional_query</code>.</p>
 </div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="geomultistar-query-functions">
+<code>geomultistar</code> query functions<a class="anchor" aria-label="anchor" href="#geomultistar-query-functions"></a>
+</h2>
+<p>A query is defined on a <code>multistar</code> object and the result
+is another <code>multistar</code> object.</p>
+<p>This section presents the functions available to define queries.</p>
+<div class="section level3">
+<h3 id="dimensional_query">
+<code>dimensional_query()</code><a class="anchor" aria-label="anchor" href="#dimensional_query"></a>
+</h3>
+<p>From a <code>multistar</code> object, an empty
+<code>dimensional_query</code> object is created where we can select
+fact measures, dimension attributes and filter dimension rows.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dimensional_query.html">dimensional_query</a></span><span class="op">(</span><span class="va">ms</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="select_fact">
+<code>select_fact()</code><a class="anchor" aria-label="anchor" href="#select_fact"></a>
+</h3>
+<p>To define the fact table to be consulted, its name is indicated,
+optionally, a vector of names of selected measures and another of
+aggregation functions are also indicated. If the name of any measure is
+not indicated, only the one corresponding to the number of aggregated
+rows is included, which is always included. If no aggregation function
+is included, those defined for the measures are considered.</p>
+<p>Examples:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq_1</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
+<span>    measures <span class="op">=</span> <span class="st">"n_deaths"</span>,</span>
+<span>    agg_functions <span class="op">=</span> <span class="st">"MAX"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The measure is considered with the indicated aggregation function. In
+addition, the measure corresponding to the number of grouped records
+that make up the result is automatically included.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq_2</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
+<span>              measures <span class="op">=</span> <span class="st">"n_deaths"</span><span class="op">)</span></span></code></pre></div>
+<p>The measure is considered with the aggregation function defined in
+the multidimensional scheme.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq_3</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span><span class="op">)</span></span></code></pre></div>
+<p>Only the measure corresponding to the number of grouped records is
+included.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq_4</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
+<span>              measures <span class="op">=</span> <span class="st">"n_deaths"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_cause"</span><span class="op">)</span></span></code></pre></div>
+<p>More than one fact table can be selected in a query.</p>
+</div>
+<div class="section level3">
+<h3 id="select_dimension">
+<code>select_dimension()</code><a class="anchor" aria-label="anchor" href="#select_dimension"></a>
+</h3>
+<p>To include a dimension in a <code>dimensional_query</code> object, we
+have to define its name and a subset of the dimension attributes. If
+only the name of the dimension is indicated, it is considered that all
+its attributes should be added.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq_1</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span>,</span>
+<span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"city"</span>, <span class="st">"state"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Only the indicated attributes of the dimension will be included.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq_2</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span><span class="op">)</span></span></code></pre></div>
+<p>All attributes of the dimension will be included.</p>
+</div>
+<div class="section level3">
+<h3 id="filter_dimension">
+<code>filter_dimension()</code><a class="anchor" aria-label="anchor" href="#filter_dimension"></a>
+</h3>
+<p>Allows us to define selection conditions for dimension rows.
+Conditions can be defined on any attribute of the dimension, not only on
+attributes selected in the query for the dimension. The selection is
+made based on the function <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>. Conditions are
+defined in exactly the same way as in that function.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/filter_dimension.html">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>, <span class="va">week</span> <span class="op">&lt;=</span> <span class="st">"03"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/filter_dimension.html">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span>, <span class="va">city</span> <span class="op">==</span> <span class="st">"Bridgeport"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="run_query">
+<code>run_query()</code><a class="anchor" aria-label="anchor" href="#run_query"></a>
+</h3>
+<p>Once we have selected the facts, dimensions and defined the
+conditions on the instances, we can execute the query to obtain the
+result.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dimensional_query.html">dimensional_query</a></span><span class="op">(</span><span class="va">ms</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span>,</span>
+<span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"division_name"</span>, <span class="st">"region_name"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>,</span>
+<span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
+<span>              measures <span class="op">=</span> <span class="st">"n_deaths"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/filter_dimension.html">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>, <span class="va">week</span> <span class="op">&lt;=</span> <span class="st">"03"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ms_2</span> <span class="op">&lt;-</span> <span class="va">dq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/run_query.html">run_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">ms_2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "multistar"</span></span></code></pre></div>
+<p>The result of a query is an object of the <code>multistar</code>
+class that meets the defined conditions. Other queries can continue to
+be defined on this object.</p>
+<p>In this case we transform it into a flat table to more easily show
+the result.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="va">ms_2</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/multistar_as_flat_table.html">multistar_as_flat_table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Below are the first rows of the result.</p>
+<table style="width:94%;" class="table">
+<colgroup>
+<col width="9%">
+<col width="9%">
+<col width="29%">
+<col width="19%">
+<col width="15%">
+<col width="11%">
+</colgroup>
+<thead><tr class="header">
+<th align="center">year</th>
+<th align="center">week</th>
+<th align="center">division_name</th>
+<th align="center">region_name</th>
+<th align="center">n_deaths</th>
+<th align="center">count</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center">1962</td>
+<td align="center">01</td>
+<td align="center">East North Central</td>
+<td align="center">Midwest</td>
+<td align="center">2258</td>
+<td align="center">75</td>
+</tr>
+<tr class="even">
+<td align="center">1962</td>
+<td align="center">01</td>
+<td align="center">East South Central</td>
+<td align="center">South</td>
+<td align="center">526</td>
+<td align="center">35</td>
+</tr>
+<tr class="odd">
+<td align="center">1962</td>
+<td align="center">01</td>
+<td align="center">Middle Atlantic</td>
+<td align="center">Northeast</td>
+<td align="center">3452</td>
+<td align="center">86</td>
+</tr>
+<tr class="even">
+<td align="center">1962</td>
+<td align="center">01</td>
+<td align="center">Mountain</td>
+<td align="center">West</td>
+<td align="center">414</td>
+<td align="center">35</td>
+</tr>
+<tr class="odd">
+<td align="center">1962</td>
+<td align="center">01</td>
+<td align="center">New England</td>
+<td align="center">Northeast</td>
+<td align="center">785</td>
+<td align="center">57</td>
+</tr>
+<tr class="even">
+<td align="center">1962</td>
+<td align="center">01</td>
+<td align="center">Pacific</td>
+<td align="center">West</td>
+<td align="center">1567</td>
+<td align="center">67</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="add-geographic-information">Add geographic information<a class="anchor" aria-label="anchor" href="#add-geographic-information"></a>
+</h2>
+<p>Both the multidimensional data model and multidimensional queries can
+be enriched with geographic information. This is what we are going to do
+in this section.</p>
 <div class="section level3">
 <h3 id="define-geographic-dimensions-and-attributes">Define geographic dimensions and attributes<a class="anchor" aria-label="anchor" href="#define-geographic-dimensions-and-attributes"></a>
 </h3>
@@ -260,14 +473,14 @@ this information.</p>
 <p>We create a <code>geomultistar</code> object from a
 <code>multistar</code> one defining the names of the dimensions that
 contain geographic information. In the example only one dimension.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/geomultistar.html">geomultistar</a></span><span class="op">(</span><span class="va">ms</span>, geodimension <span class="op">=</span> <span class="st">"where"</span><span class="op">)</span></span></code></pre></div>
 <p>For each attribute of a geographic dimension that we want to use in
 queries, we can define a vector geographic data layer with which a
 relationship can be established using one or more attributes of the
 dimension.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/define_geoattribute.html">define_geoattribute</a></span><span class="op">(</span></span>
 <span>    attribute <span class="op">=</span> <span class="st">"city"</span>,</span>
@@ -285,7 +498,7 @@ different states.&lt;/p&gt;"><sup>2</sup></a> that have the same name in the lay
 between the geographic attributes and the vector layer: Instances may
 remain unrelated. To detect these situations, we can query the rows that
 do not have associated geometry using the following function.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">empty_city</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_empty_geoinstances.html">get_empty_geoinstances</a></span><span class="op">(</span>attribute <span class="op">=</span> <span class="st">"city"</span><span class="op">)</span></span></code></pre></div>
 <p>The result obtained is shown below.</p>
@@ -311,7 +524,7 @@ determined. There may be several because other geographic data of less
 granularity may be known.</p>
 <p>In the same way, the relationship for <code>county</code> with the
 corresponding layer (<code>usa_counties</code>) is defined.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/define_geoattribute.html">define_geoattribute</a></span><span class="op">(</span></span>
 <span>    attribute <span class="op">=</span> <span class="st">"county"</span>,</span>
@@ -319,7 +532,7 @@ corresponding layer (<code>usa_counties</code>) is defined.</p>
 <span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"county"</span> <span class="op">=</span> <span class="st">"county"</span>, <span class="st">"state"</span> <span class="op">=</span> <span class="st">"state"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>  </span></code></pre></div>
 <p>We check if they have all been related.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">empty_county</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/get_empty_geoinstances.html">get_empty_geoinstances</a></span><span class="op">(</span>attribute <span class="op">=</span> <span class="st">"county"</span><span class="op">)</span></span></code></pre></div>
 <p>And the result obtained is shown below.</p>
@@ -345,7 +558,7 @@ the associated geometry is of a different type.</p>
 <p>In the case of <code>state</code> the definition is carried out by
 associating the code to the corresponding one in the layer
 (<code>usa_states</code>).</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/define_geoattribute.html">define_geoattribute</a></span><span class="op">(</span></span>
 <span>    attribute <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span>,</span>
@@ -355,7 +568,7 @@ associating the code to the corresponding one in the layer
 <p>Additionally, for an attribute we can generate its layer from the one
 associated with another related attribute of the dimension. This is what
 has been done below for <code>division</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/define_geoattribute.html">define_geoattribute</a></span><span class="op">(</span></span>
 <span>    attribute <span class="op">=</span> <span class="st">"division"</span>,</span>
@@ -367,7 +580,7 @@ desired. If not, look for a vector layer at that level of detail.</p>
 <p>If no attribute name is indicated, this operation is applied to the
 rest of the attributes of the dimension that do not have an associated
 vector layer by any of the methods presented, as shown below.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gms</span> <span class="op">&lt;-</span> <span class="va">gms</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/define_geoattribute.html">define_geoattribute</a></span><span class="op">(</span>from_attribute <span class="op">=</span> <span class="st">"state"</span><span class="op">)</span></span></code></pre></div>
 <p>With this we have all the attributes of the dimension with an
@@ -377,218 +590,45 @@ can change the layer of any attribute at any time, independently of the
 rest.</p>
 </div>
 <div class="section level3">
-<h3 id="define-multidimensional-queries">Define multidimensional queries<a class="anchor" aria-label="anchor" href="#define-multidimensional-queries"></a>
+<h3 id="run-queries-adding-geographic-information">Run queries adding geographic information<a class="anchor" aria-label="anchor" href="#run-queries-adding-geographic-information"></a>
 </h3>
-<p>Multidimensional queries are defined from a <code>multistar</code>
-object. Since we are working with <code>geomultistar</code>, a
-specialization of <code>multistar</code>, we can use this object to
-define the query.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gdqr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dimensional_query.html">dimensional_query</a></span><span class="op">(</span><span class="va">gms</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<p>Next we define the same query as before but on the data model
+enriched with geographic information.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gdq</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dimensional_query.html">dimensional_query</a></span><span class="op">(</span><span class="va">gms</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"where"</span>,</span>
 <span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"division_name"</span>, <span class="st">"region_name"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/select_dimension.html">select_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>,</span>
 <span>                   attributes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"mrs_age"</span>,</span>
-<span>              measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"n_deaths"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/select_fact.html">select_fact</a></span><span class="op">(</span></span>
-<span>    name <span class="op">=</span> <span class="st">"mrs_cause"</span>,</span>
-<span>    measures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pneumonia_and_influenza_deaths"</span>, <span class="st">"other_deaths"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filter_dimension.html">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>, <span class="va">week</span> <span class="op">&lt;=</span> <span class="st">"03"</span><span class="op">)</span></span></code></pre></div>
-<p>The definition functions of this type of queries is based on the
-selection of facts and dimensions, and the filter of dimensions.</p>
-<p>If we use the function <code><a href="../reference/run_query.html">run_query()</a></code>, a multidimensional
-query is executed, as shown below.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ft</span> <span class="op">&lt;-</span> <span class="va">gdqr</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/run_query.html">run_query</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/multistar_as_flat_table.html">multistar_as_flat_table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>The result of this type of query is a <code>multistar</code> object,
-which we can transform into a flat table to display it more easily, as
-we do below for the first rows.</p>
-<table style="width:100%;" class="table">
-<colgroup>
-<col width="4%">
-<col width="4%">
-<col width="13%">
-<col width="8%">
-<col width="7%">
-<col width="5%">
-<col width="27%">
-<col width="15%">
-<col width="13%">
-</colgroup>
-<thead><tr class="header">
-<th align="center">year</th>
-<th align="center">week</th>
-<th align="center">division_name</th>
-<th align="center">region_name</th>
-<th align="center">n_deaths</th>
-<th align="center">count</th>
-<th align="center">mrs_cause_pneumonia_and_influenza_deaths</th>
-<th align="center">mrs_cause_other_deaths</th>
-<th align="center">mrs_cause_nrow_agg</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">East North Central</td>
-<td align="center">Midwest</td>
-<td align="center">2258</td>
-<td align="center">75</td>
-<td align="center">113</td>
-<td align="center">2145</td>
-<td align="center">16</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">East South Central</td>
-<td align="center">South</td>
-<td align="center">526</td>
-<td align="center">35</td>
-<td align="center">31</td>
-<td align="center">495</td>
-<td align="center">7</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">Middle Atlantic</td>
-<td align="center">Northeast</td>
-<td align="center">3452</td>
-<td align="center">86</td>
-<td align="center">173</td>
-<td align="center">3279</td>
-<td align="center">20</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">Mountain</td>
-<td align="center">West</td>
-<td align="center">414</td>
-<td align="center">35</td>
-<td align="center">34</td>
-<td align="center">380</td>
-<td align="center">8</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">New England</td>
-<td align="center">Northeast</td>
-<td align="center">785</td>
-<td align="center">57</td>
-<td align="center">56</td>
-<td align="center">729</td>
-<td align="center">14</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">Pacific</td>
-<td align="center">West</td>
-<td align="center">1567</td>
-<td align="center">67</td>
-<td align="center">56</td>
-<td align="center">1511</td>
-<td align="center">14</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">South Atlantic</td>
-<td align="center">South</td>
-<td align="center">1271</td>
-<td align="center">59</td>
-<td align="center">58</td>
-<td align="center">1213</td>
-<td align="center">12</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">West North Central</td>
-<td align="center">Midwest</td>
-<td align="center">936</td>
-<td align="center">46</td>
-<td align="center">47</td>
-<td align="center">889</td>
-<td align="center">10</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">West South Central</td>
-<td align="center">South</td>
-<td align="center">1243</td>
-<td align="center">65</td>
-<td align="center">66</td>
-<td align="center">1177</td>
-<td align="center">13</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">02</td>
-<td align="center">East North Central</td>
-<td align="center">Midwest</td>
-<td align="center">2289</td>
-<td align="center">76</td>
-<td align="center">115</td>
-<td align="center">2174</td>
-<td align="center">16</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">02</td>
-<td align="center">East South Central</td>
-<td align="center">South</td>
-<td align="center">575</td>
-<td align="center">33</td>
-<td align="center">36</td>
-<td align="center">539</td>
-<td align="center">7</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">02</td>
-<td align="center">Middle Atlantic</td>
-<td align="center">Northeast</td>
-<td align="center">3426</td>
-<td align="center">90</td>
-<td align="center">157</td>
-<td align="center">3269</td>
-<td align="center">20</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level3">
-<h3 id="run-queries-adding-geographic-information">Run queries adding geographic information<a class="anchor" aria-label="anchor" href="#run-queries-adding-geographic-information"></a>
-</h3>
+<span>              measures <span class="op">=</span> <span class="st">"n_deaths"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/filter_dimension.html">filter_dimension</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"when"</span>, <span class="va">week</span> <span class="op">&lt;=</span> <span class="st">"03"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gms_2</span> <span class="op">&lt;-</span> <span class="va">gdq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/run_query.html">run_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">gms_2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "multistar"</span></span></code></pre></div>
 <p>If instead of executing the standard query, we execute
 <code><a href="../reference/run_geoquery.html">run_geoquery()</a></code> function, we automatically obtain a vector
 geographic data layer at the finest possible level of detail, depending
 on the definition of the query.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">vl_sf</span> <span class="op">&lt;-</span> <span class="va">gdqr</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/run_geoquery.html">run_geoquery</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vl_sf</span> <span class="op">&lt;-</span> <span class="va">gdq</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/run_geoquery.html">run_geoquery</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">vl_sf</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></span></code></pre></div>
 <p>The first rows of the result can be seen below in table form.</p>
 <table class="table">
 <colgroup>
-<col width="3%">
-<col width="3%">
-<col width="11%">
-<col width="7%">
-<col width="5%">
-<col width="4%">
-<col width="22%">
+<col width="6%">
+<col width="6%">
+<col width="20%">
 <col width="13%">
-<col width="11%">
-<col width="17%">
+<col width="10%">
+<col width="7%">
+<col width="32%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">year</th>
@@ -597,9 +637,6 @@ on the definition of the query.</p>
 <th align="center">region_name</th>
 <th align="center">n_deaths</th>
 <th align="center">count</th>
-<th align="center">mrs_cause_pneumonia_and_influenza_deaths</th>
-<th align="center">mrs_cause_other_deaths</th>
-<th align="center">mrs_cause_nrow_agg</th>
 <th align="center">geometry</th>
 </tr></thead>
 <tbody>
@@ -610,9 +647,6 @@ on the definition of the query.</p>
 <td align="center">Midwest</td>
 <td align="center">2258</td>
 <td align="center">75</td>
-<td align="center">113</td>
-<td align="center">2145</td>
-<td align="center">16</td>
 <td align="center">MULTIPOLYGON (((-84.65 45.8…</td>
 </tr>
 <tr class="even">
@@ -622,9 +656,6 @@ on the definition of the query.</p>
 <td align="center">South</td>
 <td align="center">526</td>
 <td align="center">35</td>
-<td align="center">31</td>
-<td align="center">495</td>
-<td align="center">7</td>
 <td align="center">MULTIPOLYGON (((-88.4 30.37…</td>
 </tr>
 <tr class="odd">
@@ -634,9 +665,6 @@ on the definition of the query.</p>
 <td align="center">Northeast</td>
 <td align="center">3452</td>
 <td align="center">86</td>
-<td align="center">173</td>
-<td align="center">3279</td>
-<td align="center">20</td>
 <td align="center">MULTIPOLYGON (((-72.03 41.2…</td>
 </tr>
 <tr class="even">
@@ -646,9 +674,6 @@ on the definition of the query.</p>
 <td align="center">West</td>
 <td align="center">414</td>
 <td align="center">35</td>
-<td align="center">34</td>
-<td align="center">380</td>
-<td align="center">8</td>
 <td align="center">MULTIPOLYGON (((-109.1 41, …</td>
 </tr>
 <tr class="odd">
@@ -658,9 +683,6 @@ on the definition of the query.</p>
 <td align="center">Northeast</td>
 <td align="center">785</td>
 <td align="center">57</td>
-<td align="center">56</td>
-<td align="center">729</td>
-<td align="center">14</td>
 <td align="center">MULTIPOLYGON (((-71.59 41.1…</td>
 </tr>
 <tr class="even">
@@ -670,94 +692,16 @@ on the definition of the query.</p>
 <td align="center">West</td>
 <td align="center">1567</td>
 <td align="center">67</td>
-<td align="center">56</td>
-<td align="center">1511</td>
-<td align="center">14</td>
 <td align="center">MULTIPOLYGON (((-156.1 19.7…</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">South Atlantic</td>
-<td align="center">South</td>
-<td align="center">1271</td>
-<td align="center">59</td>
-<td align="center">58</td>
-<td align="center">1213</td>
-<td align="center">12</td>
-<td align="center">MULTIPOLYGON (((-81.81 24.5…</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">West North Central</td>
-<td align="center">Midwest</td>
-<td align="center">936</td>
-<td align="center">46</td>
-<td align="center">47</td>
-<td align="center">889</td>
-<td align="center">10</td>
-<td align="center">POLYGON ((-102 36.99, -94.6…</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">01</td>
-<td align="center">West South Central</td>
-<td align="center">South</td>
-<td align="center">1243</td>
-<td align="center">65</td>
-<td align="center">66</td>
-<td align="center">1177</td>
-<td align="center">13</td>
-<td align="center">POLYGON ((-106.6 31.87, -10…</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">02</td>
-<td align="center">East North Central</td>
-<td align="center">Midwest</td>
-<td align="center">2289</td>
-<td align="center">76</td>
-<td align="center">115</td>
-<td align="center">2174</td>
-<td align="center">16</td>
-<td align="center">MULTIPOLYGON (((-84.65 45.8…</td>
-</tr>
-<tr class="odd">
-<td align="center">1962</td>
-<td align="center">02</td>
-<td align="center">East South Central</td>
-<td align="center">South</td>
-<td align="center">575</td>
-<td align="center">33</td>
-<td align="center">36</td>
-<td align="center">539</td>
-<td align="center">7</td>
-<td align="center">MULTIPOLYGON (((-88.4 30.37…</td>
-</tr>
-<tr class="even">
-<td align="center">1962</td>
-<td align="center">02</td>
-<td align="center">Middle Atlantic</td>
-<td align="center">Northeast</td>
-<td align="center">3426</td>
-<td align="center">90</td>
-<td align="center">157</td>
-<td align="center">3269</td>
-<td align="center">20</td>
-<td align="center">MULTIPOLYGON (((-72.03 41.2…</td>
 </tr>
 </tbody>
 </table>
 <p>The result is a vector geographic data layer that we can save,
 perform spatial analysis or queries on it, or we can see it as a map,
 using the functions associated with the <code>sf</code> class.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">vl_sf</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "sf"         "tbl_df"     "tbl"        "data.frame"</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vl_sf</span><span class="op">[</span>,<span class="st">"n_deaths"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="geomultistar_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vl_sf</span><span class="op">[</span>,<span class="st">"n_deaths"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<p><img src="geomultistar_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
 <p>Although we have indicated in the query the attributes
 <code>division_name</code> and <code>region_name</code>, as can be seen
 in the figure, the result obtained is at the finest granularity level,
@@ -774,32 +718,23 @@ level.</p>
 The tables are wide: for each object the rest of the attributes are
 defined as columns. By means of the parameter <code>wider</code> we can
 indicate that we want a result of this type.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">vl_sf_w</span> <span class="op">&lt;-</span> <span class="va">gdqr</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vl_sf_w</span> <span class="op">&lt;-</span> <span class="va">gdq</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/run_geoquery.html">run_geoquery</a></span><span class="op">(</span>wider <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The first rows of the result can be seen below in table form.</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="1%">
-<col width="1%">
+<col width="3%">
 <col width="4%">
-<col width="3%">
-<col width="3%">
-<col width="3%">
-<col width="3%">
-<col width="2%">
-<col width="2%">
-<col width="2%">
-<col width="10%">
-<col width="10%">
-<col width="10%">
-<col width="6%">
-<col width="6%">
-<col width="6%">
-<col width="5%">
-<col width="5%">
-<col width="5%">
+<col width="13%">
+<col width="8%">
+<col width="8%">
+<col width="8%">
+<col width="8%">
 <col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="21%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">fid</th>
@@ -812,15 +747,6 @@ indicate that we want a result of this type.</p>
 <th align="center">count_01</th>
 <th align="center">count_02</th>
 <th align="center">count_03</th>
-<th align="center">mrs_cause_pneumonia_and_influenza_deaths_01</th>
-<th align="center">mrs_cause_pneumonia_and_influenza_deaths_02</th>
-<th align="center">mrs_cause_pneumonia_and_influenza_deaths_03</th>
-<th align="center">mrs_cause_other_deaths_01</th>
-<th align="center">mrs_cause_other_deaths_02</th>
-<th align="center">mrs_cause_other_deaths_03</th>
-<th align="center">mrs_cause_nrow_agg_01</th>
-<th align="center">mrs_cause_nrow_agg_02</th>
-<th align="center">mrs_cause_nrow_agg_03</th>
 <th align="center">geometry</th>
 </tr></thead>
 <tbody>
@@ -835,15 +761,6 @@ indicate that we want a result of this type.</p>
 <td align="center">75</td>
 <td align="center">76</td>
 <td align="center">75</td>
-<td align="center">113</td>
-<td align="center">115</td>
-<td align="center">125</td>
-<td align="center">2145</td>
-<td align="center">2174</td>
-<td align="center">2189</td>
-<td align="center">16</td>
-<td align="center">16</td>
-<td align="center">16</td>
 <td align="center">MULTIPOLYGON (((-84.65 45.8…</td>
 </tr>
 <tr class="even">
@@ -857,15 +774,6 @@ indicate that we want a result of this type.</p>
 <td align="center">35</td>
 <td align="center">33</td>
 <td align="center">32</td>
-<td align="center">31</td>
-<td align="center">36</td>
-<td align="center">44</td>
-<td align="center">495</td>
-<td align="center">539</td>
-<td align="center">606</td>
-<td align="center">7</td>
-<td align="center">7</td>
-<td align="center">7</td>
 <td align="center">MULTIPOLYGON (((-88.4 30.37…</td>
 </tr>
 <tr class="odd">
@@ -879,15 +787,6 @@ indicate that we want a result of this type.</p>
 <td align="center">86</td>
 <td align="center">90</td>
 <td align="center">91</td>
-<td align="center">173</td>
-<td align="center">157</td>
-<td align="center">160</td>
-<td align="center">3279</td>
-<td align="center">3269</td>
-<td align="center">3253</td>
-<td align="center">20</td>
-<td align="center">20</td>
-<td align="center">20</td>
 <td align="center">MULTIPOLYGON (((-72.03 41.2…</td>
 </tr>
 <tr class="even">
@@ -901,15 +800,6 @@ indicate that we want a result of this type.</p>
 <td align="center">35</td>
 <td align="center">34</td>
 <td align="center">35</td>
-<td align="center">34</td>
-<td align="center">21</td>
-<td align="center">29</td>
-<td align="center">380</td>
-<td align="center">390</td>
-<td align="center">443</td>
-<td align="center">8</td>
-<td align="center">8</td>
-<td align="center">8</td>
 <td align="center">MULTIPOLYGON (((-109.1 41, …</td>
 </tr>
 <tr class="odd">
@@ -923,15 +813,6 @@ indicate that we want a result of this type.</p>
 <td align="center">57</td>
 <td align="center">61</td>
 <td align="center">57</td>
-<td align="center">56</td>
-<td align="center">52</td>
-<td align="center">48</td>
-<td align="center">729</td>
-<td align="center">733</td>
-<td align="center">678</td>
-<td align="center">14</td>
-<td align="center">14</td>
-<td align="center">14</td>
 <td align="center">MULTIPOLYGON (((-71.59 41.1…</td>
 </tr>
 <tr class="even">
@@ -945,82 +826,7 @@ indicate that we want a result of this type.</p>
 <td align="center">67</td>
 <td align="center">67</td>
 <td align="center">66</td>
-<td align="center">56</td>
-<td align="center">70</td>
-<td align="center">76</td>
-<td align="center">1511</td>
-<td align="center">1753</td>
-<td align="center">1561</td>
-<td align="center">14</td>
-<td align="center">14</td>
-<td align="center">14</td>
 <td align="center">MULTIPOLYGON (((-156.1 19.7…</td>
-</tr>
-<tr class="odd">
-<td align="center">7</td>
-<td align="center">1962</td>
-<td align="center">South Atlantic</td>
-<td align="center">South</td>
-<td align="center">1271</td>
-<td align="center">1179</td>
-<td align="center">1319</td>
-<td align="center">59</td>
-<td align="center">58</td>
-<td align="center">57</td>
-<td align="center">58</td>
-<td align="center">54</td>
-<td align="center">62</td>
-<td align="center">1213</td>
-<td align="center">1125</td>
-<td align="center">1257</td>
-<td align="center">12</td>
-<td align="center">12</td>
-<td align="center">12</td>
-<td align="center">MULTIPOLYGON (((-81.81 24.5…</td>
-</tr>
-<tr class="even">
-<td align="center">8</td>
-<td align="center">1962</td>
-<td align="center">West North Central</td>
-<td align="center">Midwest</td>
-<td align="center">936</td>
-<td align="center">1040</td>
-<td align="center">936</td>
-<td align="center">46</td>
-<td align="center">47</td>
-<td align="center">47</td>
-<td align="center">47</td>
-<td align="center">74</td>
-<td align="center">55</td>
-<td align="center">889</td>
-<td align="center">966</td>
-<td align="center">881</td>
-<td align="center">10</td>
-<td align="center">10</td>
-<td align="center">10</td>
-<td align="center">POLYGON ((-102 36.99, -94.6…</td>
-</tr>
-<tr class="odd">
-<td align="center">9</td>
-<td align="center">1962</td>
-<td align="center">West South Central</td>
-<td align="center">South</td>
-<td align="center">1243</td>
-<td align="center">1096</td>
-<td align="center">1297</td>
-<td align="center">65</td>
-<td align="center">63</td>
-<td align="center">59</td>
-<td align="center">66</td>
-<td align="center">67</td>
-<td align="center">85</td>
-<td align="center">1177</td>
-<td align="center">1029</td>
-<td align="center">1212</td>
-<td align="center">13</td>
-<td align="center">13</td>
-<td align="center">13</td>
-<td align="center">POLYGON ((-106.6 31.87, -10…</td>
 </tr>
 </tbody>
 </table>
@@ -1030,11 +836,11 @@ measurement columns have been generated: one for each combination of
 values of these attributes with the original measurements.</p>
 <p>The meaning of the name of the columns of the measurements is part of
 the result obtained, also in table format, as can be seen below.</p>
-<table class="table">
+<table style="width:44%;" class="table">
 <colgroup>
-<col width="47%">
-<col width="44%">
-<col width="7%">
+<col width="19%">
+<col width="15%">
+<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="center">id_variable</th>
@@ -1072,36 +878,6 @@ the result obtained, also in table format, as can be seen below.</p>
 <td align="center">count</td>
 <td align="center">03</td>
 </tr>
-<tr class="odd">
-<td align="center">mrs_cause_pneumonia_and_influenza_deaths_01</td>
-<td align="center">mrs_cause_pneumonia_and_influenza_deaths</td>
-<td align="center">01</td>
-</tr>
-<tr class="even">
-<td align="center">mrs_cause_pneumonia_and_influenza_deaths_02</td>
-<td align="center">mrs_cause_pneumonia_and_influenza_deaths</td>
-<td align="center">02</td>
-</tr>
-<tr class="odd">
-<td align="center">mrs_cause_pneumonia_and_influenza_deaths_03</td>
-<td align="center">mrs_cause_pneumonia_and_influenza_deaths</td>
-<td align="center">03</td>
-</tr>
-<tr class="even">
-<td align="center">mrs_cause_other_deaths_01</td>
-<td align="center">mrs_cause_other_deaths</td>
-<td align="center">01</td>
-</tr>
-<tr class="odd">
-<td align="center">mrs_cause_other_deaths_02</td>
-<td align="center">mrs_cause_other_deaths</td>
-<td align="center">02</td>
-</tr>
-<tr class="even">
-<td align="center">mrs_cause_other_deaths_03</td>
-<td align="center">mrs_cause_other_deaths</td>
-<td align="center">03</td>
-</tr>
 </tbody>
 </table>
 <p>In this case there was only one variable with a multiplicity greater
@@ -1110,8 +886,21 @@ added to this table in the same way.</p>
 <p>This data dictionary table and layer structure can be saved in
 <em>GeoPackage</em> format using the <code><a href="../reference/save_as_geopackage.html">save_as_geopackage()</a></code>
 function.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_as_geopackage.html">save_as_geopackage</a></span><span class="op">(</span><span class="va">vl_sf_w</span>, <span class="st">"division"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/save_as_geopackage.html">save_as_geopackage</a></span><span class="op">(</span><span class="va">vl_sf_w</span>, <span class="st">"division"</span>, filepath <span class="op">=</span> <span class="va">filepath</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Deleting source `/tmp/RtmpY04hp0/division.gpkg' failed</span></span>
+<span><span class="co">#&gt; Writing layer `division' to data source </span></span>
+<span><span class="co">#&gt;   `/tmp/RtmpY04hp0/division.gpkg' using driver `GPKG'</span></span>
+<span><span class="co">#&gt; Writing 9 features with 10 fields and geometry type Unknown (any).</span></span>
+<span></span>
+<span><span class="va">file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">filepath</span>, <span class="st">"/division.gpkg"</span><span class="op">)</span></span>
+<span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_layers.html" class="external-link">st_layers</a></span><span class="op">(</span><span class="va">file</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Driver: GPKG </span></span>
+<span><span class="co">#&gt; Available layers:</span></span>
+<span><span class="co">#&gt;           layer_name geometry_type features fields crs_name</span></span>
+<span><span class="co">#&gt; 1           division                      9      9    NAD83</span></span>
+<span><span class="co">#&gt; 2 division_variables            NA        6      3     &lt;NA&gt;</span></span></code></pre></div>
 <p>The <em>GeoPackages</em> thus obtained can be used directly, for
 example in <em>QGIS</em>.</p>
 </div>
