@@ -71,8 +71,11 @@ select_fact.dimensional_query <- function(dq,
   if (length(agg_functions) > 0) {
     stopifnot("Measures and aggregation functions do not correspond." = length(measures) == length(agg_functions))
   } else {
-    measures <- all_measures[which(measures %in% all_measures)]
-    agg_functions <- all_functions[which(measures %in% all_measures)]
+    agg_functions <- NULL
+    for (measure in measures) {
+      i <- which(measure == all_measures)
+      agg_functions <- c(agg_functions, all_functions[i])
+    }
   }
   attributes <- c(agg_functions, "SUM")
   names(attributes) <- c(measures, nrow_agg)

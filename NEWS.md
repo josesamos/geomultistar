@@ -1,4 +1,5 @@
 # geomultistar (development version)
+* Fix select measure in facts.
 
 # geomultistar 1.2.0
 * Define error messages.
