@@ -20,9 +20,10 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/geomultistar)](https://CRAN.R-project.org/package=geomultistar)
 [![R-CMD-check](https://github.com/josesamos/geomultistar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/josesamos/geomultistar/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/josesamos/geomultistar/branch/master/graph/badge.svg)](https://app.codecov.io/gh/josesamos/geomultistar?branch=master)
+[![Downloads](http://cranlogs.r-pkg.org/badges/geomultistar?color=brightgreen)](https://www.r-pkg.org:443/pkg/geomultistar)
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/geomultistar?color=brightgreen)](https://www.r-pkg.org:443/pkg/geomultistar)
 <!-- badges: end -->
 
-<!-- [![Downloads](http://cranlogs.r-pkg.org/badges/geomultistar?color=brightgreen)](https://www.r-pkg.org:443/pkg/geomultistar) -->
 
 *Multidimensional systems* allow complex queries to be carried out in an easy way. The *geographic dimension*, together with the *temporal dimension*, plays a fundamental role in multidimensional systems. Through the `geomultistar` package, vector geographic data layers can be associated to the attributes of geographic dimensions, so that the results of multidimensional queries can be obtained directly as vector geographic data layers. In other words, this package allows **enriching multidimensional queries with geographic data**.
 
