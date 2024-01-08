@@ -10,7 +10,6 @@ status](https://www.r-pkg.org/badges/version/geomultistar)](https://CRAN.R-proje
 [![R-CMD-check](https://github.com/josesamos/geomultistar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/josesamos/geomultistar/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/josesamos/geomultistar/branch/master/graph/badge.svg)](https://app.codecov.io/gh/josesamos/geomultistar?branch=master)
-[![Downloads](http://cranlogs.r-pkg.org/badges/geomultistar?color=brightgreen)](https://www.r-pkg.org:443/pkg/geomultistar)
 [![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/geomultistar?color=brightgreen)](https://www.r-pkg.org:443/pkg/geomultistar)
 <!-- badges: end -->
 

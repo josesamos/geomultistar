@@ -1,5 +1,7 @@
 # geomultistar (development version)
 * Fix select measure in facts.
+* Modify the cph field of the description.
+* Include logo on website.
 
 # geomultistar 1.2.0
 * Define error messages.
