@@ -1,3 +1,5 @@
+# geomultistar (development version)
+
 # geomultistar 1.2.1
 * Fix select measure in facts.
 * Modify the cph field of the description.
