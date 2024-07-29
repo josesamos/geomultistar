@@ -43,8 +43,9 @@ test_that("dimensional_query_save works", {
   l <- sf::st_layers(paste0(filepath, "/city", ".gpkg"))
 
 
-  expect_equal(class(l),
-               "sf_layers")
+  #  in upcoming sf, st_layers() returns an object of class c("sf_layers", "data.frame"); this breaks a test in geomultistar:
+  # expect_equal(class(l),
+  #              "sf_layers")
 
 
   expect_equal(l$name,
