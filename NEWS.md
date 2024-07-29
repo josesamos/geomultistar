@@ -1,4 +1,5 @@
 # geomultistar (development version)
+* Fix test for new version of sf.
 
 # geomultistar 1.2.1
 * Fix select measure in facts.
