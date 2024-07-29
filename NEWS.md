@@ -1,3 +1,5 @@
+# geomultistar (development version)
+
 # geomultistar 1.2.2
 * Fix test for new version of sf.
 
